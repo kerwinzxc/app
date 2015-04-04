@@ -4,8 +4,9 @@
  * @create 15 04/04
  */
 
-require_once __DIR__ . "/../conf/settings.php";
-require_once ROOT . "common/ilog.class.php";
+function __autoload($class_name) {
+  require_once 'table.php';
+}
 
 class sql
 {
