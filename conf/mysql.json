@@ -1,0 +1,22 @@
+{
+  "master":{
+      "host": "127.0.0.1:3306",
+      "user": "root",
+      "passwd": "xxxxxx",
+      "dbname": "xxxxxx",
+      "charset": "utf8"
+    },
+  "slave":[{
+      "host": "127.0.0.1:3306",
+      "user": "root",
+      "passwd": "xxxxxx",
+      "dbname": "xxxxxx",
+      "charset": "utf8"
+    },{
+      "host": "127.0.0.1:3306",
+      "user": "root",
+      "passwd": "xxxxxx",
+      "dbname": "xxxxxx",
+      "charset": "utf8"
+  }]
+}
