@@ -36,11 +36,10 @@ class ilog
         $fp = self::$fatal_fp;
       }
     }
-
     if ($fp !== false) {
       $log_str = date('Y-m-d H:i:s') . " > " . $str . "\n";
-      @fwrite(self::$fp, $log_str, strlen($log_str));
-      @fflush(self::$fp);
+      @fwrite($fp, $log_str, strlen($log_str));
+      @fflush($fp);
     }
   }
 

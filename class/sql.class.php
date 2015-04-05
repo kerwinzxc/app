@@ -4,10 +4,6 @@
  * @create 15 04/04
  */
 
-function __autoload($class_name) {
-  require_once 'table.php';
-}
-
 class sql
 {
   private $db = false;
@@ -20,13 +16,13 @@ class sql
   private $charset = 'utf8';
 
   //=
-  function __construct($dbname, $host, $user, $passwd, $charset = 'utf8')
+  function __construct($server)
   {
-    $this->db_name  = $dbname;
-    $this->host     = $host;
-    $this->user     = $user;
-    $this->passwd   = $passwd;
-    $this->charset  = $charset;
+    $this->db_name  = $server['dbname'];
+    $this->host     = $server['host'];
+    $this->user     = $server['user'];
+    $this->passwd   = $server['passwd'];
+    $this->charset  = $server['charset'];
   }
   private function connect()
   {
@@ -58,6 +54,8 @@ class sql
     $errmsg = @mysql_error();
     ilog::error("db - " . "$err" . " - errno:$errno errmsg:$errmsg");
   }
+
+  //= public funtions
   public function execute($sql)
   {
     if (!$this->connected) {
@@ -106,7 +104,7 @@ class sql
     }
 
     $rows = array();
-    while ($row = @mysql_fetch_array($result, MYSQL_ASSOC)) {
+    while (($row = @mysql_fetch_array($result, MYSQL_ASSOC))) {
       $rows[] = $row;
     }
     @mysql_free_result($result);
