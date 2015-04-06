@@ -3,13 +3,22 @@
 class cc_selector
 {
   private static $chash;
-  private static $cc_list = array('192.168.1.122:6379', '192.168.1.122:6380');
 
   public static function get_cache($key)
   {
     if (!isset(self::$chash)) {
-      self::$chash = new chash($cc_list);
+      $js = file_get_contents(ROOT . "/conf/redis.json");
+      if ($js === false) {
+        ilog::fatal("open redis config failed!");
+        return false;
+      }
+      $js = json_decode($js);
+      if ($js === false || !isset($js->list)) {
+        ilog::fatal("redis config format error!");
+        return false;
+      }
+      self::$chash = new chash($js->list);
     }
-    return $self::$chash->get($key);
+    return self::$chash->get($key);
   }
 };
