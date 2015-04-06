@@ -7,7 +7,8 @@ class cache
   private $redis;
   private $connected = false;
 
-  public function __construct() {
+  public function __construct()
+  {
     $this->redis = new Redis();
   }
   private function connect($key)
@@ -17,7 +18,8 @@ class cache
       if (empty($server)) {
         return false;
       }
-      $ret = self::$redis->pconnect($server['host'], $server['port'], self::$conn_timeout);
+      $server = explode(":", $server);
+      $ret = self::$redis->pconnect($server[0], (int)$server[1], self::$conn_timeout);
       if ($ret === false) {
         return false;
       }
