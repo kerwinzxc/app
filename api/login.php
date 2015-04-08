@@ -37,6 +37,7 @@ do {
   session::set_session($sid, json_encode($s_info));
 
   $ret_body['sid'] = $sid;
+  $ret_body['name'] = $user_info['name'];
 
 } while (false);
 
