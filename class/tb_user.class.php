@@ -29,4 +29,15 @@ class tb_user
     . " where phone_num='$phone_num' limit 1";
     return $db->get_row($sql);
   }
+  // return false on error, return array on ok.
+  public static function query_user_by_uid($uid)
+  {
+    $db = new sql(db_selector::get_db(db_selector::$db_r));
+    $sql = "select "
+    . self::$all_cols
+    . " from "
+    . self::$tb_name
+    . " where uid=$uid limit 1";
+    return $db->get_row($sql);
+  }
 };

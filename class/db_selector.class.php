@@ -2,22 +2,22 @@
 
 class db_selector
 {
-  public static $db_w = 'utruck_w';
-  public static $db_r = 'utruck_r';
+  public static $db_w = 'ddky_w';
+  public static $db_r = 'ddky_r';
 
   private static $db_list = array(
-      'utruck_w' => array(
-        'dbname'  => 'utruck',
+      'ddky_w' => array(
+        'dbname'  => 'ddky',
         'host'    => '127.0.0.1:3306',
         'user'    => 'root',
-        'passwd'  => 'shaovie',
+        'passwd'  => 'zhongwei',
         'charset' => 'utf8',
         ),
-      'utruck_r' => array(
-        'dbname'  => 'utruck',
+      'ddky_r' => array(
+        'dbname'  => 'ddky',
         'host'    => '127.0.0.1:3306',
         'user'    => 'root',
-        'passwd'  => 'shaovie',
+        'passwd'  => 'zhongwei',
         'charset' => 'utf8',
         ),
       );

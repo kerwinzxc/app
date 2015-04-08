@@ -21,7 +21,7 @@ create table if not exists user (
   phone_num           char(15) not null unique key,           # mobile phone number
   passwd              char(32) not null,                      # md5
 
-  name                varchar(30) not null default 'null',    #
+  name                varchar(30) not null default '',        #
   sex                 tinyint not null default 1,             # 0: famale 1: male
   birth_year          smallint not null default '1900',       # 
 

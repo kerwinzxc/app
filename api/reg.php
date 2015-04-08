@@ -36,7 +36,10 @@ do {
     break;
   }
 
-  $sid = util::generate_sid(); 
+  $sid = session::generate_sid(); 
+
+  $s_info = array('uid' => $new_user_id);
+  session::set_session($sid, json_encode($s_info));
 
   $ret_body['sid'] = $sid;
 
