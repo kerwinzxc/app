@@ -28,6 +28,24 @@ class tb_user_patient
     }
     return false;
   }
+  public static function del_one($user_id, $patient_id)
+  {
+    $db = new sql(db_selector::get_db(db_selector::$db_w));
+    $name = $db->escape($name);
+    $sql = "delete from "
+      . self::$tb_name
+      . " where id={$patient_id} and user_id={$user_id}";
+    if ($db->execute($sql) === false) {
+      return false;
+    }
+    if ($db->affected_rows() == 1) {
+      // for cache
+      $cc = new cache();
+      $ck = CK_USER_PATIENT_LIST . $user_id;
+      $cc->del($ck);
+    }
+    return true;
+  }
 
   public static function query_user_patients_num($user_id)
   {
