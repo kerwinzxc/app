@@ -30,6 +30,9 @@ class tb_user_patient
   }
   public static function del_one($user_id, $patient_id)
   {
+    if (empty($user_id) || empty($patient_id)) {
+      return false;
+    }
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     $name = $db->escape($name);
     $sql = "delete from "

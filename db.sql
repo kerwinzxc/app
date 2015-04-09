@@ -19,7 +19,7 @@ create table if not exists user (
   sex                 tinyint not null default 1,             # 0: famale 1: male
   birth_year          smallint not null default '1900',       # 
 
-  default_patient     char(32) not null default '',           # md5
+  default_patient     char(32) not null default 0,            # md5
 
   c_time              int unsigned not null default 0,
 

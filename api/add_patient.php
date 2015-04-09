@@ -10,7 +10,7 @@ $result = array();
 do {
   if (empty($_GET['sid'])
     || empty($_GET['name'])
-    || empty($_GET['sex'])
+    || !isset($_GET['sex'])
     || empty($_GET['phone_num'])) {
     $ret_code = ERR_PARAM_INVALID;
     break;
@@ -58,13 +58,6 @@ do {
     $ret_code = ERR_DB_ERROR;
     break;
   }
-
-  // update session info
-  if (tb_user::update_default_patient($user_id, $new_patient_id) !== false) {
-    $s_info['default_patient'] = $new_patient_id;
-    user_session::set_session($sid, json_encode($s_info));
-  }
-
 } while (false);
 
 $ret_body['code'] = $ret_code;
