@@ -8,6 +8,10 @@ $ret_code = 0;
 $ret_body = array();
 
 do {
+  if (empty($_GET['user']) || empty($_GET['passwd'])) {
+    $ret_code = ERR_PARAM_INVALID;
+    break;
+  }
   $phone_num = $_GET['user'];
   $passwd    = $_GET['passwd'];
 
@@ -26,20 +30,17 @@ do {
     break;
   }
 
-  $new_user_id = tb_user_id_pool::get_new_user_id();
-  if ($new_user_id === false
-      || (tb_user::insert_new_one($new_user_id,
-          $phone_num,
-          $passwd,
-          time()) === false)) {
+  $new_user_id = tb_user::insert_new_one($phone_num, $passwd, time());
+  if ($new_user_id === false) {
     $ret_code = ERR_DB_ERROR;
     break;
   }
 
-  $sid = session::generate_sid(); 
+  $sid = user_session::generate_sid(); 
 
-  $s_info = array('uid' => $new_user_id);
-  session::set_session($sid, json_encode($s_info));
+  $s_info = array('user_id' => $new_user_id,
+    "default_patient" => 0);
+  user_session::set_session($sid, json_encode($s_info));
 
   $ret_body['sid'] = $sid;
 

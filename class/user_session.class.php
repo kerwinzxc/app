@@ -2,13 +2,13 @@
 
 require_once ROOT . '/common/cc_key_def.php';
 
-class session
+class user_session
 {
   private static $nosql;
 
   /**
    * { 
-   *   "uid":1234,
+   *   "user_id":1234,
    *
    * }
    */
@@ -21,12 +21,12 @@ class session
   {
     if (!isset(self::$nosql))
       self::$nosql = new nosql();
-    return self::$nosql->get(CC_KEY_SID . $sid);
+    return self::$nosql->get(CK_USER_SID . $sid);
   }
   public static function set_session($sid, $v)
   {
     if (!isset(self::$nosql))
       self::$nosql = new nosql();
-    return self::$nosql->set(CC_KEY_SID . $sid, $v);
+    return self::$nosql->set(CK_USER_SID . $sid, $v);
   }
 };

@@ -8,20 +8,11 @@
 -- md5 len = 32
 -- mobile phone number = 15
 
--- user id generator
-drop table if exists user_id_pool;
-create table user_id_pool (
-    id                int unsigned not null auto_increment,
-    n                 int not null default 0,
-    primary key(id),
-    unique key(n)
-)engine=MyISAM default charset=utf8 auto_increment=10000;
-
 -- user info
 drop table if exists user;
 create table if not exists user (
-  uid                 int unsigned not null primary key,      #
-  phone_num           char(15) not null unique key,           # mobile phone number
+  id                  int unsigned not null auto_increment,   #
+  phone_num           char(15) not null,                      # mobile phone number
   passwd              char(32) not null,                      # md5
 
   name                varchar(30) not null default '',        #
@@ -32,37 +23,31 @@ create table if not exists user (
 
   c_time              int unsigned not null default 0,
 
+  primary key(id),
+  unique key(phone_num),
   index idx_name(`name`)
-)engine=InnoDB default charset=utf8;
+)engine=InnoDB default charset=utf8 auto_increment=10000;
 
 -- user's patient info 用户的常用就诊人
 drop table if exists user_patient;
 create table if not exists user_patient (
-  uid                 int unsigned not null,                  # master id
-  patient_id          char(32) not null,                      # md5
-  phone_num           char(15) not null unique key,           # mobile phone number
+  id                  int unsigned not null auto_increment,   #
+  user_id             int unsigned not null,                  # master id
+  phone_num           char(15) not null,                      # mobile phone number
 
   name                varchar(30) not null default '',        #
   sex                 tinyint not null default 1,             # 0: famale 1: male
   birth_year          smallint not null default '1900',       # 
 
-  index idx_uid(`uid`)
-)engine=InnoDB default charset=utf8;
-
--- doctor id generator
-drop table if exists doctor_id_pool;
-create table doctor_id_pool (
-    id                int unsigned not null auto_increment,
-    n                 int not null default 0,
-    primary key(id),
-    unique key(n)
-)engine=MyISAM default charset=utf8 auto_increment=10000;
+  primary key(id),
+  index idx_uid(`user_id`)
+)engine=InnoDB default charset=utf8 auto_increment=10000;
 
 -- doctor info
 drop table if exists doctor;
 create table if not exists doctor (
-  uid                 int unsigned not null primary key,      #
-  phone_num           char(15) not null unique key,           # mobile phone number
+  id                  int unsigned not null auto_increment,   #
+  phone_num           char(15) not null,                      # mobile phone number
   passwd              char(32) not null,                      # md5
 
   name                varchar(30) not null default 'null',    #
@@ -70,6 +55,8 @@ create table if not exists doctor (
 
   c_time              int unsigned not null default 0,
 
+  primary key(id),
+  unique key(phone_num),
   index idx_name(`name`)
-)engine=InnoDB default charset=utf8;
+)engine=InnoDB default charset=utf8 auto_increment=10000;
 

@@ -110,6 +110,17 @@ class sql
     @mysql_free_result($result);
     return $rows;
   }
+
+  public function get_rows_count($sql)
+  {
+    $result = $this->execute($sql);
+    if ($result === false) {
+      return false;
+    }
+
+    $rows = @mysql_fetch_row($result);
+    return (int)$rows[0];
+  }
   /**********************************************************************
    * Creates a SET nvp sql string from an associative array (and escapes all values)
    *

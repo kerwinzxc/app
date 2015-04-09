@@ -44,7 +44,7 @@ class cache
     }
     return $this->redis->set($key, $v);
   }
-  public static function del($key)
+  public function del($key)
   {
     if ($this->connected === false) {
       if ($this->connect($key) === false)

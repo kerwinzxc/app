@@ -26,4 +26,12 @@ class check
       return false;
     return true;
   }
+  public static function is_name($v)
+  {
+    if (strlen($v) < 6 || strlen($v) > 18)
+      return false;
+    return true;
+  }
+  public static function is_sex($v)
+  { return ((int)$v == 1 || (int)$v == 0); }
 };

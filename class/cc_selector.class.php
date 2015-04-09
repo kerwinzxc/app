@@ -12,12 +12,12 @@ class cc_selector
         ilog::fatal("open redis config failed!");
         return false;
       }
-      $js = json_decode($js);
-      if ($js === false || !isset($js->list)) {
+      $js = json_decode($js, true);
+      if ($js === false || !isset($js['list'])) {
         ilog::fatal("redis config format error!");
         return false;
       }
-      self::$chash = new chash($js->list);
+      self::$chash = new chash($js['list']);
     }
     return self::$chash->get($key);
   }

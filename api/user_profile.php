@@ -10,24 +10,24 @@ $result = array();
 do {
   $sid = $_GET['sid'];
 
-  if (!session::is_sid($sid)) {
-    $ret_code = ERR_PARAM_INVALID;
+  if (empty($sid) || !user_session::is_sid($sid)) {
+    $ret_code = ERR_NOT_LOGIN;
     break;
   }
 
-  $s_info = session::get_session($sid);
+  $s_info = user_session::get_session($sid);
   if ($s_info === false) {
     $ret_code = ERR_NOT_LOGIN;
     break;
   }
 
-  $s_info = json_decode($s_info);
+  $s_info = json_decode($s_info, true);
   if ($s_info == false) {
     $ret_code = ERR_NOT_LOGIN;
     break;
   }
-  $uid = $s_info->uid;
-  $user_info = tb_user::query_user_by_uid($uid);
+  $user_id = $s_info['user_id'];
+  $user_info = tb_user::query_user_by_id($user_id);
   if ($user_info === false) {
     $ret_code = ERR_DB_ERROR;
     break;
