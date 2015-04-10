@@ -58,6 +58,10 @@ do {
     $ret_code = ERR_DB_ERROR;
     break;
   }
+  $ret_body['sex'] = $sex;
+  $ret_body['name'] = $name;
+  $ret_body['phone_num'] = $phone_num;
+
 } while (false);
 
 $ret_body['code'] = $ret_code;

@@ -18,7 +18,6 @@ do {
       $ret_code = ERR_NOT_LOGIN;
       break;
     }
-
     $s_info = json_decode($s_info, true);
     if (empty($s_info)) {
       $ret_code = ERR_NOT_LOGIN;

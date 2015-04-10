@@ -32,4 +32,29 @@ class tb_doctor
     . " where phone_num='$phone_num' limit 1";
     return $db->get_row($sql);
   }
+  // return false on error, return array on ok.
+  public static function query_doctor_by_id($id)
+  {
+    // for cache
+    $cc = new cache();
+    $ck = CK_DOCTOR_ID_2_DOCTOR . $id;
+    $result = $cc->get($ck);
+    if ($result !== false) {
+      return json_decode($result, true);
+    }
+
+    $db = new sql(db_selector::get_db(db_selector::$db_r));
+    $sql = "select "
+    . self::$all_cols
+    . " from "
+    . self::$tb_name
+    . " where id=$id limit 1";
+    $result = $db->get_row($sql);
+
+    // for cache
+    if ($result !== false) {
+      $cc->set($ck, json_encode($result));
+    }
+    return $result;
+  }
 };

@@ -12,3 +12,5 @@ define('ERR_USER_NOT_EXIST', -1101);       $ERRORS[ERR_USER_NOT_EXIST] = 'user n
 define('ERR_PASSWD_ERR', -1102);           $ERRORS[ERR_PASSWD_ERR] = 'passwd error';
 define('ERR_USER_EXIST', -1103);           $ERRORS[ERR_USER_EXIST] = 'user exists';
 define('ERR_USER_PATIENTS_LIMIT', -1104);  $ERRORS[ERR_USER_PATIENTS_LIMIT] = 'user patient out of limit';
+define('ERR_USER_GUAN_ZHU_LIMIT', -1105);  $ERRORS[ERR_USER_GUAN_ZHU_LIMIT] = 'user guan zhu out of limit';
+define('ERR_USER_GUAN_ZHU_EXIST', -1106);  $ERRORS[ERR_USER_GUAN_ZHU_EXIST] = 'user had guan zhu';

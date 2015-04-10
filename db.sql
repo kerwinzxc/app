@@ -43,6 +43,15 @@ create table if not exists user_patient (
   index idx_uid(`user_id`)
 )engine=InnoDB default charset=utf8 auto_increment=10000;
 
+-- 用户关注的医生
+drop table if exists user_guan_zhu;
+create table if not exists user_guan_zhu (
+  user_id             int unsigned not null,                  # master id
+  doctor_id           int unsigned not null,                  #
+
+  primary key(`user_id`, `doctor_id`)
+)engine=InnoDB default charset=utf8;
+
 -- doctor info
 drop table if exists doctor;
 create table if not exists doctor (
