@@ -19,8 +19,6 @@ create table if not exists user (
   sex                 tinyint not null default 1,             # 0: famale 1: male
   birth_year          smallint not null default '1900',       # 
 
-  default_patient     char(32) not null default 0,            # md5
-
   c_time              int unsigned not null default 0,
 
   primary key(id),
@@ -38,6 +36,7 @@ create table if not exists user_patient (
   name                varchar(30) not null default '',        #
   sex                 tinyint not null default 1,             # 0: famale 1: male
   birth_year          smallint not null default '1900',       # 
+  is_default          tinyint not null default 1,             # 0 or 1
 
   primary key(id),
   index idx_uid(`user_id`)

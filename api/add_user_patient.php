@@ -11,6 +11,7 @@ do {
   if (empty($_GET['sid'])
     || empty($_GET['name'])
     || !isset($_GET['sex'])
+    || !isset($_GET['is_default'])
     || empty($_GET['phone_num'])) {
     $ret_code = ERR_PARAM_INVALID;
     break;
@@ -19,10 +20,12 @@ do {
   $sid = $_GET['sid'];
   $sex = $_GET['sex'];
   $name = $_GET['name'];
+  $is_default = (int)$_GET['is_default'];
   $phone_num = $_GET['phone_num'];
   if (!user_session::is_sid($sid)
     || !check::is_phone_num($phone_num)
     || !check::is_sex($sex)
+    || !check::is_0_or_1($is_default)
     || !check::is_name($name)) {
     $ret_code = ERR_PARAM_INVALID;
     break;
@@ -53,7 +56,8 @@ do {
   $new_patient_id = tb_user_patient::insert_new_one($user_id,
     $phone_num,
     $name,
-    $sex);
+    $sex,
+    $is_default);
   if ($new_patient_id === false) {
     $ret_code = ERR_DB_ERROR;
     break;

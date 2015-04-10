@@ -7,14 +7,18 @@ class tb_user_patient
   private static $tb_name  = 'user_patient';
   private static $all_cols = '*';
 
-  public static function insert_new_one($user_id, $phone_num, $name, $sex)
+  public static function insert_new_one($user_id,
+      $phone_num,
+      $name,
+      $sex,
+      $is_default)
   {
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     $name = $db->escape($name);
     $sql = "insert into "
       . self::$tb_name
-      . "(user_id,phone_num,name,sex)"
-      . "value($user_id, $phone_num,'$name', $sex)";
+      . "(user_id,phone_num,name,sex,is_default)"
+      . "value($user_id, $phone_num,'$name', $sex, $is_default)";
     if ($db->execute($sql) === false) {
       return false;
     }

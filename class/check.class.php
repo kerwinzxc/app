@@ -34,4 +34,6 @@ class check
   }
   public static function is_sex($v)
   { return ((int)$v == 1 || (int)$v == 0); }
+  public static function is_0_or_1($v)
+  { return ((int)$v == 1 || (int)$v == 0); }
 };
