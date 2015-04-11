@@ -48,7 +48,7 @@ do {
       break;
     }
     // update session info
-    if (tb_user::update_default_patient($user_id, $patient_id) !== false) {
+    if (tb_user::set_default_patient($user_id, $patient_id) !== false) {
       $s_info['default_patient'] = $patient_id;
       user_session::set_session($sid, json_encode($s_info));
     }

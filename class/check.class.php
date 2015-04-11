@@ -4,36 +4,49 @@ class check
 {
   public static function is_phone_num($v)
   {
-    if (!preg_match('/^1[34578]\d{9}$/', $v))
-      return false;
-    return true;
+    return preg_match('/^1[34578]\d{9}$/', $v);
   }
   public static function is_coord($v)
   {
-    if (!is_numeric($v) || strlen($v) > 10)
+    if (!is_numeric($v) || strlen($v) > 10) {
       return false;
+    }
     return true;
   }
   public static function is_user($v)
   {
-    if (!preg_match('/^[\w]{3,20}$/', $v))
-      return false;
-    return true;
+    return preg_match('/^[\w]{3,20}$/', $v);
   }
   public static function is_passwd($v)
   {
-    if (!preg_match('/^[\w~!@#$%^&*()\-_=+,.:;]{6,18}$/', $v))
+    return preg_match('/^[\w~!@#$%^&*()\-_=+,.:;]{6,18}$/', $v);
+  }
+  public static function is_id_card($v)
+  {
+    if ((strlen($v) != 15 && strlen($v) != 18)
+        || !preg_match('/^([\d]{17}[xX\d]|[\d]{15})$/', $v)) {
       return false;
+    }
     return true;
   }
   public static function is_name($v)
   {
-    if (strlen($v) < 6 || strlen($v) > 18)
+    $len = strlen($v);
+    if ($len > 18 || $len < 3) {
       return false;
-    return true;
+    }
+    return preg_match("/^[\w\x7f-\xff]+$/", $v);
   }
   public static function is_sex($v)
   { return ((int)$v == 1 || (int)$v == 0); }
   public static function is_0_or_1($v)
   { return ((int)$v == 1 || (int)$v == 0); }
+  public static function is_date($v)
+  {
+    $dt = explode('-', $v);
+    if (count($dt) == 3 && is_numeric($dt[0]) && is_numeric($dt[1]) && is_numeric($dt[2])) {
+      return checkdate($dt[1], $dt[2], $dt[0]);
+    }
+    return false;
+  }
 };

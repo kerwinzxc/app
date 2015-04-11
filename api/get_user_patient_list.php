@@ -32,7 +32,16 @@ do {
     $ret_code = ERR_DB_ERROR;
     break;
   }
-  $ret_body['list'] = $pl;
+  $real_pl = array();
+  foreach ($pl as $p) {
+    $real_p = $p;
+    $real_p['is_default'] = 0;
+    if ((int)$p['id'] === (int)$s_info['default_patient']) {
+      $real_p['is_default'] = 1;
+    }
+    $real_pl[] = $real_p;
+  }
+  $ret_body['list'] = $real_pl;
 
 } while (false);
 

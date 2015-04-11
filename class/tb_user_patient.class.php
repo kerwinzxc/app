@@ -10,15 +10,16 @@ class tb_user_patient
   public static function insert_new_one($user_id,
       $phone_num,
       $name,
+      $id_card,
       $sex,
-      $is_default)
+      $birthday)
   {
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     $name = $db->escape($name);
     $sql = "insert into "
       . self::$tb_name
-      . "(user_id,phone_num,name,sex,is_default)"
-      . "value($user_id, $phone_num,'$name', $sex, $is_default)";
+      . "(user_id,phone_num,name,id_card,sex,birthday)"
+      . "value($user_id, $phone_num,'$name', '$id_card', $sex, '$birthday')";
     if ($db->execute($sql) === false) {
       return false;
     }
@@ -38,7 +39,6 @@ class tb_user_patient
       return false;
     }
     $db = new sql(db_selector::get_db(db_selector::$db_w));
-    $name = $db->escape($name);
     $sql = "delete from "
       . self::$tb_name
       . " where id={$patient_id} and user_id={$user_id} limit 1";
