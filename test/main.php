@@ -135,6 +135,7 @@ function test_get_user_patient_list($users) {
   return $get_ok;
 }
 $begin_time = microtime(true);
+$all_user_patient_list = array();
 $get_ok_num = test_get_user_patient_list($login_ok_users);
 $diff = round(microtime(true) - $begin_time, 3);
 printf("get user patient list ok %d %s (%s req/sec)\n", $get_ok_num, $diff, round($get_ok_num/$diff, 2));
@@ -168,3 +169,36 @@ for ($i = 0; $i < 2; $i++) {
 }
 $diff = round(microtime(true) - $begin_time, 3);
 printf("del_user_patient ok %d %s (%s req/sec)\n", $del_ok_num, $diff, round($del_ok_num/$diff, 2));
+
+$all_user_patient_list = array();
+test_get_user_patient_list($login_ok_users);
+
+// set_user_patient
+function test_set_default_patient() {
+  global $host;
+  global $get_timeout;
+  global $login_ok_users;
+  global $all_user_patient_list;
+  $set_ok = 0;
+  foreach ($all_user_patient_list as $phone_num => $my_patients) {
+    foreach ($my_patients as $patient_info) {
+      if ((int)$patient_info['is_default'] != 1) {
+        $patient_id = $patient_info['id'];
+        $sid = $login_ok_users[$phone_num];
+        $ret = json_decode(file_get_contents("http://{$host}/api/set_default_patient.php?sid={$sid}&patient_id={$patient_id}", false, $get_timeout), true);
+        if ((int)$ret['code'] == 0) {
+          $set_ok++;
+          break;
+        } else {
+          printf("%s set_user_patient failed [%s]\n", $phone_num, $ret['desc']);
+        }
+      }
+    }
+  }
+  return $set_ok;
+}
+$set_ok_num = 0;
+$begin_time = microtime(true);
+$set_ok_num = test_set_default_patient();
+$diff = round(microtime(true) - $begin_time, 3);
+printf("set_default_patient ok %d %s (%s req/sec)\n", $set_ok_num, $diff, round($del_ok_num/$diff, 2));
