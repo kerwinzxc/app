@@ -40,6 +40,9 @@ class tb_doctor
   // return false on error, return array on ok.
   public static function query_doctor_by_id($id)
   {
+    if (empty($id)) {
+      return false;
+    }
     // for cache
     $cc = new cache();
     $ck = CK_DOCTOR_ID_2_DOCTOR . $id;

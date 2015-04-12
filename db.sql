@@ -59,8 +59,13 @@ create table if not exists doctor (
   phone_num           char(15) not null,                      # mobile phone number
   passwd              char(32) not null,                      # md5
 
-  name                varchar(30) not null default 'null',    #
+  name                varchar(30) not null default '',        #
   sex                 tinyint not null default 1,             # 0: famale 1: male
+  icon_url            varchar(255) not null default '',       #
+
+  title               smallint not null default 0,            # 职称
+  hospital            varchar(90) not null default '',        # 所属医院
+  expert_in           varchar(300) not null default '',       # 擅长
 
   c_time              int unsigned not null default 0,
 

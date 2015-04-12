@@ -12,18 +12,18 @@ printf("test doctor phone_num %d\n", count($doctor_phone_nums));
 // add_doctor
 $add_ok_doctor_list = array(); // array(phone_num => array);
 function test_add_doctor($users) {
-  global $host;
-  global $get_timeout;
-  global $add_ok_doctor_list;
+  $names = array('乔峰', '段誉', '虚竹', '南慕容', '郭大侠');
   $add_ok = 0;
   foreach ($users as $phone_num) {
-    $sex = mt_rand(0, 1);
-    $ret = json_decode(file_get_contents("http://{$host}/api/add_doctor.php?name=彭好宇&sex={$sex}&phone_num={$phone_num}", false, $get_timeout), true);
-    if ((int)$ret['code'] == 0) {
+    $di = tb_doctor::query_doctor_by_phone_num($phone_num);
+    if (!empty($di)) {
+      $new_doctor_id = tb_doctor::insert_new_one($phone_num,
+                                                 md5('000000'),
+                                                 $names[array_rand($names)],
+                                                 mt_rand(0, 1),
+                                                 time());
+      $add_ok_doctor_list[$phone_num] = $new_doctor_id;
       $add_ok++;
-      $add_ok_doctor_list[$phone_num] = (int)$ret['id'];
-    } else {
-      printf("%s add_doctor failed [%s]\n", $phone_num, $ret['desc']);
     }
   }
   return $add_ok;
