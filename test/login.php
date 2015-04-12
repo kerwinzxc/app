@@ -1,6 +1,9 @@
 <?php
 
 // login
+if (!isset($reg_ok_users)) {
+  $reg_ok_users = $phone_nums;
+}
 $login_ok_users = array(); // array(phone_num => sid)
 function test_login($phone_nums) {
   global $host;

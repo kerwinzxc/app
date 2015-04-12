@@ -32,13 +32,14 @@ do {
     $ret_code = ERR_DB_ERROR;
     break;
   }
+  $gz_list_info = array();
   foreach ($gl as $item) {
     $doctor_info = tb_doctor::query_doctor_by_id($item['doctor_id']);
     if (!empty($doctor_info)) {
       $gz_list_info[] = array('doctor_id' => $item['doctor_id'],
-          'name' => $doctor_info['name'],
-          'sex' => $doctor_info['sex'],
-          );
+                              'name' => $doctor_info['name'],
+                              'sex' => $doctor_info['sex'],
+                             );
     }
   }
   $ret_body['list'] = $gz_list_info;

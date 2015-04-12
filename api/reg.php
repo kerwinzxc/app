@@ -39,7 +39,7 @@ do {
   $sid = user_session::generate_sid(); 
 
   $s_info = array('user_id' => $new_user_id,
-    "default_patient" => 0);
+                  "default_patient" => 0);
   user_session::set_session($sid, json_encode($s_info));
 
   $ret_body['sid'] = $sid;

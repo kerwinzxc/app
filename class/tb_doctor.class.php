@@ -5,13 +5,18 @@ class tb_doctor
   private static $tb_name  = 'doctor';
   private static $all_cols = '*';
 
-  public static function insert_new_one($phone_num, $passwd, $c_time)
+  public static function insert_new_one($phone_num,
+                                        $passwd,
+                                        $name,
+                                        $sex,
+                                        $c_time)
   {
+    $db = new sql(db_selector::get_db(db_selector::$db_w));
+    $name = $db->escape($name);
     $sql = "insert into "
       . self::$tb_name
-      . "(uid,phone_num,passwd,c_time)"
-      . "value($phone_num,'$passwd',$c_time)";
-    $db = new sql(db_selector::get_db(db_selector::$db_w));
+      . "(phone_num,passwd,name,sex,c_time)"
+      . "value('$phone_num','$passwd','$name',$sex,$c_time)";
     if ($db->execute($sql) === false) {
       return false;
     }
@@ -26,10 +31,10 @@ class tb_doctor
   {
     $db = new sql(db_selector::get_db(db_selector::$db_r));
     $sql = "select "
-    . self::$all_cols
-    . " from "
-    . self::$tb_name
-    . " where phone_num='$phone_num' limit 1";
+      . self::$all_cols
+      . " from "
+      . self::$tb_name
+      . " where phone_num='$phone_num' limit 1";
     return $db->get_row($sql);
   }
   // return false on error, return array on ok.
@@ -45,10 +50,10 @@ class tb_doctor
 
     $db = new sql(db_selector::get_db(db_selector::$db_r));
     $sql = "select "
-    . self::$all_cols
-    . " from "
-    . self::$tb_name
-    . " where id=$id limit 1";
+      . self::$all_cols
+      . " from "
+      . self::$tb_name
+      . " where id=$id limit 1";
     $result = $db->get_row($sql);
 
     // for cache

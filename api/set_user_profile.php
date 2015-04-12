@@ -9,23 +9,32 @@ $result = array();
 
 do {
   if (empty($_GET['sid'])
-      || empty($_GET['doctor_id'])) {
+      || empty($_GET['name'])
+      || empty($_GET['id_card'])) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
 
   $sid = $_GET['sid'];
-  $doctor_id = (int)$_GET['doctor_id'];
+  $name = $_GET['name'];
+  $id_card = $_GET['id_card'];
+
   if (!user_session::is_sid($sid)
-      || $doctor_id <= 0) {
+      || !check::is_id_card($id_card)
+      || !check::is_name($name)) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
+  if (get_magic_quotes_gpc()) {
+    $name = stripslashes($name);
+  }
+
   $s_info = user_session::get_session($sid);
   if ($s_info === false) {
     $ret_code = ERR_NOT_LOGIN;
     break;
   }
+
   $s_info = json_decode($s_info, true);
   if (empty($s_info)) {
     $ret_code = ERR_NOT_LOGIN;
@@ -33,22 +42,15 @@ do {
   }
   $user_id = $s_info['user_id'];
 
-  $num = tb_user_guan_zhu::query_user_guan_zhu_num($user_id);
-  if ($num === false || $num >= 100) {
-    $ret_code = ERR_USER_GUAN_ZHU_LIMIT;
+  if (tb_user::query_user_id_card_exist_or_not($id_card)) {
+    $ret_code = ERR_ID_CARD_INVALID;
     break;
   }
-
-  if (tb_user_guan_zhu::query_user_had_guan_zhu_or_not($user_id, $doctor_id)) {
-    $ret_code = ERR_USER_GUAN_ZHU_EXIST;
-    break;
-  }
-
-  if (tb_user_guan_zhu::insert_new_one($user_id, $doctor_id) === false) {
+  if (tb_user::set_profile($user_id, $name, $id_card) === false) {
     $ret_code = ERR_DB_ERROR;
     break;
   }
-  $ret_body['doctor_id'] = $doctor_id;
+  $ret_body['name'] = $user_info['name'];
 
 } while (false);
 

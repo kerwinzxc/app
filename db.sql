@@ -16,12 +16,14 @@ create table if not exists user (
   passwd              char(32) not null,                      # md5
 
   name                varchar(30) not null default '',        #
+  id_card             char(18) not null default '',           # person id card
   default_patient     int unsigned not null default 0,        #
 
   c_time              int unsigned not null default 0,
 
   primary key(id),
-  unique key(phone_num)
+  unique key(phone_num),
+  index idx_id_card(`id_card`)
 )engine=MyISAM default charset=utf8 auto_increment=10000;
 
 -- user's patient info 用户的常用就诊人

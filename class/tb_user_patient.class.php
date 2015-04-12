@@ -8,11 +8,11 @@ class tb_user_patient
   private static $all_cols = '*';
 
   public static function insert_new_one($user_id,
-      $phone_num,
-      $name,
-      $id_card,
-      $sex,
-      $birthday)
+                                        $phone_num,
+                                        $name,
+                                        $id_card,
+                                        $sex,
+                                        $birthday)
   {
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     $name = $db->escape($name);
@@ -69,9 +69,9 @@ class tb_user_patient
 
     $db = new sql(db_selector::get_db(db_selector::$db_r));
     $sql = "select count(*)"
-    . " from "
-    . self::$tb_name
-    . " where user_id=$user_id";
+      . " from "
+      . self::$tb_name
+      . " where user_id=$user_id";
     return $db->get_rows_count($sql);
   }
   // return false on error, return array on ok.
@@ -90,10 +90,10 @@ class tb_user_patient
 
     $db = new sql(db_selector::get_db(db_selector::$db_r));
     $sql = "select "
-    . self::$all_cols
-    . " from "
-    . self::$tb_name
-    . " where user_id=$user_id";
+      . self::$all_cols
+      . " from "
+      . self::$tb_name
+      . " where user_id=$user_id";
     $result = $db->get_rows($sql);
 
     // for cache

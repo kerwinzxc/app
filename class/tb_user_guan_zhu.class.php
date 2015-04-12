@@ -10,7 +10,6 @@ class tb_user_guan_zhu
   public static function insert_new_one($user_id, $doctor_id)
   {
     $db = new sql(db_selector::get_db(db_selector::$db_w));
-    $name = $db->escape($name);
     $sql = "insert into "
       . self::$tb_name
       . "(user_id,doctor_id)"
@@ -33,7 +32,6 @@ class tb_user_guan_zhu
       return false;
     }
     $db = new sql(db_selector::get_db(db_selector::$db_w));
-    $name = $db->escape($name);
     $sql = "delete from "
       . self::$tb_name
       . " where user_id={$user_id} and doctor_id={$doctor_id}";
@@ -64,9 +62,9 @@ class tb_user_guan_zhu
 
     $db = new sql(db_selector::get_db(db_selector::$db_r));
     $sql = "select count(*)"
-    . " from "
-    . self::$tb_name
-    . " where user_id=$user_id";
+      . " from "
+      . self::$tb_name
+      . " where user_id={$user_id}";
     return $db->get_rows_count($sql);
   }
   // return false on error, return array on ok.
@@ -85,10 +83,10 @@ class tb_user_guan_zhu
 
     $db = new sql(db_selector::get_db(db_selector::$db_r));
     $sql = "select "
-    . self::$all_cols
-    . " from "
-    . self::$tb_name
-    . " where user_id=$user_id";
+      . self::$all_cols
+      . " from "
+      . self::$tb_name
+      . " where user_id={$user_id}";
     $result = $db->get_rows($sql);
 
     // for cache
@@ -97,10 +95,10 @@ class tb_user_guan_zhu
     }
     return $result;
   }
-  public static function query_user_guan_zhu_or_not($user_id, $doctor_id)
+  public static function query_user_had_guan_zhu_or_not($user_id, $doctor_id)
   {
     if (empty($user_id) || empty($doctor_id)) {
-      return false;
+      return true;
     }
     // for cache
     $cc = new cache();
@@ -108,18 +106,16 @@ class tb_user_guan_zhu
     $result = $cc->get($ck);
     if ($result !== false) {
       $result = json_decode($result, true);
-      foreach ($result as $item) {
-        if ((int)$item['doctor_id'] === (int)$doctor_id) {
-          return true;
-        }
+      if (in_array($doctor_id, $result)) {
+        return true;
       }
       return false;
     }
 
     $db = new sql(db_selector::get_db(db_selector::$db_r));
     $sql = "select 1 from "
-    . self::$tb_name
-    . " where user_id={$user_id} and doctor_id={$doctor_id}";
+      . self::$tb_name
+      . " where user_id={$user_id} and doctor_id={$doctor_id}";
     return $db->get_rows_count($sql) == 1;
   }
 };

@@ -14,3 +14,4 @@ define('ERR_USER_EXIST', -1103);           $ERRORS[ERR_USER_EXIST] = 'user exist
 define('ERR_USER_PATIENTS_LIMIT', -1104);  $ERRORS[ERR_USER_PATIENTS_LIMIT] = 'user patient out of limit';
 define('ERR_USER_GUAN_ZHU_LIMIT', -1105);  $ERRORS[ERR_USER_GUAN_ZHU_LIMIT] = 'user guan zhu out of limit';
 define('ERR_USER_GUAN_ZHU_EXIST', -1106);  $ERRORS[ERR_USER_GUAN_ZHU_EXIST] = 'user had guan zhu';
+define('ERR_ID_CARD_INVALID', -1107);      $ERRORS[ERR_ID_CARD_INVALID] = 'user id card error';

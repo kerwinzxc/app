@@ -9,7 +9,7 @@ $result = array();
 
 do {
   if (empty($_GET['sid'])
-    || empty($_GET['patient_id'])) {
+      || empty($_GET['patient_id'])) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
@@ -17,7 +17,7 @@ do {
   $sid = $_GET['sid'];
   $patient_id = (int)$_GET['patient_id'];
   if (!user_session::is_sid($sid)
-    || $patient_id <= 0) {
+      || $patient_id <= 0) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
