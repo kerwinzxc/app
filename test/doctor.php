@@ -1,9 +1,9 @@
 <?php
 
 $doctor_phone_nums = array();
-$doctor_test_phone_num = 10;
+$doctor_test_phone_num = 100;
 $doctor_phone_num_r = 13400000000 + mt_rand(1, 100000000);
-//$doctor_phone_num_r = 13400000000;
+$doctor_phone_num_r = 13400000000;
 for ($i = $doctor_phone_num_r; $i < $doctor_phone_num_r + $doctor_test_phone_num; $i++) {
     $doctor_phone_nums[] = $i;
 }
@@ -20,6 +20,7 @@ function test_add_doctor($users) {
     if (empty($di)) {
       $new_doctor_id = tb_doctor::insert_new_one($phone_num,
                                                  md5('000000'),
+                                                 1,
                                                  $names[array_rand($names)],
                                                  mt_rand(0, 1),
                                                  '',

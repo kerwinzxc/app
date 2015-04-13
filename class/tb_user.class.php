@@ -107,6 +107,6 @@ class tb_user
     $sql = "select 1 from "
       . self::$tb_name
       . " where id_card='{$id_card}'";
-    return $db->get_rows_count($sql) == 1;
+    return $db->get_one_row_col($sql, 0) == '1';
   }
 };

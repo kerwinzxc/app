@@ -65,7 +65,7 @@ class tb_user_guan_zhu
       . " from "
       . self::$tb_name
       . " where user_id={$user_id}";
-    return $db->get_rows_count($sql);
+    return (int)$db->get_rows_count($sql, 0);
   }
   // return false on error, return array on ok.
   public static function query_user_guan_zhu_list($user_id)
@@ -114,6 +114,6 @@ class tb_user_guan_zhu
     $sql = "select 1 from "
       . self::$tb_name
       . " where user_id={$user_id} and doctor_id={$doctor_id}";
-    return $db->get_rows_count($sql) == 1;
+    return $db->get_one_row_col($sql, 0) == '1';
   }
 };

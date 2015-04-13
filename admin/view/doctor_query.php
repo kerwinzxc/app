@@ -3,7 +3,8 @@
 require_once dirname(__FILE__) . '/../conf/settings.php';
 require_once ROOT . 'init.php';
 require_once ROOT . 'view/fill_menu_name.inc.php';
-require_once ROOT . 'libs/crm_db.inc.php';
+
+require_once ROOT . 'autoload.php'; // below smarty
 
 $doctor_rows = array();
 $page = 1;
@@ -13,8 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] != "GET") exit;
 
 if (!isset($_GET['p'])) {
   $page = 1;
-  $pages = array();//crm_db::select_doctor_count();
-  $doctor_rows = array();//crm_db::select_doctor(($page-1)*10);
+  $pages = tb_doctor::query_doctor_total_num();
+  $doctor_rows = tb_doctor::query_doctor_limit(($page - 1) * 10);
 } else {
   $page = $_GET['p'];
   $doctor_id = $_POST['doctor_id'];

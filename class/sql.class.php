@@ -111,7 +111,7 @@ class sql
     return $rows;
   }
 
-  public function get_rows_count($sql)
+  public function get_one_row_col($sql, $n)
   {
     $result = $this->execute($sql);
     if ($result === false) {
@@ -119,7 +119,7 @@ class sql
     }
 
     $rows = @mysql_fetch_row($result);
-    return (int)$rows[0];
+    return $rows[$n];
   }
   /**********************************************************************
    * Creates a SET nvp sql string from an associative array (and escapes all values)

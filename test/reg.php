@@ -7,7 +7,9 @@ function test_reg_user($phone_nums) {
   global $get_timeout;
   global $reg_ok_users;
   foreach ($phone_nums as $phone_num) {
-    $ret = json_decode(file_get_contents("http://{$host}/api/reg.php?user={$phone_num}&passwd=000000", false, $get_timeout), true);
+    $ret = json_decode(util::post_data("http://{$host}/api/reg.php",
+                                       array('user' => "$phone_num",
+                                             'passwd' => "000000")), true);
     if ((int)$ret['code'] == 0) {
       $reg_ok_users[] = $phone_num;
     } else {

@@ -3,15 +3,8 @@
 require_once dirname(__FILE__) . '/../conf/settings.php';
 require_once ROOT . 'init.php';
 require_once ROOT . 'view/fill_menu_name.inc.php';
-require_once ROOT . 'libs/crm_db.inc.php';
 require_once ROOT . 'libs/func.inc.php';
-
-function class_loader($cls)
-{
-  $file = ROOT . '/../class/' . $cls . '.class.php';
-  require_once($file);
-}
-spl_autoload_register('class_loader');
+require_once ROOT . 'autoload.php'; // below smarty
 
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
   $tpl->assign("content_title", S_DOCTOR_LU_RU);
@@ -59,10 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     //upload file
     $err_msg = '';
-    $photos = array('photo' => '');
-    foreach ($photos as $photo => $fn) {
+    $filename = '';
+    $photo = 'photo';
+    if (!empty($_FILES[$photo]["name"])) {
       $filename = $_FILES[$photo]["name"];
-      if (empty($filename)) continue;
       if ($_FILES[$photo]["error"] > 0) {
         $err_msg = 'Return Code: ' . $_FILES[$photo]["error"];
         break;
@@ -75,7 +68,6 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         . "."
         . util::get_file_ext($filename);
       move_uploaded_file($_FILES[$photo]['tmp_name'], ROOT . 'image/' . $filename);
-      $photos[$photo] = $filename;
     }
     if ($err_msg != '') {
       break;
@@ -84,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     $new_doctor_id = tb_doctor::insert_new_one($phone_num,
         md5('000000'),
+        $classify,
         $name,
         $sex,
         BASE_URL . "image/{$filename}",

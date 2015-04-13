@@ -72,7 +72,7 @@ class tb_user_patient
       . " from "
       . self::$tb_name
       . " where user_id=$user_id";
-    return $db->get_rows_count($sql);
+    return (int)$db->get_rows_count($sql, 0);
   }
   // return false on error, return array on ok.
   public static function query_user_patient_list($user_id)

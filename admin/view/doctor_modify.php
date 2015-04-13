@@ -3,7 +3,7 @@
 require_once dirname(__FILE__) . '/../conf/settings.php';
 require_once ROOT . 'init.php';
 require_once ROOT . 'view/fill_menu_name.inc.php';
-require_once ROOT . 'libs/crm_db.inc.php';
+require_once ROOT . 'autoload.php'; // below smarty
 
 $err_msg = '';
 $recent_jh_num = 0;
