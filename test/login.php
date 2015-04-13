@@ -21,5 +21,5 @@ function test_login($phone_nums) {
 }
 $begin_time = microtime(true);
 $login_ok_num = test_login($reg_ok_users);
-$diff = round(microtime(true) - $begin_time, 3);
+$diff = round(microtime(true) - $begin_time, 3) + 0.001;
 printf("login users ok %d %s (%s req/sec)\n", $login_ok_num, $diff, round($login_ok_num/$diff, 2));

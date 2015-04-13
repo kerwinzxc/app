@@ -82,9 +82,7 @@ class tb_user_guan_zhu
     }
 
     $db = new sql(db_selector::get_db(db_selector::$db_r));
-    $sql = "select "
-      . self::$all_cols
-      . " from "
+    $sql = "select doctor_id from "
       . self::$tb_name
       . " where user_id={$user_id}";
     $result = $db->get_rows($sql);

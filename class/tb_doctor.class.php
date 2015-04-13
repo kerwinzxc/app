@@ -9,14 +9,21 @@ class tb_doctor
                                         $passwd,
                                         $name,
                                         $sex,
+                                        $icon_url,
+                                        $tec_title,
+                                        $aca_title,
+                                        $hospital,
+                                        $expert_in,
                                         $c_time)
   {
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     $name = $db->escape($name);
+    $hospital = $db->escape($hospital);
+    $expert_in = $db->escape($expert_in);
     $sql = "insert into "
       . self::$tb_name
-      . "(phone_num,passwd,name,sex,c_time)"
-      . "value('$phone_num','$passwd','$name',$sex,$c_time)";
+      . "(phone_num,passwd,name,sex,icon_url,tec_title,aca_title,hospital,expert_in,c_time)"
+      . "value('$phone_num','$passwd','$name',$sex,'$icon_url',$tec_title,$aca_title,'$hospital','$expert_in',$c_time)";
     if ($db->execute($sql) === false) {
       return false;
     }

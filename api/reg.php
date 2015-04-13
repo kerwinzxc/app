@@ -2,18 +2,18 @@
 
 require_once __DIR__ . '/../init.php';
 
-if ($_SERVER['REQUEST_METHOD'] != 'GET') exit;
+if ($_SERVER['REQUEST_METHOD'] != 'POST') exit;
 
 $ret_code = 0;
 $ret_body = array();
 
 do {
-  if (empty($_GET['user']) || empty($_GET['passwd'])) {
+  if (empty($_POST['user']) || empty($_POST['passwd'])) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
-  $phone_num = $_GET['user'];
-  $passwd    = $_GET['passwd'];
+  $phone_num = $_POST['user'];
+  $passwd    = $_POST['passwd'];
 
   if (!check::is_phone_num($phone_num) || !check::is_passwd($passwd)) {
     $ret_code = ERR_PARAM_INVALID;

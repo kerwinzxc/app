@@ -11,10 +11,11 @@ class fn_doctor
         continue;
       }
       $doctor_detail = array();
-      $doctor_detail['id'] = $doctor_info['id'];
+      $doctor_detail['doctor_id'] = (int)$doctor_info['id'];
       $doctor_detail['name'] = $doctor_info['name'];
+      $doctor_detail['sex'] = (int)$doctor_info['sex'];
       $doctor_detail['icon_url'] = $doctor_info['icon_url'];
-      $doctor_detail['title'] = $doctor_info['title'];
+      $doctor_detail['title'] = (int)$doctor_info['title'];
       $doctor_detail['hospital'] = $doctor_info['hospital'];
       $doctor_detail['expert_in'] = $doctor_info['expert_in'];
 

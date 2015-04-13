@@ -8,6 +8,17 @@
 -- md5 len = 32
 -- mobile phone number = 15
 
+-- 员工信息
+drop table if exists employe;
+create table employe (
+  user                varchar(30) not null primary key,       #
+  passwd              varchar(32) not null,                   #
+  name                varchar(30) not null,                   #
+
+  c_time              int not null default 0,                 # create time
+  index idx_name(`name`)
+)engine=MyISAM default charset=utf8;
+
 -- read more than insert/update, so use `MyISAM'
 drop table if exists user;
 create table if not exists user (
@@ -17,6 +28,7 @@ create table if not exists user (
 
   name                varchar(30) not null default '',        #
   id_card             char(18) not null default '',           # person id card
+  icon_url            varchar(255) not null default '',       #
   default_patient     int unsigned not null default 0,        #
 
   c_time              int unsigned not null default 0,
@@ -59,11 +71,13 @@ create table if not exists doctor (
   phone_num           char(15) not null,                      # mobile phone number
   passwd              char(32) not null,                      # md5
 
+  classify            tinyint not null default 0,             # 医生类别
   name                varchar(30) not null default '',        #
   sex                 tinyint not null default 1,             # 0: famale 1: male
   icon_url            varchar(255) not null default '',       #
 
-  title               smallint not null default 0,            # 职称
+  tec_title           smallint not null default 0,            # 技术职称
+  aca_title           smallint not null default 0,            # 学术职称
   hospital            varchar(90) not null default '',        # 所属医院
   expert_in           varchar(300) not null default '',       # 擅长
 

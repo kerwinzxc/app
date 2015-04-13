@@ -1,0 +1,18 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    <div id='head'>
+      <h1>优卡后台-注册</h1>
+    </div>
+    <div style="text-align:center;">
+      <form action="reg.php" method="post">
+        <p>帐号&nbsp;<input type='text' name='user' /></p>
+        <p>姓名&nbsp;<input type='text' name='name' /></p>
+        <p><a href="login.php">登录</a>&nbsp;&nbsp;
+        <input type='submit' value='注册' />{if $err_msg neq ''} {$err_msg} {/if}</p>
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    {include file="header.html"}
+  </head>
+  <body>
+    <div id='main'>
+      <div id='header'>
+      <p style='display:inline;font-size:35px;font-weight:bold;line-height:95px;'>滴滴快医-管理系统</p>
+      <p style='float:right;line-height:130px;'>{$user_id}<a style="padding-left:10px;" href="logout.php">退出</a></p>
+      </div>
+      <div id='content'>
+        {include file="content_left.html"}
+        {include file="content_main.html" inc_name=$inc_name}
+      </div>
+      {include file="foot.html"}
+    </div>
+  </body>
+</html>

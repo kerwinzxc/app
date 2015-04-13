@@ -6,6 +6,7 @@ function test_add_user_guan_zhu($users, $add_ok_doctor_list) {
   global $host;
   global $get_timeout;
   global $add_ok_user_guan_zhu_list;
+  global $add_ok_doctor_list;
   $add_ok = 0;
   foreach ($users as $phone_num => $sid) {
     $doctor_id = $add_ok_doctor_list[array_rand($add_ok_doctor_list)];
@@ -30,7 +31,7 @@ $begin_time = microtime(true);
 for ($i = 0; $i < 3; $i++) {
   $add_ok_num += test_add_user_guan_zhu($login_ok_users, array_values($add_ok_doctor_list));
 }
-$diff = round(microtime(true) - $begin_time, 3);
+$diff = round(microtime(true) - $begin_time, 3) + 0.001;
 printf("add_user_guan_zhu ok %d %s (%s req/sec)\n", $add_ok_num, $diff, round($add_ok_num/$diff, 2));
 
 // get_user_guan_zhu_list // return array(phone_num = > array(guan_zhu_info))
@@ -54,7 +55,7 @@ function test_get_user_guan_zhu_list($users) {
 $begin_time = microtime(true);
 $all_user_guan_zhu_list = array();
 $get_ok_num = test_get_user_guan_zhu_list($login_ok_users);
-$diff = round(microtime(true) - $begin_time, 3);
+$diff = round(microtime(true) - $begin_time, 3) + 0.001;
 printf("get user guan_zhu list ok %d %s (%s req/sec)\n", $get_ok_num, $diff, round($get_ok_num/$diff, 2));
 
 // del_user_guan_zhu
@@ -84,7 +85,7 @@ $begin_time = microtime(true);
 for ($i = 0; $i < 2; $i++) {
   $del_ok_num += test_del_user_guan_zhu();
 }
-$diff = round(microtime(true) - $begin_time, 3);
+$diff = round(microtime(true) - $begin_time, 3) + 0.001;
 printf("del_user_guan_zhu ok %d %s (%s req/sec)\n", $del_ok_num, $diff, round($del_ok_num/$diff, 2));
 
 $all_user_guan_zhu_list = array();

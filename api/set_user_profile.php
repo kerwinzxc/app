@@ -2,22 +2,22 @@
 
 require_once __DIR__ . '/../init.php';
 
-if ($_SERVER['REQUEST_METHOD'] != 'GET') exit;
+if ($_SERVER['REQUEST_METHOD'] != 'POST') exit;
 
 $ret_code = 0;
 $result = array();
 
 do {
-  if (empty($_GET['sid'])
-      || empty($_GET['name'])
-      || empty($_GET['id_card'])) {
+  if (empty($_POST['sid'])
+      || empty($_POST['name'])
+      || empty($_POST['id_card'])) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
 
-  $sid = $_GET['sid'];
-  $name = $_GET['name'];
-  $id_card = $_GET['id_card'];
+  $sid = $_POST['sid'];
+  $name = $_POST['name'];
+  $id_card = $_POST['id_card'];
 
   if (!user_session::is_sid($sid)
       || !check::is_id_card($id_card)

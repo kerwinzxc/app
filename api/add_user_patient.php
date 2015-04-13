@@ -4,30 +4,30 @@
 
 require_once __DIR__ . '/../init.php';
 
-if ($_SERVER['REQUEST_METHOD'] != 'GET') exit;
+if ($_SERVER['REQUEST_METHOD'] != 'POST') exit;
 
 $ret_code = 0;
 $result = array();
 
 do {
-  if (empty($_GET['sid'])
-      || empty($_GET['name'])
-      || empty($_GET['id_card'])
-      || empty($_GET['birthday'])
-      || !isset($_GET['sex'])
-      || !isset($_GET['is_default'])
-      || empty($_GET['phone_num'])) {
+  if (empty($_POST['sid'])
+      || empty($_POST['name'])
+      || empty($_POST['id_card'])
+      || empty($_POST['birthday'])
+      || !isset($_POST['sex'])
+      || !isset($_POST['is_default'])
+      || empty($_POST['phone_num'])) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
 
-  $sid = $_GET['sid'];
-  $sex = $_GET['sex'];
-  $name = $_GET['name'];
-  $id_card = $_GET['id_card'];
-  $birthday = $_GET['birthday'];
-  $is_default = (int)$_GET['is_default'];
-  $phone_num = $_GET['phone_num'];
+  $sid = $_POST['sid'];
+  $sex = (int)$_POST['sex'];
+  $name = $_POST['name'];
+  $id_card = $_POST['id_card'];
+  $birthday = $_POST['birthday'];
+  $is_default = (int)$_POST['is_default'];
+  $phone_num = $_POST['phone_num'];
   if (!user_session::is_sid($sid)
       || !check::is_phone_num($phone_num)
       || !check::is_sex($sex)
@@ -81,7 +81,7 @@ do {
       user_session::set_session($sid, json_encode($s_info));
     }
   }
-  $ret_body['id'] = $new_patient_id;
+  $ret_body['patient_id'] = $new_patient_id;
   $ret_body['name'] = $name;
   $ret_body['sex'] = $sex;
   $ret_body['id_card'] = $id_card;

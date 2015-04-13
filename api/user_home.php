@@ -56,6 +56,7 @@ do {
     break;
   }
   $ret_body['name'] = $user_info['name'];
+  $ret_body['icon_url'] = $user_info['icon_url'];
   $default_patient = (int)$s_info['default_patient'];
   $ret_body['default_patient'] = $default_patient;
   if ($default_patient !== 0) {

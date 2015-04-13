@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    {include file="header.html"}
+  </head>
+  <body>
+    <div id='main'>
+      <div id='top' style="height:33px;background:#FF9900;padding-right:10px;text-align:right;line-height:33px;">
+        <p><a href="reg.php">注册</a></p>
+      </div>
+      <div style='margin-top:80px;text-align:center;font-size:35px;font-weight:bold;line-height:95px;'>滴滴快医-管理系统</div>
+      <center>
+        <div style="margin-top:50px;width:400px;border:1px solid #FF9900;">
+          <form class='input_form' name="login" action="login.php" method="post" onsubmit='return '>
+            <table>
+              <tr>
+                <td class="form_label" style='width:60px;height:45px;line-height:45px;'>帐号</td>
+                <td><input style="width:120px;height:27px;" id='user' type='text' name='user' onchange='checkRegUser(this)'/></td>
+              </tr>
+              <tr>
+                <td class="form_label" style='width:60px;height:45px;line-height:45px;'>密码</td>
+                <td><input style="width:120px;height:27px;" type='password' name='passwd'/></td>
+              </tr>
+            </table>
+            <div class="submit">
+              <input style="width:80px;height:27px;" type='submit' value='登录' />
+            </div>
+          </form>
+        </div>
+      </center>
+      {include file="foot.html"}
+    </div>
+  </body>
+</html>

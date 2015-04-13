@@ -18,5 +18,5 @@ function test_reg_user($phone_nums) {
 }
 $begin_time = microtime(true);
 $reg_ok_num = test_reg_user($phone_nums);
-$diff = round(microtime(true) - $begin_time, 3);
+$diff = round(microtime(true) - $begin_time, 3) + 0.001;
 printf("reg users ok %d %s (%s req/sec)\n", $reg_ok_num, $diff, round($reg_ok_num/$diff, 2));

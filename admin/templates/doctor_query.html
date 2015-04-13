@@ -1,0 +1,52 @@
+<div class="query" style="margin:10px;">
+  <div style="width:100%;height:70px;margin-bottom:10px;background:#FFC78E;text-align:center;">
+    <form method="post" action='view/doctor_query.php'>
+      <input style="width:90px;padding-left:5px;" type='text' id='q_name' name='name' value='{if isset($name)}{$name}{else}医生姓名{/if}' onfocus='onQueryInputFocus(this,"医生姓名")' onblur='onQueryInputBlur(this,"医生姓名")'/>
+      <input style="width:100px;padding-left:5px;" type='text' id='q_phone_num' name='phone_num' value='{if isset($phone_num)}{$phone_num}{else}电话{/if}' onchange='checkPhoneNum(this)' onfocus='onQueryInputFocus(this,"电话")' onblur='onQueryInputBlur(this,"电话")'/>
+      <select style="width:100px;padding-left:2px;" id='q_classify' name='classify'>
+        <option value=""  >--医生类别--</option>
+        <option value="1" {if isset($classify) && $classify eq 1} selected="selected"{/if}>普通医生</option>
+        <option value="2" {if isset($classify) && $classify eq 2} selected="selected"{/if}>医学泰斗</option>
+      </select>
+      <input style="width:100px;padding-left:5px;" type='text' id='q_employe_id' name='employe_id' value='{if isset($employe_id)}{$employe_id}{else}录入者ID{/if}' onfocus='onQueryInputFocus(this,"录入者ID")' onblur='onQueryInputBlur(this,"录入者ID")'/>
+      <input style=';width:60px;margin-left:30px;' type='submit' value='查询' onclick='return clrTKQueryDefaultVal();'/>
+    </form>
+  </div>
+  <table cellspacing="10">
+    <tr style="font-weight:bold;">
+      <th style="width:110px;height:40px;background:#E9893A;">车牌号</th>
+      <th style="width:90px;background:#E9893A;">车主</th>
+      <th style="width:140px;background:#E9893A;">电话</th>
+      <th style="width:100px;background:#E9893A;">车型</th>
+      <th style="width:90px;background:#E9893A;">录入者</th>
+      <th style="width:200px;background:#E9893A;">录入日期</th>
+      <th style="width:120px;background:#E9893A;">操作</th>
+    </tr>
+    {foreach from=$doctor_rows item=row}
+      <tr>
+        <td style="height:35px;">{$row.doctor_id}</td>
+        <td>{$row.name}</td>
+        <td>{$row.phone_num}</td>
+        <td>
+          {if $row.classify eq 1}普通面包车
+          {elseif $row.classify eq 2}中型面包车
+          {elseif $row.classify eq 3}普通厢车
+          {elseif $row.classify eq 4}尾板厢车
+          {elseif $row.classify eq 5}开顶厢车
+          {elseif $row.classify eq 6}尾板开顶厢车
+          {elseif $row.classify eq 7}低栏货车
+          {elseif $row.classify eq 8}平板货车
+          {else}未知车型
+          {/if}
+        </td>
+        <td>{$row.employe_id}</td>
+        <td>{$row.c_time|date_format:"%Y-%m-%d %H:%M:%S"}</td>
+        <td><a href="view/che_modify.php?uid={$row.uid}">查看</a>｜<a href="view/che_del.php?uid={$row.uid}" onclick='return window.confirm("确定要删除吗？")'>删除</a></td>
+      </tr>
+    {/foreach}
+  </table>
+  <div class="page_v">
+    {if !isset($page) || $page eq 1}上一页{else}<a href="view/che_query.php?p={$page-1}">上一页</a>{/if}
+    {if !isset($page) || $page ge $pages}下一页{else}<a href="view/che_query.php?p={$page+1}">下一页</a>{/if}
+  </div>
+</div>

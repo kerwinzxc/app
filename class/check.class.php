@@ -49,4 +49,12 @@ class check
     }
     return false;
   }
+  public static function is_doctor_classify($v)
+  {
+    $v = (int)$v;
+    if ($v <= 0 || $v > 100) {
+      return false;
+    }
+    return true;
+  }
 };

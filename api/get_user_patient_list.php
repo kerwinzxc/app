@@ -34,7 +34,12 @@ do {
   }
   $real_pl = array();
   foreach ($pl as $p) {
-    $real_p = $p;
+    $real_p['patient_id'] = (int)$p['id'];
+    $real_p['name'] = $p['name'];
+    $real_p['sex'] = (int)$p['sex'];
+    $real_p['id_card'] = $p['id_card'];
+    $real_p['phone_num'] = $p['phone_num'];
+    $real_p['birthday'] = $p['birthday'];
     $real_p['is_default'] = 0;
     if ((int)$p['id'] === (int)$s_info['default_patient']) {
       $real_p['is_default'] = 1;

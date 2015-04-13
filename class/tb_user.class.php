@@ -11,7 +11,7 @@ class tb_user
   {
     $sql = "insert into "
       . self::$tb_name
-      . "(phone_num,passwd,id_card,c_time)"
+      . "(phone_num,passwd,c_time)"
       . "value('$phone_num','$passwd',$c_time)";
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     if ($db->execute($sql) === false) {
