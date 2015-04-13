@@ -9,28 +9,29 @@ require_once ROOT . 'autoload.php'; // below smarty
 $doctor_rows = array();
 $page = 1;
 $pages = 1;
+$total_num = 0;
 
 if ($_SERVER['REQUEST_METHOD'] != "GET") exit;
 
 if (!isset($_GET['p'])) {
   $page = 1;
-  $pages = tb_doctor::query_doctor_total_num();
+} else {
+  $page = (int)$_GET['p'];
+}
+
+if (!isset($_GET['kw'])) {
+  $total_num = tb_doctor::query_doctor_total_num();
   $doctor_rows = tb_doctor::query_doctor_limit(($page - 1) * 10);
+  $pages = $total_num / 10 + 1;
+  if ($total_num % 10 == 0) {
+    $pages -= 1;
+  }
 } else {
   $page = $_GET['p'];
-  $doctor_id = $_POST['doctor_id'];
   $phone_num = $_POST['phone_num'];
   $name = $_POST['name'];
   $classify = $_POST['classify'];
   $employe_id = $_POST['employe_id'];
-
-  if (!empty($doctor_id)) {
-    $tpl->assign("doctor_id", $doctor_id);
-    if (!empty($where))
-      $where = $where . " and doctor_id like '%%$doctor_id%%'";
-    else
-      $where = "doctor_id like '%%$doctor_id%%'";
-  }
 
   if (!empty($phone_num)) {
     $tpl->assign("phone_num", $phone_num);
@@ -70,6 +71,7 @@ $tpl->assign("content_title", S_DOCTOR_CHA_XUN);
 $tpl->assign("doctor_rows", $doctor_rows === false ? array() : $doctor_rows);
 $tpl->assign("inc_name", "doctor_query.html");
 $tpl->assign("page", $page);
+$tpl->assign("total_num", $total_num);
 $tpl->assign("pages", $pages);
 
 $tpl->display("home.html");

@@ -15,7 +15,7 @@ for ($i = $phone_num_r; $i < $phone_num_r + $test_phone_num; $i++) {
 printf("test phone_num %d\n", count($phone_nums));
 
 //$test_modules = array('reg', 'login', 'user_patient', 'doctor', 'user_guan_zhu');
-$test_modules = array('reg', 'login');
+$test_modules = array('doctor');
 foreach ($test_modules as $module) {
   require_once __DIR__ . "/{$module}.php";
 }
