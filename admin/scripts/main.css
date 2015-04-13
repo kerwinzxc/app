@@ -109,7 +109,7 @@ body{
 }
 .query input[type="text"],
 .query select{
-  margin:21px 10px 16px 0px;
+  margin:15px 10px 16px 0px;
   color:#999;
 }
 .query tr:nth-child(odd) td{ background-color:#FBDAB7; }
