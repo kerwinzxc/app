@@ -17,3 +17,5 @@ define('ERR_USER_GZ_DOCTOR_EXIST', -1106); $ERRORS[ERR_USER_GZ_DOCTOR_EXIST] = '
 define('ERR_ID_CARD_INVALID', -1107);      $ERRORS[ERR_ID_CARD_INVALID] = 'user id card error';
 define('ERR_USER_GZ_KE_SHI_LIMIT', -1108); $ERRORS[ERR_USER_GZ_KE_SHI_LIMIT] = 'user guan zhu ke shi out of limit';
 define('ERR_USER_GZ_KE_SHI_EXIST', -1109); $ERRORS[ERR_USER_GZ_KE_SHI_EXIST] = 'user had guan zhu';
+define('ERR_USER_GZ_BA_LIMIT', -1110);     $ERRORS[ERR_USER_GZ_BA_LIMIT] = 'user guan zhu ba out of limit';
+define('ERR_USER_GZ_BA_EXIST', -1111);     $ERRORS[ERR_USER_GZ_BA_EXIST] = 'user had guan zhu';

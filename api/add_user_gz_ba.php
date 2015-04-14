@@ -4,23 +4,22 @@ require_once __DIR__ . '/../init.php';
 
 if ($_SERVER['REQUEST_METHOD'] != 'GET') exit;
 
-define('MAX_GZ_KE_SHI_NUMBER', 20);
+define('MAX_GZ_BA_NUMBER', 50);
 
 $ret_code = 0;
 $ret_body = array();
 
 do {
   if (empty($_GET['sid'])
-      || empty($_GET['ke_shi'])) {
+      || empty($_GET['ba_id'])) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
 
   $sid = $_GET['sid'];
-  $ke_shi_list = explode(',', $_GET['ke_shi']);
+  $ba_id = (int)$_GET['ba_id'];
   if (!user_session::is_sid($sid)
-      || empty($ke_shi_list)
-      || count($ke_shi_list) > MAX_GZ_KE_SHI_NUMBER) {
+      || $ba_id <= 0) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
@@ -36,23 +35,22 @@ do {
   }
   $user_id = $s_info['user_id'];
 
-  $num = tb_user_gz_ke_shi::query_user_guan_zhu_num($user_id);
+  $num = tb_user_gz_ba::query_user_guan_zhu_num($user_id);
   if ($num === false
-      || ($num + count($ke_shi_list)) >= MAX_GZ_KE_SHI_NUMBER) {
-    $ret_code = ERR_USER_GZ_KE_SHI_LIMIT;
+      || $num >= MAX_GZ_BA_NUMBER) {
+    $ret_code = ERR_USER_GZ_BA_LIMIT;
+    break;
+  }
+  if (tb_user_gz_ba::query_user_had_guan_zhu_or_not($user_id, $ba_id)) {
+    $ret_code = ERR_USER_GZ_BA_EXIST;
     break;
   }
 
-  $gz_list = tb_user_gz_ke_shi::query_user_guan_zhu_list($user_id);
-
-  $real_to_gz_list = array_diff($ke_shi_list, $gz_list);
-
-  if (!empty($real_to_gz_list)) {
-    if (tb_user_gz_ke_shi::insert_some_one($user_id, $real_to_gz_list) === false) {
-      $ret_code = ERR_DB_ERROR;
-      break;
-    }
+  if (tb_user_gz_ba::insert_new_one($user_id, $ba_id) === false) {
+    $ret_code = ERR_DB_ERROR;
+    break;
   }
+  $ret_body['ba_id'] = $ba_id;
 
 } while (false);
 

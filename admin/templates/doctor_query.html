@@ -16,15 +16,17 @@
   <table cellspacing="10">
     <tr style="font-weight:bold;">
       <th style="width:90px;height:44px;background:#E9893A;">医生姓名</th>
+      <th style="width:120px;background:#E9893A;">电话</th>
       <th style="width:150px;background:#E9893A;">职称</th>
       <th style="width:100px;background:#E9893A;">类别</th>
       <th style="width:200px;background:#E9893A;">所属医院</th>
       <th style="width:200px;background:#E9893A;">录入日期</th>
-      <th style="width:120px;background:#E9893A;">操作</th>
+      <th style="width:70px;background:#E9893A;">操作</th>
     </tr>
     {foreach from=$doctor_rows item=row}
       <tr>
         <td style="height:36px;">{$row.name}</td>
+        <td>{$row.phone_num}</td>
         <td>{if $row.tec_title eq 1}主任医师,
 {elseif $row.tec_title eq 2}副主任医师,
 {elseif $row.tec_title eq 3}主治医师,
@@ -44,7 +46,7 @@
         </td>
         <td>{$row.hospital}</td>
         <td>{$row.c_time|date_format:"%Y-%m-%d %H:%M:%S"}</td>
-        <td><a href="view/doctor_modify.php?id={$row.id}">详细</a>｜<a href="view/doctor_del.php?id={$row.id}" onclick='return window.confirm("确定要删除吗？")'>删除</a></td>
+        <td><a href="view/doctor_modify.php?id={$row.id}">详细</a></td>
       </tr>
     {/foreach}
   </table>

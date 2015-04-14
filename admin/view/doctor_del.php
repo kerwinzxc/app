@@ -9,9 +9,9 @@ require_once MNG_ROOT . 'libs/func.inc.php';
 $err_msg = '';
 if ($_SERVER['REQUEST_METHOD'] == "GET")
 {
-  if (empty($_GET['uid']))
+  if (empty($_GET['id'])) {
     $err_msg = "参数错误";
-  else
+  } else {
   {
     $rows = crm_db::query_truck_by_uid($_GET['uid']);
     if (!$rows || count($rows) == 0)

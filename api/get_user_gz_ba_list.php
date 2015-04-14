@@ -27,12 +27,12 @@ do {
   }
   $user_id = $s_info['user_id'];
 
-  $gl = tb_user_gz_doctor::query_user_guan_zhu_list($user_id);
+  $gl = tb_user_gz_ba::query_user_guan_zhu_list($user_id);
   if ($gl === false) {
     $ret_code = ERR_DB_ERROR;
     break;
   }
-  $ret_body['list'] = fn_doctor::build_doctor_detail_list($gl);
+  $ret_body['list'] = $gl;
 
 } while (false);
 

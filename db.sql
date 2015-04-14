@@ -73,6 +73,15 @@ create table if not exists user_gz_ke_shi (
   primary key(`user_id`, `ke_shi`)
 )engine=MyISAM default charset=utf8;
 
+-- 用户关注的病友吧
+drop table if exists user_gz_ba;
+create table if not exists user_gz_ba (
+  user_id             int unsigned not null,                  # master id
+  ba_id               int unsigned not null default 0,        #
+
+  primary key(`user_id`, `ba_id`)
+)engine=MyISAM default charset=utf8;
+
 -- doctor info
 drop table if exists doctor;
 create table if not exists doctor (
@@ -95,6 +104,8 @@ create table if not exists doctor (
 
   primary key(id),
   unique key(phone_num),
-  index idx_name(`name`)
+  index idx_name(`name`),
+  index idx_classify(`classify`),
+  index idx_ke_shi(`ke_shi`)
 )engine=MyISAM default charset=utf8 auto_increment=10000;
 

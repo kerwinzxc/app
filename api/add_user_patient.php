@@ -7,7 +7,7 @@ require_once __DIR__ . '/../init.php';
 if ($_SERVER['REQUEST_METHOD'] != 'POST') exit;
 
 $ret_code = 0;
-$result = array();
+$ret_body = array();
 
 do {
   if (empty($_POST['sid'])
