@@ -7,7 +7,7 @@ class cc_selector
   public static function get_cache($key)
   {
     if (!isset(self::$chash)) {
-      $js = file_get_contents(ROOT . "/conf/redis.json");
+      $js = file_get_contents(APP_ROOT . "/conf/redis.json");
       if ($js === false) {
         ilog::fatal("open redis config failed!");
         return false;

@@ -14,13 +14,27 @@ class fn_doctor
       $doctor_detail['doctor_id'] = (int)$doctor_info['id'];
       $doctor_detail['name'] = $doctor_info['name'];
       $doctor_detail['sex'] = (int)$doctor_info['sex'];
+      $doctor_detail['classify'] = (int)$doctor_info['classify'];
       $doctor_detail['icon_url'] = $doctor_info['icon_url'];
-      $doctor_detail['title'] = (int)$doctor_info['title'];
+      $doctor_detail['ke_shi'] = (int)$doctor_info['ke_shi'];
+      $doctor_detail['tec_title'] = (int)$doctor_info['tec_title'];
+      $doctor_detail['aca_title'] = (int)$doctor_info['aca_title'];
       $doctor_detail['hospital'] = $doctor_info['hospital'];
       $doctor_detail['expert_in'] = $doctor_info['expert_in'];
 
       $doctor_detail_list[] = $doctor_detail;
     }
     return $doctor_detail_list;
+  }
+  public static function query_expert_total_num()
+  {
+    return tb_doctor::query_doctor_total_num('classify=1');
+  }
+  public static function query_expert_order_by_limit($start, $offset)
+  {
+    return tb_doctor::query_doctor_limit('classify=1',
+        'id desc',
+        $start,
+        $offset);
   }
 };

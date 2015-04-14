@@ -63,6 +63,10 @@ do {
   if ($num === 0) {
     $is_default = 1;
   }
+  if (tb_user_patient::query_patient_id_card_exist_or_not($id_card)) {
+    $ret_code = ERR_ID_CARD_INVALID;
+    break;
+  }
 
   $new_patient_id = tb_user_patient::insert_new_one($user_id,
                                                     $phone_num,

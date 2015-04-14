@@ -1,10 +1,10 @@
 <?php
 
 require_once dirname(__FILE__) . '/../conf/settings.php';
-require_once ROOT . 'init.php';
-require_once ROOT . 'view/fill_menu_name.inc.php';
-require_once ROOT . 'libs/crm_db.inc.php';
-require_once ROOT . 'libs/func.inc.php';
+require_once MNG_ROOT . 'init.php';
+require_once MNG_ROOT . 'view/fill_menu_name.inc.php';
+require_once MNG_ROOT . 'libs/crm_db.inc.php';
+require_once MNG_ROOT . 'libs/func.inc.php';
 
 if ($_SERVER['REQUEST_METHOD'] == "GET")
 {
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET")
           break;
         }
         $filename = md5($user . $filename . uniqid(microtime())) . "." . get_file_ext($filename);
-        move_uploaded_file($_FILES[$photo]['tmp_name'], ROOT . 'image/' . $filename);
+        move_uploaded_file($_FILES[$photo]['tmp_name'], MNG_ROOT . 'image/' . $filename);
         $photos[$photo] = $filename;
       }
       if ($err_msg != '')

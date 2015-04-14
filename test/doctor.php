@@ -1,14 +1,5 @@
 <?php
 
-$doctor_phone_nums = array();
-$doctor_test_phone_num = 100;
-$doctor_phone_num_r = 13400000000 + mt_rand(1, 100000000);
-$doctor_phone_num_r = 13400000000;
-for ($i = $doctor_phone_num_r; $i < $doctor_phone_num_r + $doctor_test_phone_num; $i++) {
-    $doctor_phone_nums[] = $i;
-}
-printf("test doctor phone_num %d\n", count($doctor_phone_nums));
-
 // add_doctor
 $add_ok_doctor_list = array(); // array(phone_num => array);
 function test_add_doctor($users) {
@@ -23,11 +14,12 @@ function test_add_doctor($users) {
                                                  1,
                                                  $names[array_rand($names)],
                                                  mt_rand(0, 1),
-                                                 '',
+                                                 'http://photocdn.sohu.com/20150413/Img411198795.jpg',
                                                  1,
                                                  1,
-                                                 '',
-                                                 '',
+                                                 1,
+                                                 '解放军306医院',
+                                                 '本教程提供了几款php教程  删除字符串中的空格多种方法哦',
                                                  time());
       $add_ok_doctor_list[$phone_num] = $new_doctor_id;
       $add_ok++;

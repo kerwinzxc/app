@@ -160,6 +160,10 @@ function submitDoctorValidate()
   }
   if (!checkHospital(document.getElementById("hospital")))
     return false;
+  if (document.getElementById("ke_shi").value.length == 0) {
+    alert('请选择科室!');
+    return false;
+  }
   if (document.getElementById("tec_title").value.length == 0) {
     alert('请选择技术职称!');
     return false;
@@ -176,23 +180,24 @@ function submitLoginValidate()
     return false;
   return true;
 }
-function clrTKQueryDefaultVal()
+function clrDoctorQueryDefaultVal()
 {
   var allEmpty = true;
-  var defaultVal = document.getElementById("q_truck_id");
-  if (defaultVal.value == '车牌号') defaultVal.value = '';
+  var defaultVal = document.getElementById("q_name");
+  if (defaultVal.value == '医生姓名') defaultVal.value = '';
   if (defaultVal.value != '') allEmpty = false;
-  defaultVal = document.getElementById("q_name");
-  if (defaultVal.value == '车主') defaultVal.value = '';
-  if (defaultVal.value != '') allEmpty = false;
+
   defaultVal = document.getElementById("q_phone_num");
   if (defaultVal.value == '电话') defaultVal.value = '';
   if (defaultVal.value != '') allEmpty = false;
+
   defaultVal = document.getElementById("q_employe_id");
   if (defaultVal.value == '录入者ID') defaultVal.value = '';
   if (defaultVal.value != '') allEmpty = false;
+
   defaultVal = document.getElementById("q_classify");
   if (defaultVal.value != '') allEmpty = false;
+
   return !allEmpty;
 }
 function clrSPQueryDefaultVal()

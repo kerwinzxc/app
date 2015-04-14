@@ -8,19 +8,11 @@ $ret_code = 0;
 $result = array();
 
 do {
-  if (empty($_GET['sid'])
-      || empty($_GET['doctor_id'])) {
-    $ret_code = ERR_PARAM_INVALID;
+  if (empty($_GET['sid'])) {
+    $ret_code = ERR_NOT_LOGIN;
     break;
   }
-
   $sid = $_GET['sid'];
-  $doctor_id = (int)$_GET['doctor_id'];
-  if (!user_session::is_sid($sid)
-      || $doctor_id <= 0) {
-    $ret_code = ERR_PARAM_INVALID;
-    break;
-  }
 
   $s_info = user_session::get_session($sid);
   if ($s_info === false) {
@@ -35,12 +27,13 @@ do {
   }
   $user_id = $s_info['user_id'];
 
-  // del
-  if (tb_user_guan_zhu::del_one($user_id, $doctor_id) === false) {
-    $ret_code = ERR_INNER_ERROR;
+  $gl = tb_user_gz_ke_shi::query_user_guan_zhu_list($user_id);
+  if ($gl === false) {
+    $ret_code = ERR_DB_ERROR;
     break;
   }
-  $ret_body['doctor_id'] = $doctor_id;
+  $ret_body['list'] = $gl;
+
 } while (false);
 
 $ret_body['code'] = $ret_code;

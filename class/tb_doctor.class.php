@@ -1,5 +1,7 @@
 <?php
 
+require_once APP_ROOT . '/common/cc_key_def.php';
+
 class tb_doctor
 {
   private static $tb_name  = 'doctor';
@@ -11,6 +13,7 @@ class tb_doctor
                                         $name,
                                         $sex,
                                         $icon_url,
+                                        $ke_shi,
                                         $tec_title,
                                         $aca_title,
                                         $hospital,
@@ -23,8 +26,8 @@ class tb_doctor
     $expert_in = $db->escape($expert_in);
     $sql = "insert into "
       . self::$tb_name
-      . "(phone_num,passwd,classify,name,sex,icon_url,tec_title,aca_title,hospital,expert_in,c_time)"
-      . "value('$phone_num','$passwd',$classify,'$name',$sex,'$icon_url',$tec_title,$aca_title,'$hospital','$expert_in',$c_time)";
+      . "(phone_num,passwd,classify,name,sex,icon_url,ke_shi,tec_title,aca_title,hospital,expert_in,c_time)"
+      . "value('$phone_num','$passwd',$classify,'$name',$sex,'$icon_url',$ke_shi,$tec_title,$aca_title,'$hospital','$expert_in',$c_time)";
     if ($db->execute($sql) === false) {
       return false;
     }
@@ -45,11 +48,15 @@ class tb_doctor
       . " where phone_num='$phone_num' limit 1";
     return $db->get_row($sql);
   }
-  public static function query_doctor_total_num()
+  public static function query_doctor_total_num($where)
   {
+    if (!empty($where)) {
+      $where = " where $where";
+    }
     $db = new sql(db_selector::get_db(db_selector::$db_r));
     $sql = "select count(*) from "
-      . self::$tb_name;
+      . self::$tb_name
+      . $where;
     $ret = $db->get_one_row_col($sql, 0);
     if ($ret === false) {
       return false;
@@ -84,12 +91,21 @@ class tb_doctor
     }
     return $result;
   }
-  public static function query_doctor_limit($start, $offset = 10)
+  public static function query_doctor_limit($where,
+      $order_by,
+      $start,
+      $offset)
   {
+    if (!empty($where)) {
+      $where = " where $where";
+    }
+    if (!empty($order_by)) {
+      $order_by = " order by $order_by";
+    }
     $db = new sql(db_selector::get_db(db_selector::$db_r));
     $sql = "select * from "
       . self::$tb_name
-      . " order by id desc limit {$start},{$offset}";
+      . " {$where} {$order_by} limit {$start},{$offset}";
     return $db->get_rows($sql);
   }
 };

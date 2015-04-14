@@ -1,10 +1,10 @@
 <?php
 
 require_once dirname(__FILE__) . '/../conf/settings.php';
-require_once ROOT . 'init.php';
-require_once ROOT . 'view/fill_menu_name.inc.php';
-require_once ROOT . 'libs/crm_db.inc.php';
-require_once ROOT . 'libs/func.inc.php';
+require_once MNG_ROOT . 'init.php';
+require_once MNG_ROOT . 'view/fill_menu_name.inc.php';
+require_once MNG_ROOT . 'libs/crm_db.inc.php';
+require_once MNG_ROOT . 'libs/func.inc.php';
 
 $err_msg = '';
 if ($_SERVER['REQUEST_METHOD'] == "GET")

@@ -1,9 +1,9 @@
 <?php
 
 require_once dirname(__FILE__) . '/../conf/settings.php';
-require_once ROOT . 'init.php';
-require_once ROOT . 'view/fill_menu_name.inc.php';
-require_once ROOT . 'libs/crm_db.inc.php';
+require_once MNG_ROOT . 'init.php';
+require_once MNG_ROOT . 'view/fill_menu_name.inc.php';
+require_once MNG_ROOT . 'libs/crm_db.inc.php';
 
 $huo_zhu_rows = array();
 $page = 1;

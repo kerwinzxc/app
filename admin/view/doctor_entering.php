@@ -1,10 +1,10 @@
 <?php
 
 require_once dirname(__FILE__) . '/../conf/settings.php';
-require_once ROOT . 'init.php';
-require_once ROOT . 'view/fill_menu_name.inc.php';
-require_once ROOT . 'libs/func.inc.php';
-require_once ROOT . 'autoload.php'; // below smarty
+require_once MNG_ROOT . 'init.php';
+require_once MNG_ROOT . 'view/fill_menu_name.inc.php';
+require_once MNG_ROOT . 'libs/func.inc.php';
+require_once MNG_ROOT . 'autoload.php'; // below smarty
 
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
   $tpl->assign("content_title", S_DOCTOR_LU_RU);
@@ -15,11 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
   $tpl->display("home.html");
 }else if ($_SERVER['REQUEST_METHOD'] == "POST") {
   $err_msg = '';
-  $name = $_POST['name'];
+  $name = trim($_POST['name']);
   $sex = $_POST['sex'];
   $phone_num = $_POST['phone_num'];
   $classify = $_POST['classify'];
-  $hospital = $_POST['hospital'];
+  $ke_shi = $_POST['ke_shi'];
+  $hospital = trim($_POST['hospital']);
   $expert_in = $_POST['expert_in'];
   $tec_title = $_POST['tec_title'];
   $aca_title = $_POST['aca_title'];
@@ -31,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         || !check::is_doctor_classify($classify)
         || empty($hospital) || strlen($hospital) > 90
         || empty($expert_in) || strlen($expert_in) > 300
+        || empty($ke_shi) || !is_numeric($ke_shi)
         || empty($tec_title) || !is_numeric($tec_title)
         || empty($aca_title) || !is_numeric($aca_title)) {
       $err_msg = '输入参数错误';
@@ -67,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
       $filename = md5($name . $phone_num . "doctor_icon")
         . "."
         . util::get_file_ext($filename);
-      move_uploaded_file($_FILES[$photo]['tmp_name'], ROOT . 'image/' . $filename);
+      move_uploaded_file($_FILES[$photo]['tmp_name'], MNG_ROOT . 'image/' . $filename);
     }
     if ($err_msg != '') {
       break;
@@ -80,6 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         $name,
         $sex,
         BASE_URL . "image/{$filename}",
+        $ke_shi,
         $tec_title,
         $aca_title,
         $hospital,

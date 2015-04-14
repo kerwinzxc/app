@@ -1,6 +1,6 @@
 <?php
 
-require_once ROOT . '/common/cc_key_def.php';
+require_once APP_ROOT . '/common/cc_key_def.php';
 
 class tb_user
 {

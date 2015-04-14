@@ -9,25 +9,23 @@ $result = array();
 
 do {
   if (empty($_GET['sid'])
-      || empty($_GET['patient_id'])) {
+      || empty($_GET['doctor_id'])) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
 
   $sid = $_GET['sid'];
-  $patient_id = (int)$_GET['patient_id'];
+  $doctor_id = (int)$_GET['doctor_id'];
   if (!user_session::is_sid($sid)
-      || $patient_id <= 0) {
+      || $doctor_id <= 0) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
-
   $s_info = user_session::get_session($sid);
   if ($s_info === false) {
     $ret_code = ERR_NOT_LOGIN;
     break;
   }
-
   $s_info = json_decode($s_info, true);
   if (empty($s_info)) {
     $ret_code = ERR_NOT_LOGIN;
@@ -35,18 +33,23 @@ do {
   }
   $user_id = $s_info['user_id'];
 
-  // del
-  if (tb_user_patient::del_one($user_id, $patient_id) === false) {
-    $ret_code = ERR_INNER_ERROR;
+  $num = tb_user_gz_doctor::query_user_guan_zhu_num($user_id);
+  if ($num === false || $num >= 100) {
+    $ret_code = ERR_USER_GZ_DOCTOR_LIMIT;
     break;
   }
-  if ((int)$s_info['default_patient'] == $patient_id) {
-    if (tb_user::set_default_patient($user_id, 0) !== false) {
-      $s_info['default_patient'] = 0;
-      user_session::set_session($sid, json_encode($s_info));
-    }
+
+  if (tb_user_gz_doctor::query_user_had_guan_zhu_or_not($user_id, $doctor_id)) {
+    $ret_code = ERR_USER_GZ_DOCTOR_EXIST;
+    break;
   }
-  $ret_body['patient_id'] = $patient_id;
+
+  if (tb_user_gz_doctor::insert_new_one($user_id, $doctor_id) === false) {
+    $ret_code = ERR_DB_ERROR;
+    break;
+  }
+  $ret_body['doctor_id'] = $doctor_id;
+
 } while (false);
 
 $ret_body['code'] = $ret_code;

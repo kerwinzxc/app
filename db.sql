@@ -53,16 +53,25 @@ create table if not exists user_patient (
   primary key(id),
   index idx_uid(`user_id`),
   unique key(`id_card`)
-)engine=InnoDB default charset=utf8 auto_increment=10000;
+)engine=MyISAM default charset=utf8 auto_increment=10000;
 
 -- 用户关注的医生
-drop table if exists user_guan_zhu;
-create table if not exists user_guan_zhu (
+drop table if exists user_gz_doctor;
+create table if not exists user_gz_doctor (
   user_id             int unsigned not null,                  # master id
   doctor_id           int unsigned not null,                  #
 
   primary key(`user_id`, `doctor_id`)
-)engine=InnoDB default charset=utf8;
+)engine=MyISAM default charset=utf8;
+
+-- 用户关注的科室
+drop table if exists user_gz_ke_shi;
+create table if not exists user_gz_ke_shi (
+  user_id             int unsigned not null,                  # master id
+  ke_shi              smallint not null default 0,            #
+
+  primary key(`user_id`, `ke_shi`)
+)engine=MyISAM default charset=utf8;
 
 -- doctor info
 drop table if exists doctor;
@@ -76,6 +85,7 @@ create table if not exists doctor (
   sex                 tinyint not null default 1,             # 0: famale 1: male
   icon_url            varchar(255) not null default '',       #
 
+  ke_shi              smallint not null default 0,            # 科室
   tec_title           smallint not null default 0,            # 技术职称
   aca_title           smallint not null default 0,            # 学术职称
   hospital            varchar(90) not null default '',        # 所属医院

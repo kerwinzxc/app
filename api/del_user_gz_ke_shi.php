@@ -9,15 +9,15 @@ $result = array();
 
 do {
   if (empty($_GET['sid'])
-      || empty($_GET['patient_id'])) {
+      || empty($_GET['ke_shi'])) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
 
   $sid = $_GET['sid'];
-  $patient_id = (int)$_GET['patient_id'];
+  $ke_shi = (int)$_GET['ke_shi'];
   if (!user_session::is_sid($sid)
-      || $patient_id <= 0) {
+      || $ke_shi <= 0) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
@@ -36,17 +36,11 @@ do {
   $user_id = $s_info['user_id'];
 
   // del
-  if (tb_user_patient::del_one($user_id, $patient_id) === false) {
+  if (tb_user_gz_ke_shi::del_one($user_id, $ke_shi) === false) {
     $ret_code = ERR_INNER_ERROR;
     break;
   }
-  if ((int)$s_info['default_patient'] == $patient_id) {
-    if (tb_user::set_default_patient($user_id, 0) !== false) {
-      $s_info['default_patient'] = 0;
-      user_session::set_session($sid, json_encode($s_info));
-    }
-  }
-  $ret_body['patient_id'] = $patient_id;
+  $ret_body['ke_shi'] = $ke_shi;
 } while (false);
 
 $ret_body['code'] = $ret_code;

@@ -17,7 +17,15 @@ function test_add_user_patient($users) {
     $birthday = $year . $month . $day;
     $sex = mt_rand(0, 1);
     $is_default = mt_rand(0, 1);
-    $ret = json_decode(file_get_contents("http://{$host}/api/add_user_patient.php?sid={$sid}&name=彭好宇&id_card={$city1}{$city2}{$birthday}{$end}&birthday={$year}-{$month}-{$day}&sex={$sex}&is_default={$is_default}&phone_num=13810421852", false, $get_timeout), true);
+    $ret = json_decode(util::post_data("http://{$host}/api/add_user_patient.php",
+          array("sid" => "{$sid}",
+            "name" => "彭好宇",
+            "id_card" => "{$city1}{$city2}{$birthday}{$end}",
+            "birthday" => "{$year}-{$month}-{$day}",
+            "sex" => "{$sex}",
+            "is_default" => "{$is_default}",
+            "phone_num" => "13810421852")),
+        true);
     if ((int)$ret['code'] == 0) {
       $add_ok++;
       if (isset($add_ok_user_patient_list[$phone_num])) {

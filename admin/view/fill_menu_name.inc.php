@@ -1,6 +1,6 @@
 <?php
 
-require_once ROOT . 'conf/strings.php';
+require_once MNG_ROOT . 'conf/strings.php';
 
 $tpl->assign("s_menu_func_g",     '常用功能');
 $tpl->assign("s_doctor_lu_ru",    '医生录入');

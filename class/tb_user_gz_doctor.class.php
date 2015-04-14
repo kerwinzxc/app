@@ -1,10 +1,10 @@
 <?php
 
-require_once ROOT . '/common/cc_key_def.php';
+require_once APP_ROOT . '/common/cc_key_def.php';
 
-class tb_user_guan_zhu
+class tb_user_gz_doctor
 {
-  private static $tb_name  = 'user_guan_zhu';
+  private static $tb_name  = 'user_gz_doctor';
   private static $all_cols = '*';
 
   public static function insert_new_one($user_id, $doctor_id)
@@ -20,7 +20,7 @@ class tb_user_guan_zhu
     if ($db->affected_rows() == 1) {
       // for cache
       $cc = new cache();
-      $ck = CK_USER_GUAN_ZHU_LIST . $user_id;
+      $ck = CK_USER_GZ_DOCTOR_LIST . $user_id;
       $cc->del($ck);
       return true;
     }
@@ -34,14 +34,14 @@ class tb_user_guan_zhu
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     $sql = "delete from "
       . self::$tb_name
-      . " where user_id={$user_id} and doctor_id={$doctor_id}";
+      . " where user_id={$user_id} and doctor_id={$doctor_id} limit 1";
     if ($db->execute($sql) === false) {
       return false;
     }
     if ($db->affected_rows() == 1) {
       // for cache
       $cc = new cache();
-      $ck = CK_USER_GUAN_ZHU_LIST . $user_id;
+      $ck = CK_USER_GZ_DOCTOR_LIST . $user_id;
       $cc->del($ck);
     }
     return true;
@@ -54,7 +54,7 @@ class tb_user_guan_zhu
     }
     // for cache
     $cc = new cache();
-    $ck = CK_USER_GUAN_ZHU_LIST . $user_id;
+    $ck = CK_USER_GZ_DOCTOR_LIST . $user_id;
     $result = $cc->get($ck);
     if ($result !== false) {
       return count(json_decode($result, true));
@@ -65,9 +65,9 @@ class tb_user_guan_zhu
       . " from "
       . self::$tb_name
       . " where user_id={$user_id}";
-    return (int)$db->get_rows_count($sql, 0);
+    return (int)$db->get_one_row_col($sql, 0);
   }
-  // return false on error, return array on ok.
+  // return false on error, return array(12,1,2).
   public static function query_user_guan_zhu_list($user_id)
   {
     if (empty($user_id)) {
@@ -75,7 +75,7 @@ class tb_user_guan_zhu
     }
     // for cache
     $cc = new cache();
-    $ck = CK_USER_GUAN_ZHU_LIST . $user_id;
+    $ck = CK_USER_GZ_DOCTOR_LIST . $user_id;
     $result = $cc->get($ck);
     if ($result !== false) {
       return json_decode($result, true);
@@ -87,8 +87,9 @@ class tb_user_guan_zhu
       . " where user_id={$user_id}";
     $result = $db->get_rows($sql);
 
-    // for cache
     if ($result !== false) {
+      $result = array_map(function ($r) { return (int)$r['doctor_id'];}, $result);
+      // for cache
       $cc->set($ck, json_encode($result));
     }
     return $result;
@@ -98,9 +99,10 @@ class tb_user_guan_zhu
     if (empty($user_id) || empty($doctor_id)) {
       return true;
     }
+    $doctor_id = (int)$doctor_id;
     // for cache
     $cc = new cache();
-    $ck = CK_USER_GUAN_ZHU_LIST . $user_id;
+    $ck = CK_USER_GZ_DOCTOR_LIST . $user_id;
     $result = $cc->get($ck);
     if ($result !== false) {
       $result = json_decode($result, true);
