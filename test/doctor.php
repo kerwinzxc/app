@@ -11,6 +11,7 @@ function test_add_doctor($users) {
     if (empty($di)) {
       $new_doctor_id = tb_doctor::insert_new_one($phone_num,
                                                  md5('000000'),
+                                                 'cuisw',
                                                  1,
                                                  $names[array_rand($names)],
                                                  mt_rand(0, 1),

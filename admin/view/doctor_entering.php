@@ -76,12 +76,14 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     }
     // upload end
 
+    $icon_url = empty($filename) ? '' : BASE_URL . "image/{$filename}";
     $new_doctor_id = tb_doctor::insert_new_one($phone_num,
         md5('000000'),
+        $user,
         $classify,
         $name,
         $sex,
-        BASE_URL . "image/{$filename}",
+        $icon_url,
         $ke_shi,
         $tec_title,
         $aca_title,

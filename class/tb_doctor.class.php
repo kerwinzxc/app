@@ -9,6 +9,7 @@ class tb_doctor
 
   public static function insert_new_one($phone_num,
                                         $passwd,
+                                        $employe_id,
                                         $classify,
                                         $name,
                                         $sex,
@@ -26,8 +27,8 @@ class tb_doctor
     $expert_in = $db->escape($expert_in);
     $sql = "insert into "
       . self::$tb_name
-      . "(phone_num,passwd,classify,name,sex,icon_url,ke_shi,tec_title,aca_title,hospital,expert_in,c_time)"
-      . "value('$phone_num','$passwd',$classify,'$name',$sex,'$icon_url',$ke_shi,$tec_title,$aca_title,'$hospital','$expert_in',$c_time)";
+      . "(phone_num,passwd,employe_id,classify,name,sex,icon_url,ke_shi,tec_title,aca_title,hospital,expert_in,c_time)"
+      . "value('$phone_num','$passwd','$employe_id',$classify,'$name',$sex,'$icon_url',$ke_shi,$tec_title,$aca_title,'$hospital','$expert_in',$c_time)";
     if ($db->execute($sql) === false) {
       return false;
     }

@@ -38,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       $tpl->assign("aca_title", $doctor_info['aca_title']);
       $tpl->assign("hospital", $doctor_info['hospital']);
       $tpl->assign("expert_in", $doctor_info['expert_in']);
+      $tpl->assign("c_time", $doctor_info['c_time']);
       $recent_jh_num = 1;
     }
   }

@@ -34,6 +34,7 @@ if (!isset($_GET['kw'])) {
   $name = $_GET['name'];
   $classify = $_GET['classify'];
   $phone_num = $_GET['phone_num'];
+  $employe_id = $_GET['employe_id'];
   $where = '';
 
   if (!empty($phone_num)) {
@@ -60,14 +61,14 @@ if (!isset($_GET['kw'])) {
       $where = "classify=$classify";
     }
   }
-  /*if (!empty($employe_id)) {
+  if (!empty($employe_id)) {
     $tpl->assign("employe_id", $employe_id);
     if (!empty($where)) {
       $where = $where . " and employe_id='$employe_id'";
     } else {
       $where = "employe_id='$employe_id'";
     }
-  }*/
+  }
   if (!empty($where)) {
     $total_num = tb_doctor::query_doctor_total_num($where);
     $doctor_rows = tb_doctor::query_doctor_limit($where,

@@ -9,7 +9,11 @@ $ret_body = array();
 
 do {
   $total_num = 0;
+  $page = 0;
+  $classify = 0;
   $doctor_list = array();
+  $where = '';
+
   if (empty($_GET['sid'])) { // guest
     $total_num = fn_doctor::query_expert_total_num();
     $doctor_list = fn_doctor::query_expert_order_by_limit(0, 10);
@@ -33,9 +37,10 @@ do {
     }
     $user_id = $s_info['user_id'];
 
-    $doctor_list = tb_doctor::query_doctor_limit(0,
-        '', // where
+    $total_num = tb_doctor::query_doctor_total_num($where);
+    $doctor_list = tb_doctor::query_doctor_limit($where,
         'order by id desc',
+        0,
         10);
     if ($doctor_list === false) {
       $ret_code = ERR_DB_ERROR;
@@ -45,6 +50,7 @@ do {
 
   $dl = array_map(function ($r) { return $r['id'];}, $doctor_list);
   $ret_body['list'] = fn_doctor::build_doctor_detail_list($dl);
+  $ret_body['total_num'] = $total_num;
 
 } while (false);
 

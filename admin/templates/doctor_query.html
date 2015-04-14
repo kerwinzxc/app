@@ -17,16 +17,22 @@
     <tr style="font-weight:bold;">
       <th style="width:90px;height:44px;background:#E9893A;">医生姓名</th>
       <th style="width:120px;background:#E9893A;">电话</th>
-      <th style="width:150px;background:#E9893A;">职称</th>
       <th style="width:100px;background:#E9893A;">类别</th>
+      <th style="width:150px;background:#E9893A;">职称</th>
       <th style="width:200px;background:#E9893A;">所属医院</th>
-      <th style="width:200px;background:#E9893A;">录入日期</th>
+      <th style="width:150px;background:#E9893A;">科室</th>
       <th style="width:70px;background:#E9893A;">操作</th>
     </tr>
     {foreach from=$doctor_rows item=row}
       <tr>
         <td style="height:36px;">{$row.name}</td>
         <td>{$row.phone_num}</td>
+        <td>
+          {if $row.classify eq 1}普通医生
+          {elseif $row.classify eq 2}医学泰斗
+          {else}未知
+          {/if}
+        </td>
         <td>{if $row.tec_title eq 1}主任医师,
 {elseif $row.tec_title eq 2}副主任医师,
 {elseif $row.tec_title eq 3}主治医师,
@@ -38,14 +44,15 @@
 {else}未填
 {/if}
 </td>
+        <td>{$row.hospital}</td>
         <td>
-          {if $row.classify eq 1}普通医生
-          {elseif $row.classify eq 2}医学泰斗
+          {if $row.ke_shi eq 1}内科-风湿
+          {elseif $row.ke_shi eq 2}外科-泌尿
+          {elseif $row.ke_shi eq 3}骨科-骨科
+          {elseif $row.ke_shi eq 4}妇科-产科
           {else}未知
           {/if}
         </td>
-        <td>{$row.hospital}</td>
-        <td>{$row.c_time|date_format:"%Y-%m-%d %H:%M:%S"}</td>
         <td><a href="view/doctor_modify.php?id={$row.id}">详细</a></td>
       </tr>
     {/foreach}

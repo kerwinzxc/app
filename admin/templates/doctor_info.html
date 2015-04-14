@@ -1,6 +1,9 @@
 <div style="margin:35px 150px 0 150px;">
   <div>
     <p style="font-size:23px;display:inline">{$doctor_info_title}</p>
+    {if $new_one ne 1}
+    <p style="font-size:16px;line-height:38px;float:right;">录入时间：{$c_time|date_format:"%Y-%m-%d %H:%M:%S"}</p>
+    {/if}
     <hr style="height:2px;border:0;background-color:#FF9900;"/>
   </div>
   <div class="input_form">

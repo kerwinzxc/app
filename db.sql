@@ -88,6 +88,7 @@ create table if not exists doctor (
   id                  int unsigned not null auto_increment,   #
   phone_num           char(15) not null,                      # mobile phone number
   passwd              char(32) not null,                      # md5
+  employe_id          varchar(30) not null default '',        # 录入者
 
   classify            tinyint not null default 0,             # 医生类别
   name                varchar(30) not null default '',        #
@@ -105,6 +106,7 @@ create table if not exists doctor (
   primary key(id),
   unique key(phone_num),
   index idx_name(`name`),
+  index idx_employe(`employe_id`),
   index idx_classify(`classify`),
   index idx_ke_shi(`ke_shi`)
 )engine=MyISAM default charset=utf8 auto_increment=10000;
