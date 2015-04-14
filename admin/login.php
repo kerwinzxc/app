@@ -3,9 +3,9 @@
 session_start();
 
 require_once 'conf/settings.php';
-require_once ROOT . 'libs/smarty/libs/Smarty.class.php';
-require_once ROOT . 'libs/func.inc.php';
-require_once ROOT . 'autoload.php'; // below smarty
+require_once MNG_ROOT . 'libs/smarty/libs/Smarty.class.php';
+require_once MNG_ROOT . 'libs/func.inc.php';
+require_once MNG_ROOT . 'autoload.php'; // below smarty
 
 $tpl = new smarty();
 $err_msg  = '';

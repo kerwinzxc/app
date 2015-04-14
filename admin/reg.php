@@ -1,9 +1,9 @@
 <?php
 
 require_once dirname(__FILE__) . '/conf/settings.php';
-require_once ROOT . 'libs/smarty/libs/Smarty.class.php';
-require_once ROOT . 'libs/func.inc.php';
-require_once ROOT . 'autoload.php'; // below smarty
+require_once MNG_ROOT . 'libs/smarty/libs/Smarty.class.php';
+require_once MNG_ROOT . 'libs/func.inc.php';
+require_once MNG_ROOT . 'autoload.php'; // below smarty
 
 date_default_timezone_set("PRC");
 

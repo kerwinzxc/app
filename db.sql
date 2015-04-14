@@ -82,6 +82,27 @@ create table if not exists user_gz_ba (
   primary key(`user_id`, `ba_id`)
 )engine=MyISAM default charset=utf8;
 
+
+-- 用户病历 electronic medical record
+drop table if exists user_emr;
+create table if not exists user_emr (
+  id                  int unsigned not null auto_increment,   #
+  user_id             int unsigned not null,                  # master id
+  patient_id          int unsigned not null,                  #
+
+  sd_time             int unsigned not null,                  # see doctor time
+  hospital            varchar(90) not null default '',        # 就诊医院
+  ke_shi              smallint not null default 0,            # 科室
+  doctor_name         varchar(30) not null default '',        # 医生姓名
+  photoes_1           varchar(350) not null default '',       # ,分隔的检查报告照片
+  photoes_2           varchar(350) not null default '',       # ,分隔的处方报告照片
+
+  doctor_diagnosis    varchar(600) not null default '',       # 医生诊断
+  doctor_tell         varchar(600) not null default '',       # 医生嘱咐
+
+  index idx_uid(`user_id`, `patient_id`)
+)engine=MyISAM default charset=utf8;
+
 -- doctor info
 drop table if exists doctor;
 create table if not exists doctor (
