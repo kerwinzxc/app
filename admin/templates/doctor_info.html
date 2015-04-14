@@ -12,16 +12,16 @@
         <tr><td><input type='hidden' name='id' value='{if isset($id)}{$id}{/if}'/></td></tr>
         <tr>
           <td class="form_label">姓名</td>
-          <td><input style="width:120px;" id='name' type='text' name='name' value='{if isset($name)}{$name}{/if}' onchange='checkDoctorName(this)'/><p class='must_p'>*</p></td>
+          <td><input style="width:100px;padding-left:2px;" id='name' type='text' name='name' value='{if isset($name)}{$name}{/if}' onchange='checkDoctorName(this)'/><p class='must_p'>*</p></td>
         </tr>
         <tr>
           <td class="form_label">手机</td>
-          <td><input style="width:150px;" id='phone_num' type='text' name='phone_num' value='{if isset($phone_num)}{$phone_num}{/if}' onchange='checkPhoneNum(this)'/><p class='must_p'>*</p></td>
+          <td><input style="width:150px;padding-left:2px;" id='phone_num' type='text' name='phone_num' value='{if isset($phone_num)}{$phone_num}{/if}' onchange='checkPhoneNum(this)'/><p class='must_p'>*</p></td>
         </tr>
         <tr><td class="form_label">性别</td>
           <td>
-          <select style="width:70px;" id='sex' name='sex'>
-          <option value="" >--性别--</option>
+          <select style="width:60px;" id='sex' name='sex'>
+          <option value="" >选择</option>
           <option value="0" {if isset($sex) && $sex eq 0} selected="selected"{/if}>女</option>
           <option value="1" {if isset($sex) && $sex eq 1} selected="selected"{/if}>男</option>
           </select><p class='must_p'>*</p>
@@ -41,7 +41,7 @@
         </tr>
         <tr>
           <td class="form_label">所属医院</td>
-          <td><input style="width:250px;" id='hospital' type='text' name='hospital' value='{if isset($hospital)}{$hospital}{/if}' onchange='checkHospital(this)'/><p class='must_p'>*</p></td>
+          <td><input style="width:250px;padding-left:2px;" id='hospital' type='text' name='hospital' value='{if isset($hospital)}{$hospital}{/if}' onchange='checkHospital(this)'/><p class='must_p'>*</p></td>
         </tr>
         <tr><td class="form_label">科室</td>
           <td>
@@ -72,7 +72,7 @@
         </tr>
         <tr>
           <td class="form_label">擅长</td>
-          <td><textarea style="margin:10px 0px 10px 0px;width:300px;resize:none;" rows='5' cols='20' maxlength='300' name='expert_in'>{if isset($expert_in)}{$expert_in|escape}{/if}</textarea></td>
+          <td><textarea style="margin:5px 0px 5px 0px;padding:5px;width:300px;resize:none;" rows='5' cols='20' maxlength='300' name='expert_in'>{if isset($expert_in)}{$expert_in|escape}{/if}</textarea></td>
         </tr>
         <tr>
           <td class="form_label">医生照片</td>
