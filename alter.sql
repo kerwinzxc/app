@@ -1,8 +1,11 @@
+-- cuisw 04-15
+alter table doctor add adm_title smallint not null default 0 after aca_title;
+
 -- cuisw 04-14
-alter table doctor add ke_shi smallint not null default 0 after icon_url;
-alter table doctor add index idx_classify(`classify`);
-alter table doctor add index idx_ke_shi(`ke_shi`);
-alter table doctor add employe_id varchar(30) not null default '' after passwd;
+-- alter table doctor add ke_shi smallint not null default 0 after icon_url;
+-- alter table doctor add index idx_classify(`classify`);
+-- alter table doctor add index idx_ke_shi(`ke_shi`);
+-- alter table doctor add employe_id varchar(30) not null default '' after passwd;
 
 -- cuisw 04-13
 -- alter table doctor add classify tinyint not null default 0 after passwd;

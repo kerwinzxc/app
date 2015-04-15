@@ -2,6 +2,11 @@
 
 class check
 {
+  static $can_upload_photos = array("image/jpg",
+                                    "image/jpeg",
+                                    "image/gif",
+                                    "image/png");
+
   public static function is_phone_num($v)
   {
     return preg_match('/^1[34578]\d{9}$/', $v);
@@ -56,5 +61,9 @@ class check
       return false;
     }
     return true;
+  }
+  public static function can_upload($type)
+  {
+    return in_array($type, check::$can_upload_photos);
   }
 };

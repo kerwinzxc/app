@@ -23,7 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
   $hospital = trim($_POST['hospital']);
   $expert_in = $_POST['expert_in'];
   $tec_title = $_POST['tec_title'];
-  $aca_title = $_POST['aca_title'];
+  $aca_title = isset($_POST['aca_title']) ? (int)$_POST['aca_title'] : 0;
+  $adm_title = $_POST['adm_title'];
 
   do {
     if (empty($name) || !check::is_name($name)
@@ -31,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         || empty($phone_num) || !check::is_phone_num($phone_num)
         || !check::is_doctor_classify($classify)
         || empty($hospital) || strlen($hospital) > 90
-        || empty($expert_in) || strlen($expert_in) > 300
+        || empty($expert_in) || strlen($expert_in) > 450
         || empty($ke_shi) || !is_numeric($ke_shi)
         || empty($tec_title) || !is_numeric($tec_title)
         || empty($aca_title) || !is_numeric($aca_title)) {
@@ -66,9 +67,15 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         $err_msg = $filename . " 图片大小超出限制(2M)";
         break;
       }
+      if (!check::can_upload($_FILES[$photo]['type'])) {
+        $err_msg = "图片格式不支持";
+        break;
+      }
+      $mime = explode('/', $_FILES[$photo]['type']);
       $filename = md5($name . $phone_num . "doctor_icon")
         . "."
-        . util::get_file_ext($filename);
+        . $mime[1];
+
       move_uploaded_file($_FILES[$photo]['tmp_name'], MNG_ROOT . 'image/' . $filename);
     }
     if ($err_msg != '') {
@@ -76,17 +83,17 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     }
     // upload end
 
-    $icon_url = empty($filename) ? '' : BASE_URL . "image/{$filename}";
     $new_doctor_id = tb_doctor::insert_new_one($phone_num,
         md5('000000'),
         $user,
         $classify,
         $name,
         $sex,
-        $icon_url,
+        $filename,
         $ke_shi,
         $tec_title,
         $aca_title,
+        $adm_title,
         $hospital,
         $expert_in,
         time());

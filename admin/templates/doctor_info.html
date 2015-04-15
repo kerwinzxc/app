@@ -41,7 +41,12 @@
         </tr>
         <tr>
           <td class="form_label">所属医院</td>
-          <td><input style="width:250px;padding-left:2px;" id='hospital' type='text' name='hospital' value='{if isset($hospital)}{$hospital}{/if}' onchange='checkHospital(this)'/><p class='must_p'>*</p></td>
+          <td><input style="width:250px;padding-left:2px;" id='hospital' type='text' name='hospital' value='{if isset($hospital)}{$hospital|escape}{/if}' onchange='checkHospital(this)'/><p class='must_p'>*</p>
+          <select style="width:100px;margin-left:20px;" id=adm_title' name='adm_title'>
+          <option value=""  >--行政职称--</option>
+          <option value="1" {if isset($adm_title) && $adm_title eq 1} selected="selected"{/if}>院长</option>
+          <option value="2" {if isset($adm_title) && $adm_title eq 2} selected="selected"{/if}>副院长</option>
+          </td>
         </tr>
         <tr><td class="form_label">科室</td>
           <td>

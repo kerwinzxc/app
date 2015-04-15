@@ -22,5 +22,17 @@ class util
     curl_close($ch);
     return $ret;
   }
+  public static function escape($str)
+  {
+    return mysql_escape_string($str);
+  }
+
+  public static function array_get($key, $arr, $default_v)  
+  {
+    if (!array_key_exists($key, $arr)) {
+      return $default_v;
+    }
+    return $arr[$key];
+  }
 
 };

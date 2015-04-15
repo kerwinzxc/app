@@ -11,8 +11,33 @@ do {
   $total_num = 0;
   $page = 0;
   $classify = 0;
+  $ke_shi = 0;
+
   $doctor_list = array();
   $where = '';
+
+  if (!empty($_GET['classify'])) {
+    $classify = (int)$_GET['classify'];
+  }
+  if (!empty($_GET['ke_shi'])) {
+    $ke_shi = (int)$_GET['ke_shi'];
+  }
+
+  if ($classify != 0) {
+    if (!empty($where)) {
+      $where = $where . " and classify=$classify";
+    } else {
+      $where = "classify=$classify";
+    }
+  }
+
+  if ($ke_shi != 0) {
+    if (!empty($where)) {
+      $where = $where . " and ke_shi=$ke_shi";
+    } else {
+      $where = "ke_shi=$ke_shi";
+    }
+  }
 
   if (empty($_GET['sid'])) { // guest
     $total_num = fn_doctor::query_expert_total_num();

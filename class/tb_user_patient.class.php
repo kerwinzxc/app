@@ -41,7 +41,7 @@ class tb_user_patient
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     $sql = "delete from "
       . self::$tb_name
-      . " where id={$patient_id} and user_id={$user_id} limit 1";
+      . " where id={$patient_id} limit 1";
     if ($db->execute($sql) === false) {
       return false;
     }

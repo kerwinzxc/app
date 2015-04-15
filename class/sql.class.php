@@ -80,6 +80,7 @@ class sql
     }
     return mysql_real_escape_string($str, $this->db);
   }
+
   // get one row
   public function get_row($sql)
   {
