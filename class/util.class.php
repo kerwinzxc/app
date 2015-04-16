@@ -10,7 +10,7 @@ class util
     $ext = pathinfo($path, PATHINFO_EXTENSION);
     return $ext == '' ? 'dat' : $ext;
   }
-  function post_data($url, $data, $timeout = 2)
+  function post_data($url, $data, $timeout = 1)
   {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -34,5 +34,4 @@ class util
     }
     return $arr[$key];
   }
-
 };

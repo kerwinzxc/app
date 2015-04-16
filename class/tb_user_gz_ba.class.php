@@ -46,8 +46,9 @@ class tb_user_gz_ba
       $cc = new cache();
       $ck = CK_USER_GZ_BA_LIST . $user_id;
       $cc->del($ck);
+      return 1;
     }
-    return true;
+    return 0;
   }
 
   public static function query_user_guan_zhu_num($user_id)

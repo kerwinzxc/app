@@ -4,12 +4,7 @@ class fn_doctor
 {
   public static function build_doctor_detail_list($doctor_list)
   {
-    $doctor_detail_list = array();
-    foreach ($doctor_list as $doctor_id) {
-      $doctor_info = tb_doctor::query_doctor_by_id($doctor_id);
-      if (empty($doctor_info)) {
-        continue;
-      }
+    foreach ($doctor_list as $doctor_info) {
       $doctor_detail = array();
       $doctor_detail['doctor_id'] = (int)$doctor_info['id'];
       $doctor_detail['name'] = $doctor_info['name'];
@@ -34,8 +29,8 @@ class fn_doctor
   public static function query_expert_order_by_limit($start, $offset)
   {
     return tb_doctor::query_doctor_limit('classify=1',
-        'id desc',
-        $start,
-        $offset);
+                                         'id desc',
+                                         $start,
+                                         $offset);
   }
 };

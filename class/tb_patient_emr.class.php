@@ -48,10 +48,7 @@ class tb_patient_emr
     if ($db->execute($sql) === false) {
       return false;
     }
-    if ($db->affected_rows() == 1) {
-      return 1;
-    }
-    return 0;
+    return $db->affected_rows() == 1) ? 1 : 0;
   }
 
   public static function query_patient_emrs_num($patient_id)

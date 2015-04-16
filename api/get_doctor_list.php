@@ -64,16 +64,16 @@ do {
 
     $total_num = tb_doctor::query_doctor_total_num($where);
     $doctor_list = tb_doctor::query_doctor_limit($where,
-        'order by id desc',
-        0,
-        10);
+                                                 'id desc',
+                                                 0,
+                                                 10);
     if ($doctor_list === false) {
       $ret_code = ERR_DB_ERROR;
       break;
     }
   } // end of `if'
 
-  $dl = array_map(function ($r) { return $r['id'];}, $doctor_list);
+  $dl = array_map(function ($r) { return (int)$r['id'];}, $doctor_list);
   $ret_body['list'] = fn_doctor::build_doctor_detail_list($dl);
   $ret_body['total_num'] = $total_num;
 

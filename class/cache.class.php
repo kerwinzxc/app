@@ -60,4 +60,12 @@ class cache
     }
     return $this->redis->del($key);
   }
+  public function incr($key)
+  {
+    if ($this->connected === false) {
+      if ($this->connect($key) === false)
+        return false;
+    }
+    return $this->redis->incr($key);
+  }
 };

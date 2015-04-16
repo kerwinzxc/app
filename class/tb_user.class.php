@@ -9,11 +9,12 @@ class tb_user
 
   public static function insert_new_one($phone_num, $passwd, $c_time)
   {
+    $db = new sql(db_selector::get_db(db_selector::$db_w));
+    $passwd = $db->escape($passwd);
     $sql = "insert into "
       . self::$tb_name
       . "(phone_num,passwd,c_time)"
       . "value('$phone_num','$passwd',$c_time)";
-    $db = new sql(db_selector::get_db(db_selector::$db_w));
     if ($db->execute($sql) === false) {
       return false;
     }
@@ -49,6 +50,26 @@ class tb_user
       . self::$tb_name
       . " set "
       . "default_patient={$patient_id}"
+      . " where id={$user_id} limit 1";
+    if ($db->execute($sql) === false) {
+      return false;
+    }
+
+    // for cache
+    $cc = new cache();
+    $ck = CK_USER_ID_2_USER . $user_id;
+    $cc->del($ck);
+
+    return true;
+  }
+  public static function update_passwd($user_id, $new_passwd)
+  {
+    $db = new sql(db_selector::get_db(db_selector::$db_w));
+    $new_passwd = $db->escape($new_passwd);
+    $sql = "update "
+      . self::$tb_name
+      . " set "
+      . "passwd='{$new_passwd}'"
       . " where id={$user_id} limit 1";
     if ($db->execute($sql) === false) {
       return false;
@@ -108,5 +129,13 @@ class tb_user
       . self::$tb_name
       . " where id_card='{$id_card}'";
     return $db->get_one_row_col($sql, 0) == '1';
+  }
+  public static function query_name_by_id($id)
+  {
+    $user_info = self::query_user_by_id($id);
+    if ($user_info === false) {
+      return false;
+    }
+    return $user_info['name'];
   }
 };

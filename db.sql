@@ -34,7 +34,7 @@ create table if not exists user (
   c_time              int unsigned not null default 0,
 
   primary key(id),
-  unique key(phone_num),
+  unique key phone_num(`phone_num`),
   index idx_id_card(`id_card`)
 )engine=MyISAM default charset=utf8 auto_increment=10000;
 
@@ -68,7 +68,7 @@ create table if not exists user_gz_doctor (
 drop table if exists user_gz_ke_shi;
 create table if not exists user_gz_ke_shi (
   user_id             int unsigned not null,                  # master id
-  ke_shi              smallint not null default 0,            #
+  ke_shi              int unsigned not null default 0,        #
 
   primary key(`user_id`, `ke_shi`)
 )engine=MyISAM default charset=utf8;
@@ -79,9 +79,9 @@ create table if not exists user_gz_ba (
   user_id             int unsigned not null,                  # master id
   ba_id               int unsigned not null default 0,        #
 
-  primary key(`user_id`, `ba_id`)
+  primary key(`user_id`, `ba_id`),
+  index idx_ba_id(`ba_id`)
 )engine=MyISAM default charset=utf8;
-
 
 -- 就诊人病历 electronic medical record
 drop table if exists patient_emr;
@@ -117,7 +117,7 @@ create table if not exists doctor (
   sex                 tinyint not null default 1,             # 0: famale 1: male
   icon_url            varchar(255) not null default '',       #
 
-  ke_shi              smallint not null default 0,            # 科室
+  ke_shi              int unsigned not null default 0,        # 科室
   tec_title           smallint not null default 0,            # 技术职称
   aca_title           smallint not null default 0,            # 学术职称
   adm_title           smallint not null default 0,            # 行政职称
@@ -134,3 +134,45 @@ create table if not exists doctor (
   index idx_ke_shi(`ke_shi`)
 )engine=MyISAM default charset=utf8 auto_increment=10000;
 
+-- 病友吧
+drop table if exists ba;
+create table if not exists ba (
+  id                  int unsigned not null,                  # 病种ID
+  primary key(id),
+)engine=MyISAM default charset=utf8;
+
+-- 病友吧-帖子
+drop table if exists ba_topic;
+create table if not exists ba_topic (
+  id                  int unsigned not null auto_increment,   # 帖子ID
+  ba_id               int unsigned not null default 0,        # 病友吧ID
+
+  user_id             int unsigned not null default 0,        # author
+
+  title               varchar(90) not null default '',        #
+
+  useful              int unsigned not null default 0,        # 有用的
+  useless             int unsigned not null default 0,        # 无用的
+
+  c_time              int unsigned not null default 0,
+
+  primary key(id),
+  index idx_ba_id(`ba_id`),
+  index idx_useful(`useful`)
+)engine=MyISAM default charset=utf8;
+
+-- 病友吧-帖子回复
+drop table if exists ba_topic_reply;
+create table if not exists ba_topic_reply (
+  id                  int unsigned not null auto_increment,   # 回帖ID
+  topic_id            int unsigned not null default 0,        # 所属帖子ID
+
+  user_id             int unsigned not null,                  # 该回复的作者
+  topic_author_id     int unsigned not null,                  # 帖主ID(冗余字段)
+
+  content             varchar(12000) not null default '',     # 
+  c_time              int unsigned not null default 0,
+
+  primary key(id),
+  index idx_topic_id(`topic_id`),
+)engine=MyISAM default charset=utf8;

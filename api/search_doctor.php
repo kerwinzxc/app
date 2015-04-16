@@ -81,15 +81,14 @@ do {
 
     $doctor_list = tb_doctor::query_doctor_limit($where,
                                                  'id desc', // order by
-                                                 ($page - 1)* ONE_PAGE_ITEMS,
+                                                 ($page - 1) * ONE_PAGE_ITEMS,
                                                  ONE_PAGE_ITEMS);
     if ($doctor_list === false) {
       $ret_code = ERR_DB_ERROR;
       break;
     }
 
-    $dl = array_map(function ($r) { return $r['id'];}, $doctor_list);
-    $ret_body['list'] = fn_doctor::build_doctor_detail_list($dl);
+    $ret_body['list'] = fn_doctor::build_doctor_detail_list($doctor_list);
     $ret_body['total_num'] = $total_num;
   } else {
     $ret_body['list'] = array();

@@ -50,8 +50,9 @@ class tb_user_patient
       $cc = new cache();
       $ck = CK_USER_PATIENT_LIST . $user_id;
       $cc->del($ck);
+      return 1;
     }
-    return true;
+    return 0;
   }
 
   public static function query_user_patients_num($user_id)

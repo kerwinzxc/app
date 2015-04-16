@@ -3,12 +3,13 @@
     <p style="font-size:23px;display:inline">{$my_info_title}</p>
     <hr style="height:2px;border:0;background-color:#FF9900;"/>
   </div>
+  <center>
   <div class="input_form">
     <form action="view/my_settings.php" method="post">
       <table>
         <tr>
           <td class="form_label">姓名</td>
-          <td><input style="width:150px;" type='text' name='name' value='{$name}'/></td>
+          <td><input style="width:150px;" type='text' name='name' value='{$name}' disabled/></td>
         </tr>
         <tr>
           <td class="form_label">原密码</td>
@@ -31,4 +32,5 @@
       </div>
     </form>
   </div>
+  </center>
 </div>

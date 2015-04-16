@@ -3,7 +3,7 @@
 require_once __DIR__ . '/../init.php';
 
 $host = "127.0.0.1";
-$test_phone_num = 1;
+$test_phone_num = 100;
 $doctor_test_phone_num = 100;
 $get_timeout = stream_context_create(array('http' => array('timeout' => 5))); 
 
@@ -26,7 +26,7 @@ printf("test doctor phone_num %d\n", count($doctor_phone_nums));
 
 $test_modules = array('reg', 'login', 'user_patient', 'doctor', 'user_gz_doctor', 'user_gz_ke_shi');
 //$test_modules = array('login', 'user_gz_ke_shi');
-$test_modules = array('login', 'user_patient', 'patient_emr');
+$test_modules = array('login', 'user');
 foreach ($test_modules as $module) {
   require_once __DIR__ . "/{$module}.php";
 }

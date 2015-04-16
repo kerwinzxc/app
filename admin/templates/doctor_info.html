@@ -1,4 +1,4 @@
-<div style="margin:35px 150px 0 150px;">
+<div style="margin:35px 130px 0 130px;">
   <div>
     <p style="font-size:23px;display:inline">{$doctor_info_title}</p>
     {if $new_one ne 1}
@@ -41,9 +41,9 @@
         </tr>
         <tr>
           <td class="form_label">所属医院</td>
-          <td><input style="width:250px;padding-left:2px;" id='hospital' type='text' name='hospital' value='{if isset($hospital)}{$hospital|escape}{/if}' onchange='checkHospital(this)'/><p class='must_p'>*</p>
-          <select style="width:100px;margin-left:20px;" id=adm_title' name='adm_title'>
-          <option value=""  >--行政职称--</option>
+          <td><input style="width:180px;padding-left:2px;float:left;" id='hospital' type='text' name='hospital' value='{if isset($hospital)}{$hospital|escape}{/if}' onchange='checkHospital(this)'/><p class='must_p'>*</p>
+          <select style="width:95px;margin-left:10px;display:inline;" id=adm_title' name='adm_title'>
+          <option value="" >--行政职称--</option>
           <option value="1" {if isset($adm_title) && $adm_title eq 1} selected="selected"{/if}>院长</option>
           <option value="2" {if isset($adm_title) && $adm_title eq 2} selected="selected"{/if}>副院长</option>
           </td>
@@ -77,13 +77,13 @@
         </tr>
         <tr>
           <td class="form_label">擅长</td>
-          <td><textarea style="margin:5px 0px 5px 0px;padding:5px;width:300px;resize:none;" rows='6' cols='20' maxlength='300' name='expert_in'>{if isset($expert_in)}{$expert_in|escape}{/if}</textarea></td>
+          <td><textarea style="margin:5px 0px 5px 0px;padding:5px;width:310px;resize:none;" rows='6' cols='20' maxlength='300' name='expert_in'>{if isset($expert_in)}{$expert_in|escape}{/if}</textarea></td>
         </tr>
         <tr>
           <td class="form_label">医生照片</td>
           <td class="upload"><input style='font-size:10px;color:#C00;' name='txt1' type="text" disabled="disabled" value='不能超2M (限定格式：jpg,png)'/><input type="button" value="浏览"/><input type="file" name='photo' onchange="txt1.value=this.value;"/></td>
         {if !empty($icon_url)}
-          <td><a href='{$icon_url}' target='_blank'><img src='{$icon_url}' height="150" width="120"</img></a></td>
+          <td style="padding-left:10px;"><a href='{$icon_url}' target='_blank'><img src='{$icon_url}' height="150" width="120"</img></a></td>
         {/if}
         </tr>
       </table>

@@ -8,14 +8,16 @@ $ret_code = 0;
 $ret_body = array();
 
 do {
-  if (empty($_POST['user']) || empty($_POST['passwd'])) {
+  if (empty($_POST['user'])
+      || empty($_POST['passwd'])) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
   $phone_num = $_POST['user'];
   $passwd    = $_POST['passwd'];
 
-  if (!check::is_phone_num($phone_num) || !check::is_passwd($passwd)) {
+  if (!check::is_phone_num($phone_num)
+      || !check::is_passwd($passwd)) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
@@ -26,7 +28,7 @@ do {
     break;
   }
   if (!empty($user_info)) {
-    $ret_code = ERR_USER_EXIST;
+    $ret_code = ERR_PHONE_NUM_HAD_REG;
     break;
   }
 

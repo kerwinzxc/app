@@ -49,8 +49,9 @@ class tb_user_gz_ke_shi
       $cc = new cache();
       $ck = CK_USER_GZ_KE_SHI_LIST . $user_id;
       $cc->del($ck);
+      return 1;
     }
-    return true;
+    return 0;
   }
 
   public static function query_user_guan_zhu_num($user_id)
