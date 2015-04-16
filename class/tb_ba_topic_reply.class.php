@@ -39,7 +39,7 @@ class tb_ba_topic_reply
     if ($db->execute($sql) === false) {
       return false;
     }
-    return $db->affected_rows() == 1) ? 1 : 0;
+    return $db->affected_rows() == 1 ? 1 : 0;
   }
 
   // return false on error, return array on ok.
@@ -70,7 +70,7 @@ class tb_ba_topic_reply
     }
     return $result;
   }
-  public static function query_topic_reply_total_num($ba_id)
+  public static function query_topic_reply_total_num($topic_id)
   {
     $db = new sql(db_selector::get_db(db_selector::$db_r));
     $sql = "select count(*) from "
@@ -94,7 +94,9 @@ class tb_ba_topic_reply
       $order_by = " order by $order_by";
     }
     $db = new sql(db_selector::get_db(db_selector::$db_r));
-    $sql = "select * from "
+    $sql = "select "
+      . self::$all_cols
+      . " from "
       . self::$tb_name
       . " {$where} {$order_by} limit {$start},{$offset}";
     return $db->get_rows($sql);

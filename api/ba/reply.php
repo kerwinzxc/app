@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../init.php';
+require_once __DIR__ . '/../../init.php';
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') exit;
 
@@ -11,6 +11,7 @@ do {
   if (empty($_POST['sid'])
       || empty($_POST['topic_id'])
       || empty($_POST['content'])) {
+    ilog::error(json_encode($_POST));
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
@@ -41,10 +42,20 @@ do {
   }
   $user_id = $s_info['user_id'];
 
+  $topic_info = tb_ba_topic::query_topic_by_id($topic_id);
+  if ($topic_info === false) {
+    $ret_code = ERR_DB_ERROR;
+    break;
+  }
+  if (empty($topic_info)) {
+    $ret_code = ERR_BA_TOPIC_NOT_EXIST;
+    break;
+  }
   $new_reply_id = tb_ba_topic_reply::insert_new_one($topic_id,
                                                     $user_id,
-                                                    $topic_author_id,
-                                                    $content);
+                                                    $topic_info['user_id'],
+                                                    $content,
+                                                    time());
 
   if ($new_reply_id === false) {
     $ret_code = ERR_DB_ERROR;

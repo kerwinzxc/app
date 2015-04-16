@@ -32,7 +32,7 @@ do {
     $ret_code = ERR_DB_ERROR;
     break;
   }
-  $ret_body['list'] = fn_doctor::build_doctor_detail_list($gl);
+  $ret_body['list'] = fn_doctor::build_doctor_detail_list_from_id_list($gl);
 
 } while (false);
 

@@ -40,6 +40,8 @@ class ilog
       $log_str = date('Y-m-d H:i:s') . " > " . $str . "\n";
       @fwrite($fp, $log_str, strlen($log_str));
       @fflush($fp);
+      @fclose($fp);
+      $fp = false;
     }
   }
 

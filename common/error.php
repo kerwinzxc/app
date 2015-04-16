@@ -24,3 +24,4 @@ define('ERR_REG_SMS_TIME_LIMIT', -1113);   $ERRORS[ERR_REG_SMS_TIME_LIMIT] = '�
 define('ERR_REG_SMS_TODAY_LIMIT', -1114);  $ERRORS[ERR_REG_SMS_TODAY_LIMIT] = '您今日请求验证码次数太多，请明日再试!';
 define('ERR_REG_SMS_FAILED', -1115);       $ERRORS[ERR_REG_SMS_FAILED] = '获取注册验证码失败，请稍后重试!';
 define('ERR_OLD_PASSWD_ERROR', -1116);     $ERRORS[ERR_OLD_PASSWD_ERROR] = '原密码错误';
+define('ERR_BA_TOPIC_NOT_EXIST', -1117);   $ERRORS[ERR_BA_TOPIC_NOT_EXIST] = '话题不存在';

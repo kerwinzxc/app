@@ -73,8 +73,7 @@ do {
     }
   } // end of `if'
 
-  $dl = array_map(function ($r) { return (int)$r['id'];}, $doctor_list);
-  $ret_body['list'] = fn_doctor::build_doctor_detail_list($dl);
+  $ret_body['list'] = fn_doctor::build_doctor_detail_list_from_info_list($doctor_list);
   $ret_body['total_num'] = $total_num;
 
 } while (false);

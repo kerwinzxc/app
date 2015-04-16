@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../init.php';
+require_once __DIR__ . '/../../init.php';
 
 if ($_SERVER['REQUEST_METHOD'] != 'GET') exit;
 
@@ -21,22 +21,21 @@ do {
     $page = (int)$_GET['p'];
   }
 
-  $ba_id = (int)$_GET['ba_id']);
+  $ba_id = (int)$_GET['ba_id'];
   if ($ba_id <= 0) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
 
-  $where = "ba_id=$ba_id";
-  $total_num = tb_ba_topic::query_topic_total_num($where);
+  $total_num = tb_ba_topic::query_topic_total_num($ba_id);
   if ($total_num > 0) {
     if (($page - 1) * ONE_PAGE_ITEMS > $total_num) {
-      $page = $total_num / ONE_PAGE_ITEMS;
+      $page = (int)($total_num / ONE_PAGE_ITEMS);
     }
-    $page = $page < 1 ? 1 :$page;
+    if ($page < 1) { $page = 1; }
 
-    $topic_list = tb_ba_topic::query_topic_limit($where,
-                                                 'useful desc',
+    $topic_list = tb_ba_topic::query_topic_limit("ba_id=$ba_id",
+                                                 'useful desc, id asc',
                                                  ($page - 1) * ONE_PAGE_ITEMS,
                                                  ONE_PAGE_ITEMS);
     if ($topic_list === false) {

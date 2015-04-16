@@ -105,7 +105,9 @@ class tb_doctor
       $order_by = " order by $order_by";
     }
     $db = new sql(db_selector::get_db(db_selector::$db_r));
-    $sql = "select * from "
+    $sql = "select "
+      . self::$all_cols
+      . " from "
       . self::$tb_name
       . " {$where} {$order_by} limit {$start},{$offset}";
     return $db->get_rows($sql);

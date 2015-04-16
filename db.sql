@@ -138,7 +138,7 @@ create table if not exists doctor (
 drop table if exists ba;
 create table if not exists ba (
   id                  int unsigned not null,                  # 病种ID
-  primary key(id),
+  primary key(id)
 )engine=MyISAM default charset=utf8;
 
 -- 病友吧-帖子
@@ -174,5 +174,5 @@ create table if not exists ba_topic_reply (
   c_time              int unsigned not null default 0,
 
   primary key(id),
-  index idx_topic_id(`topic_id`),
+  index idx_topic_id(`topic_id`)
 )engine=MyISAM default charset=utf8;

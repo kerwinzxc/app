@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../init.php';
+require_once __DIR__ . '/../../init.php';
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') exit;
 
@@ -53,9 +53,9 @@ do {
     $ret_code = ERR_DB_ERROR;
     break;
   }
-  if (tb_ba_topic_reply::insert_new_one($topic_id,
+  if (tb_ba_topic_reply::insert_new_one($new_topic_id,
                                         $user_id,
-                                        $topic_author_id,
+                                        $user_id,
                                         $content,
                                         time()) === false) {
     tb_ba_topic::del_one($new_topic_id);
