@@ -1,0 +1,29 @@
+<script type="text/javascript">
+{literal}
+
+{/literal}
+</script>
+<div style="margin:0px 25px 0px 25px;padding-bottom:10px;">
+  <form action={if $new_one eq 1}"view/doctor_article_add.php"{else}"view/doctor_article_modify.php"{/if}
+    method="post"
+    enctype="multipart/form-data"
+    onsubmit="return submitDoctorValidate()">
+  <div style="margin-top:20px;">
+    <input style="width:100%;height:40px;color:#999;padding-left:5px;font-size:16px;margin:0 0 12px 1px;" id='topic' type='text' name='topic'
+     value='{if isset($topic)}{$topic}{else}请填写主题{/if}'
+     onfocus='onQueryInputFocus(this,"请填写主题")'
+     onblur='onQueryInputBlur(this,"请填写主题")'/>
+  </div>
+
+  <script type="text/plain" id="umEditor" style="width:100%;height:500px;">
+    {if isset($content)}{$content}{/if}
+  </script>
+  <center>
+    <input style='text-indent:10px;letter-spacing:10px;font-size:14px;width:80px;height:30px;margin:15px 0 0 0;' type='submit' value='提交' onclick='return clrDoctorQueryDefaultVal();'/>
+  </center>
+  </form>
+</div>
+
+<script type="text/javascript">
+var um = UM.getEditor('umEditor');
+</script>

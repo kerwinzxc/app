@@ -10,7 +10,7 @@
         <option value="2" {if isset($classify) && $classify eq 2} selected="selected"{/if}>医学泰斗</option>
       </select>
       <input style="width:100px;padding-left:5px;" type='text' id='q_employe_id' name='employe_id' value='{if isset($employe_id)}{$employe_id}{else}录入者ID{/if}' onfocus='onQueryInputFocus(this,"录入者ID")' onblur='onQueryInputBlur(this,"录入者ID")'/>
-      <input style=';width:60px;margin-left:30px;' type='submit' value='查询' onclick='return clrDoctorQueryDefaultVal();'/>
+      <input style='width:60px;margin-left:30px;' type='submit' value='查询' onclick='return clrDoctorQueryDefaultVal();'/>
     </form>
   </div>
   <table cellspacing="10">

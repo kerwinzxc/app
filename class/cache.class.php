@@ -44,13 +44,13 @@ class cache
     }
     return $this->redis->set($key, $v);
   }
-  public function setex($key, $v, $t)
+  public function setex($key, $expire, $v)
   {
     if ($this->connected === false) {
       if ($this->connect($key) === false)
         return false;
     }
-    return $this->redis->setex($key, $t, $v);
+    return $this->redis->setex($key, $expire, $v);
   }
   public function del($key)
   {

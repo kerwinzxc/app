@@ -7,6 +7,14 @@ function escape_input($value)
     $value = stripslashes($value);
   return mysql_escape_string($value);
 }
+function alert($err_msg)
+{
+  $alert = "alert('$err_msg')";
+  if (empty($err_msg))
+    $alert = '';
+  echo '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />';
+  echo "<script language='javascript'>$alert;</script>";
+}
 function alert_and_redirect($err_msg, $to_url)
 {
   $redirect = BASE_URL . $to_url;

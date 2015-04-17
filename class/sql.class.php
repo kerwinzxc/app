@@ -65,11 +65,11 @@ class sql
     }
 
     $res = @mysql_query($sql, $this->db);
-    if ($res !== false) {
-      return $res;
+    if ($res === false) {
+      $this->db_err("execute($sql)");
+      return false;
     }
-    $this->db_err("execute($sql)");
-    return false;
+    return $res;
   }
   public function escape($str)
   {

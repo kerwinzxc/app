@@ -17,3 +17,5 @@ function class_loader($cls)
   require_once($file);
 }
 spl_autoload_register('class_loader');
+
+error_reporting(E_ALL);

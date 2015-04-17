@@ -39,7 +39,7 @@ do {
   }
 
   if (sms::send_reg_sms_code($phone_num)) {
-    $ret_body['sms_code'] = $code;
+    sms::save_reg_sms_code($phone_num, $code);
   } else {
     $ret_code = ERR_REG_SMS_FAILED;
     break;

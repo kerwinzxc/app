@@ -16,7 +16,7 @@ create table employe (
   name                varchar(30) not null,                   #
 
   c_time              int not null default 0,                 # create time
-  index idx_name(`name`)
+  index i_name(`name`)
 )engine=MyISAM default charset=utf8;
 
 -- read more than insert/update, so use `MyISAM'
@@ -34,8 +34,8 @@ create table if not exists user (
   c_time              int unsigned not null default 0,
 
   primary key(id),
-  unique key phone_num(`phone_num`),
-  index idx_id_card(`id_card`)
+  unique key phone(`phone_num`),
+  index i_id_card(`id_card`)
 )engine=MyISAM default charset=utf8 auto_increment=10000;
 
 -- user's patient info 用户的常用就诊人
@@ -51,7 +51,7 @@ create table if not exists user_patient (
   birthday            date not null default '1900-01-01',     # 
 
   primary key(id),
-  index idx_uid(`user_id`),
+  index i_uid(`user_id`),
   unique key(`id_card`)
 )engine=MyISAM default charset=utf8 auto_increment=10000;
 
@@ -80,7 +80,7 @@ create table if not exists user_gz_ba (
   ba_id               int unsigned not null default 0,        #
 
   primary key(`user_id`, `ba_id`),
-  index idx_ba_id(`ba_id`)
+  index i_ba_id(`ba_id`)
 )engine=MyISAM default charset=utf8;
 
 -- 就诊人病历 electronic medical record
@@ -101,15 +101,15 @@ create table if not exists patient_emr (
   doctor_tell         varchar(450) not null default '',       # 医生嘱咐
 
   primary key(id),
-  index idx_pid(`patient_id`)
+  index i_pid(`patient_id`)
 )engine=MyISAM default charset=utf8;
 
 -- doctor info
 drop table if exists doctor;
 create table if not exists doctor (
   id                  int unsigned not null auto_increment,   #
-  phone_num           char(15) not null,                      # mobile phone number
-  passwd              char(32) not null,                      # md5
+  phone_num           char(15) not null '',                   # mobile phone number
+  passwd              char(32) not null '',                   # md5
   employe_id          varchar(30) not null default '',        # 录入者
 
   classify            tinyint not null default 0,             # 医生类别
@@ -128,10 +128,10 @@ create table if not exists doctor (
 
   primary key(id),
   unique key(phone_num),
-  index idx_name(`name`),
-  index idx_employe(`employe_id`),
-  index idx_classify(`classify`),
-  index idx_ke_shi(`ke_shi`)
+  index i_name(`name`),
+  index i_employe(`employe_id`),
+  index i_cls(`classify`),
+  index i_ke_shi(`ke_shi`)
 )engine=MyISAM default charset=utf8 auto_increment=10000;
 
 -- 病友吧
@@ -157,8 +157,8 @@ create table if not exists ba_topic (
   c_time              int unsigned not null default 0,
 
   primary key(id),
-  index idx_ba_id(`ba_id`),
-  index idx_useful(`useful`)
+  index i_ba_id(`ba_id`),
+  index i_useful(`useful`)
 )engine=MyISAM default charset=utf8;
 
 -- 病友吧-帖子回复
@@ -174,5 +174,5 @@ create table if not exists ba_topic_reply (
   c_time              int unsigned not null default 0,
 
   primary key(id),
-  index idx_topic_id(`topic_id`)
+  index i_tid(`topic_id`)
 )engine=MyISAM default charset=utf8;

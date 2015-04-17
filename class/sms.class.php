@@ -61,6 +61,12 @@ class sms
     }
     return false;
   }
+  public static function save_reg_sms_code($phone_num, $code, $expire = 120)
+  {
+    $cc = new cache();
+    $ck = CK_PHONE_NUM_2_REG_SMS_CODE . $phone_num;
+    return $cc->setex($ck, $expire, "$code");
+  }
   public static function send_reg_sms_code($phone_num)
   {
     $code = self::verify_code(4);

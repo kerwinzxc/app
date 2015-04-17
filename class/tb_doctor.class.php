@@ -38,6 +38,24 @@ class tb_doctor
     }
     return false;
   }
+  public static function update($doctor_id, $info)
+  {
+    $db = new sql(db_selector::get_db(db_selector::$db_w));
+    $sql = "update "
+      . self::$tb_name
+      . " set " . $db->get_set($info)
+      . " where id={$doctor_id} limit 1";
+    if ($db->execute($sql) === false) {
+      return false;
+    }
+
+    // for cache
+    $cc = new cache();
+    $ck = CK_DOCTOR_ID_2_DOCTOR . $doctor_id;
+    $cc->del($ck);
+
+    return true;
+  }
 
   // return false on error, return array on ok.
   public static function query_doctor_by_phone_num($phone_num)

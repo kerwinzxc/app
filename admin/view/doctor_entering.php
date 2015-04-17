@@ -23,8 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
   $hospital = trim($_POST['hospital']);
   $expert_in = $_POST['expert_in'];
   $tec_title = $_POST['tec_title'];
-  $aca_title = isset($_POST['aca_title']) ? (int)$_POST['aca_title'] : 0;
-  $adm_title = $_POST['adm_title'];
+  $aca_title = $_POST['aca_title'];
+  $adm_title = isset($_POST['aca_title']) ? (int)$_POST['adm_title'] : 0;
 
   do {
     if (empty($name) || !check::is_name($name)
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         break;
       }
       $mime = explode('/', $_FILES[$photo]['type']);
-      $filename = md5($name . $phone_num . "doctor_icon")
+      $filename = md5($phone_num . "doctor_icon")
         . "."
         . $mime[1];
 

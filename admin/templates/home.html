@@ -1,6 +1,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     {include file="header.html"}
+    {if isset($h_inc_name)}
+      {include file=$h_inc_name}
+    {/if}
   </head>
   <body>
     <div id='main'>
