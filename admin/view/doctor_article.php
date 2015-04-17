@@ -13,4 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
   $tpl->assign("h_inc_name", "editor_header.html");
 
   $tpl->display("home.html");
+} else {
+  echo $_POST['topic'];
+  echo $_POST['editorValue'];
 }

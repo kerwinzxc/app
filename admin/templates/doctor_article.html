@@ -1,10 +1,17 @@
 <script type="text/javascript">
 {literal}
-
+function uptext(){
+  if (!UE.getEditor('umEditor').hasContents()) {
+    alert('请先填写内容!');
+  } else {
+    document.setweb.info.value = UM.getEditor('umEditor').getContent();
+    document.setweb.submit();
+  }
+}
 {/literal}
 </script>
 <div style="margin:0px 25px 0px 25px;padding-bottom:10px;">
-  <form action={if $new_one eq 1}"view/doctor_article_add.php"{else}"view/doctor_article_modify.php"{/if}
+  <form action={if $new_one eq 1}"view/doctor_article.php"{else}"view/doctor_article_modify.php"{/if}
     method="post"
     enctype="multipart/form-data"
     onsubmit="return submitDoctorValidate()">
@@ -15,11 +22,9 @@
      onblur='onQueryInputBlur(this,"请填写主题")'/>
   </div>
 
-  <script type="text/plain" id="umEditor" style="width:100%;height:500px;">
-    {if isset($content)}{$content}{/if}
-  </script>
+  <script type="text/plain" id="umEditor" style="width:100%;height:500px;">{if isset($content)}{$content}{/if}</script>
   <center>
-    <input style='text-indent:10px;letter-spacing:10px;font-size:14px;width:80px;height:30px;margin:15px 0 0 0;' type='submit' value='提交' onclick='return clrDoctorQueryDefaultVal();'/>
+    <input style='text-indent:10px;letter-spacing:10px;font-size:14px;width:80px;height:30px;margin:15px 0 0 0;' type='submit' value='提交'/>
   </center>
   </form>
 </div>
@@ -27,3 +32,4 @@
 <script type="text/javascript">
 var um = UM.getEditor('umEditor');
 </script>
+
