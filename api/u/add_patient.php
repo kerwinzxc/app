@@ -1,7 +1,5 @@
 <?php
 
-// 增加常用就诊人
-
 require_once __DIR__ . '/../init.php';
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') exit;
@@ -55,18 +53,20 @@ do {
   }
   $user_id = $s_info['user_id'];
 
-  $num = tb_user_patient::query_user_patients_num($user_id);
-  if ($num === false || $num >= 5) {
-    $ret_code = ERR_USER_PATIENTS_LIMIT;
+  $cur_patient_list = tb_user_patient::query_user_patient_list($user_id);
+  if ($cur_patient_list === false) {
+    $ret_code = ERR_DB_ERROR;
     break;
   }
-  if ($num === 0) {
-    $is_default = 1;
+  foreach ($cur_patient_list as $patient) {
+    if ($patient['id_card'] == $id_card) {
+      $ret_code = ERR_PATIENT_ID_CARD_EXIST;
+      break;
+    }
   }
-  if (tb_user_patient::query_patient_id_card_exist_or_not($id_card)) {
-    $ret_code = ERR_ID_CARD_INVALID;
-    break;
-  }
+  if ($ret_code != 0) { break; }
+
+  if (empty($cur_patient_list)) { $is_default = 1; }
 
   $new_patient_id = tb_user_patient::insert_new_one($user_id,
                                                     $phone_num,

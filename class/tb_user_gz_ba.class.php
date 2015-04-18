@@ -9,9 +9,8 @@ class tb_user_gz_ba
 
   public static function insert_new_one($user_id, $ba_id)
   {
-    if (empty($ba_id)) {
-      return true;
-    }
+    if (empty($ba_id)) { return true; }
+
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     $sql = "insert into "
       . self::$tb_name
@@ -31,9 +30,8 @@ class tb_user_gz_ba
   }
   public static function del_one($user_id, $ba_id)
   {
-    if (empty($user_id) || empty($ba_id)) {
-      return false;
-    }
+    if (empty($user_id) || empty($ba_id)) { return false; }
+
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     $sql = "delete from "
       . self::$tb_name
@@ -51,32 +49,11 @@ class tb_user_gz_ba
     return 0;
   }
 
-  public static function query_user_guan_zhu_num($user_id)
-  {
-    if (empty($user_id)) {
-      return false;
-    }
-    // for cache
-    $cc = new cache();
-    $ck = CK_USER_GZ_BA_LIST . $user_id;
-    $result = $cc->get($ck);
-    if ($result !== false) {
-      return count(json_decode($result, true));
-    }
-
-    $db = new sql(db_selector::get_db(db_selector::$db_r));
-    $sql = "select count(*)"
-      . " from "
-      . self::$tb_name
-      . " where user_id={$user_id}";
-    return (int)$db->get_one_row_col($sql, 0);
-  }
   // return false on error, return array on ok.
   public static function query_user_guan_zhu_list($user_id)
   {
-    if (empty($user_id)) {
-      return false;
-    }
+    if (empty($user_id)) { return false; }
+
     // for cache
     $cc = new cache();
     $ck = CK_USER_GZ_BA_LIST . $user_id;
@@ -97,29 +74,5 @@ class tb_user_gz_ba
       $cc->set($ck, json_encode($result));
     }
     return $result;
-  }
-  public static function query_user_had_guan_zhu_or_not($user_id, $ba_id)
-  {
-    if (empty($user_id) || empty($ba_id)) {
-      return true;
-    }
-    $ba_id = (int)$ba_id;
-    // for cache
-    $cc = new cache();
-    $ck = CK_USER_GZ_BA_LIST . $user_id;
-    $result = $cc->get($ck);
-    if ($result !== false) {
-      $result = json_decode($result, true);
-      if (in_array($ba, $result)) {
-        return true;
-      }
-      return false;
-    }
-
-    $db = new sql(db_selector::get_db(db_selector::$db_r));
-    $sql = "select 1 from "
-      . self::$tb_name
-      . " where user_id={$user_id} and ba_id={$ba_id}";
-    return $db->get_one_row_col($sql, 0) == '1';
   }
 };

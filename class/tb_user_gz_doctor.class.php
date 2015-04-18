@@ -28,9 +28,8 @@ class tb_user_gz_doctor
   }
   public static function del_one($user_id, $doctor_id)
   {
-    if (empty($user_id) || empty($doctor_id)) {
-      return false;
-    }
+    if (empty($user_id) || empty($doctor_id)) { return false; }
+
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     $sql = "delete from "
       . self::$tb_name
@@ -50,9 +49,8 @@ class tb_user_gz_doctor
 
   public static function query_user_guan_zhu_num($user_id)
   {
-    if (empty($user_id)) {
-      return false;
-    }
+    if (empty($user_id)) { return false; }
+
     // for cache
     $cc = new cache();
     $ck = CK_USER_GZ_DOCTOR_LIST . $user_id;
@@ -71,9 +69,8 @@ class tb_user_gz_doctor
   // return false on error, return array(12,1,2).
   public static function query_user_guan_zhu_list($user_id)
   {
-    if (empty($user_id)) {
-      return false;
-    }
+    if (empty($user_id)) { return false; }
+
     // for cache
     $cc = new cache();
     $ck = CK_USER_GZ_DOCTOR_LIST . $user_id;
@@ -97,9 +94,8 @@ class tb_user_gz_doctor
   }
   public static function query_user_had_guan_zhu_or_not($user_id, $doctor_id)
   {
-    if (empty($user_id) || empty($doctor_id)) {
-      return true;
-    }
+    if (empty($user_id) || empty($doctor_id)) { return true; }
+
     $doctor_id = (int)$doctor_id;
     // for cache
     $cc = new cache();

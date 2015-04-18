@@ -66,4 +66,8 @@ class check
   {
     return in_array($type, check::$can_upload_photos);
   }
+  public static function is_ke_shi($v)
+  {
+    return $v > 0;
+  }
 };
