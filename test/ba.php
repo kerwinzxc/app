@@ -29,19 +29,22 @@ function test_add_topic($users) {
   global $add_ok_topic_list;
   global $login_ok_users;
   $add_ok = 0;
-  $titles = array("世界最残忍的地方，不是无情，%而是根本没有感情",
+  $topics = array("世界最残忍的地方，不是无情，%而是根本没有感情",
                   "恍惚中，我好像回到了初中的\一个暑假午",
                   "去吧！我最好的朋友，带着'你的希望");
   foreach ($users as $phone_num => $sid) {
     $ret = json_decode(util::post_data("http://{$host}/api/ba/post.php",
                                        array("sid" => "{$sid}",
                                              "ba_id" => 2003,
-                                             "title" => $titles[array_rand($titles)],
+                                             "topic" => $topics[array_rand($topics)],
                                              "content" => "张斌很久不见了吧，还在广州吗，孩子会跑了吧，我仍然会回答，是啊，都很好，还是都很好。只不%过真正的张斌已经去了，'只'存在我的电话簿里，我的微信好友里\.",
                                             )),
                        true);
     if ((int)$ret['code'] == 0) {
       $add_ok++;
+      if ((int)$ret['topic_id'] === 0) {
+        printf("%s post ok but return topic id is 0\n", $phone_num);
+      }
       $add_ok_topic_list[] = (int)$ret['topic_id'];
     } else {
       printf("%s add_topic failed [%s]\n", $phone_num, $ret['desc']);
