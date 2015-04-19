@@ -17,7 +17,10 @@ function alert($err_msg)
 }
 function alert_and_redirect($err_msg, $to_url)
 {
-  $redirect = BASE_URL . $to_url;
+  $redirect = $to_url;
+  if (strpos($to_url, 'http://') === false)
+    $redirect = BASE_URL . $to_url;
+
   $alert = "alert('$err_msg')";
   if (empty($err_msg))
     $alert = '';

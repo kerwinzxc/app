@@ -1,3 +1,29 @@
+<script type="text/javascript">
+function loadFun() {
+  var ulList = document.getElementsByTagName("ul");
+  for (var i = 0; i < ulList.length; i++) {
+    var liNodes = ulList[i].childNodes;
+    for (var j = 0; j < liNodes.length; j++) {
+      if (liNodes[j].tagName == 'LI') {
+        liNodes[j].onmouseover=function() {
+          this.className+=(this.className.length>0? " ": "") + "sfhover";
+        }
+        liNodes[j].onMouseDown=function() {
+          this.className+=(this.className.length>0? " ": "") + "sfhover";
+        }
+        liNodes[j].onMouseUp=function() {
+          this.className+=(this.className.length>0? " ": "") + "sfhover";
+        }
+        liNodes[j].onmouseout=function() {
+          this.className=this.className.replace(new RegExp("( ?|^)sfhover\\b"), "");
+        }
+      }
+    }
+  }
+}
+window.onload = loadFun;
+</script>
+
 <div class="query" style="margin:8px;">
   <div style="width:100%;height:60px;margin-bottom:8px;background:#FFC78E;text-align:center;">
     <form method="get" action='view/doctor_query.php'>
@@ -53,7 +79,18 @@
           {else}未知
           {/if}
         </td>
-        <td><a href="view/doctor_modify.php?id={$row.id}">详细</a></td>
+        <td>
+        <ul class="doctor_opt_menu">
+        <li>
+        <!-- <a href="view/doctor_modify.php?id={$row.id}">详细</a> -->
+        <a href="#" onclick="return false;">操作</a>  
+          <ul id="opt_menu">
+            <li><a href="view/doctor_article.php?id={$row.id}">专家文章</a></li>
+            <li><a href="view/doctor_article.php?id={$row.id}">专家文章</a></li>
+          </ul>  
+          </li>
+        </ul>
+        </td>
       </tr>
     {/foreach}
   </table>

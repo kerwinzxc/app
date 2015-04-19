@@ -151,7 +151,7 @@ function build_html($doctor_id)
   global $tpl;
   global $recent_jh_num;
   $doctor_info = tb_doctor::query_doctor_by_id($doctor_id);
-  if (!$doctor_info || count($doctor_info) == 0) {
+  if ($doctor_info === false || empty($doctor_info)) {
     $err_msg = "query failed";
   } else {
     $tpl->assign("id", $doctor_id);

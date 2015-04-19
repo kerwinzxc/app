@@ -169,3 +169,48 @@ td.check{
   float:right;
   margin-top:3px;
 }
+
+/* 医生操作菜单列表*/
+.doctor_opt_menu { line-height: 32px;  list-style-type: none; background:#666; }
+.doctor_opt_menu a {
+display: block; width: 80px; text-align:center;
+}
+
+.doctor_opt_menu a:link  {
+color:#666; text-decoration:none;
+}
+.doctor_opt_menu a:visited  {
+color:#666;text-decoration:none;
+}
+.doctor_opt_menu a:hover  {
+color:#FFF;text-decoration:none;font-weight:bold;
+}
+.doctor_opt_menu li { float: left; width: 80px; background:#CCC; }
+.doctor_opt_menu li a:hover { background:#999; }
+.doctor_opt_menu li ul {
+  line-height: 30px;  list-style-type: none;text-align:left;
+left: -999em; width: 80px; position: absolute;
+}
+.doctor_opt_menu li ul li{
+float: left; width: 80px;
+background: #F6F6F6;
+}
+.doctor_opt_menu li ul a{
+display: block; width: 65px;height:auto; margin:0 auto;text-align:left; padding-left:5px;
+}
+.doctor_opt_menu li ul a:link  {
+color:#666; text-decoration:none;
+}
+.doctor_opt_menu li ul a:visited  {
+color:#666;text-decoration:none;
+}
+.doctor_opt_menu li ul a:hover  {
+color:#F3F3F3;text-decoration:none;font-weight:normal;
+background:#C00;
+}
+.doctor_opt_menu li:hover ul {
+left: auto;
+}
+.doctor_opt_menu li.sfhover ul {
+left: auto;
+}

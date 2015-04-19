@@ -176,3 +176,16 @@ create table if not exists ba_topic_reply (
   primary key(id),
   index i_tid(`topic_id`)
 )engine=MyISAM default charset=utf8;
+
+-- 专家文章
+drop table if exists doctor_article;
+create table if not exists doctor_article (
+  id                  int unsigned not null auto_increment,   # 文章ID
+  doctor_id           int unsigned not null default 0,        # 医生ID
+
+  content             varchar(12000) not null default '',     # 
+  c_time              int unsigned not null default 0,
+
+  primary key(id),
+  index i_did(`doctor_id`)
+)engine=MyISAM default charset=utf8;
