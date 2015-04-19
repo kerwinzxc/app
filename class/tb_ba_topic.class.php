@@ -28,9 +28,8 @@ class tb_ba_topic
   }
   public static function del_one($topic_id)
   {
-    if (empty($topic_id)) {
-      return false;
-    }
+    if (empty($topic_id)) { return false; }
+
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     $sql = "delete from "
       . self::$tb_name
@@ -39,6 +38,44 @@ class tb_ba_topic
       return false;
     }
     return $db->affected_rows() == 1 ? 1 : 0;
+  }
+  public static function incr_useful_counter($topic_id)
+  {
+    if (empty($topic_id)) { return false; }
+
+    $db = new sql(db_selector::get_db(db_selector::$db_w));
+    $sql = "update "
+      . self::$tb_name
+      . " set useful=useful+1 where id=$topic_id limit 1";
+    if ($db->execute($sql) === false) {
+      return false;
+    }
+    if ($db->affected_rows() == 1) {
+      // for cache
+      $cc = new cache();
+      $ck = CK_TOPIC_ID_2_TOPIC . $topic_id;
+      $cc->del($ck);
+    }
+    return true;
+  }
+  public static function incr_useless_counter($topic_id)
+  {
+    if (empty($topic_id)) { return false; }
+
+    $db = new sql(db_selector::get_db(db_selector::$db_w));
+    $sql = "update "
+      . self::$tb_name
+      . " set useless=useless+1 where id=$topic_id limit 1";
+    if ($db->execute($sql) === false) {
+      return false;
+    }
+    if ($db->affected_rows() == 1) {
+      // for cache
+      $cc = new cache();
+      $ck = CK_TOPIC_ID_2_TOPIC . $topic_id;
+      $cc->del($ck);
+    }
+    return true;
   }
 
   public static function query_topic_total_num($ba_id)
@@ -56,9 +93,8 @@ class tb_ba_topic
   // return false on error, return array on ok.
   public static function query_topic_by_id($id)
   {
-    if (empty($id)) {
-      return false;
-    }
+    if (empty($id)) { return false; }
+
     // for cache
     $cc = new cache();
     $ck = CK_TOPIC_ID_2_TOPIC . $id;

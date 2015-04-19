@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../init.php';
+require_once __DIR__ . '/../../init.php';
 
 if ($_SERVER['REQUEST_METHOD'] != 'GET') exit;
 
@@ -40,8 +40,9 @@ do {
       $ret_code = ERR_DB_ERROR;
       break;
     }
-    $real_p = array();
+    $real_patient_list = array();
     foreach ($patient_list as $p) {
+      $real_p = array();
       $real_p['patient_id'] = (int)$p['id'];
       $real_p['name'] = $p['name'];
       $real_p['sex'] = (int)$p['sex'];
@@ -54,7 +55,7 @@ do {
       }
       $real_patient_list[] = $real_p;
     }
-    $ret_body['list'] = $real_p;
+    $ret_body['list'] = $real_patient_list;
   } else { // other need params
     if (empty($_GET['patient_id'])) {
       $ret_code = ERR_PARAM_INVALID;

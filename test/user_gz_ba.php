@@ -8,7 +8,7 @@ function test_add_user_gz_ba($users) {
   $add_ok = 0;
   foreach ($users as $phone_num => $sid) {
     $ba_id = mt_rand(1, 9999999);
-    $ret = json_decode(file_get_contents("http://{$host}/api/add_user_gz_ba.php?sid={$sid}&ba_id={$ba_id}", false, $get_timeout), true);
+    $ret = json_decode(file_get_contents("http://{$host}/api/u/gz_ba.php?do=add&sid={$sid}&ba_id={$ba_id}", false, $get_timeout), true);
     if ((int)$ret['code'] == 0) {
       $add_ok++;
     } else {
@@ -33,7 +33,7 @@ function test_get_user_gz_ba_list($users) {
   global $all_user_gz_ba_list;
   $get_ok = 0;
   foreach ($users as $phone_num => $sid) {
-    $ret = json_decode(file_get_contents("http://{$host}/api/get_user_gz_ba_list.php?sid={$sid}", false, $get_timeout), true);
+    $ret = json_decode(file_get_contents("http://{$host}/api/u/gz_ba.php?do=get&sid={$sid}", false, $get_timeout), true);
     if ((int)$ret['code'] == 0) {
       $all_user_gz_ba_list[$phone_num] = $ret['list'];
       $get_ok += count($ret['list']);
@@ -59,7 +59,7 @@ function test_del_user_gz_ba() {
   foreach ($all_user_gz_ba_list as $phone_num => $my_guan_zhu_list) {
     foreach ($my_guan_zhu_list as $ba_id) {
       $sid = $login_ok_users[$phone_num];
-      $ret = json_decode(file_get_contents("http://{$host}/api/del_user_gz_ba.php?sid={$sid}&ba_id={$ba_id}", false, $get_timeout), true);
+      $ret = json_decode(file_get_contents("http://{$host}/api/u/gz_ba.php?do=del&sid={$sid}&ba_id={$ba_id}", false, $get_timeout), true);
       if ((int)$ret['code'] == 0) {
         $del_ok++;
         break;

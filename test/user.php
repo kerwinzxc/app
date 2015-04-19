@@ -5,7 +5,7 @@ function test_user_home($phone_nums) {
   global $get_timeout;
   $user_home_ok = 0;
   foreach ($phone_nums as $phone_num => $sid) {
-    $ret = json_decode(file_get_contents("http://{$host}/api/user_home.php?sid={$sid}", false, $get_timeout), true);
+    $ret = json_decode(file_get_contents("http://{$host}/api/u/user_home.php?sid={$sid}", false, $get_timeout), true);
     if ((int)$ret['code'] == 0) {
       $user_home_ok++;
     } else {
@@ -24,7 +24,7 @@ function test_reset_passwd($users, $passwd, $new_passwd) {
   global $get_timeout;
   $reset_passwd_ok = 0;
   foreach ($users as $phone_num => $sid) {
-    $ret = json_decode(util::post_data("http://{$host}/api/reset_passwd.php",
+    $ret = json_decode(util::post_data("http://{$host}/api/u/reset_passwd.php",
                                        array("sid" => "{$sid}",
                                              "passwd" => $passwd,
                                              "new_passwd" => $new_passwd)), true);

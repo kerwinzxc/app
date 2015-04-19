@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../init.php';
+require_once __DIR__ . '/../../init.php';
 
 if ($_SERVER['REQUEST_METHOD'] != 'GET') exit;
 
@@ -78,7 +78,8 @@ do {
         $ret_code = ERR_USER_GZ_DOCTOR_EXIST;
         break;
       }
-      if (empty(tb_doctor::query_doctor_by_id($doctor_id))) {
+      $doctor_info = tb_doctor::query_doctor_by_id($doctor_id);
+      if (empty($doctor_info)) {
         $ret_code = ERR_DOCTOR_NOT_EXIST;
         break;
       }

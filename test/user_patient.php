@@ -17,7 +17,7 @@ function test_add_user_patient($users) {
     $birthday = $year . $month . $day;
     $sex = mt_rand(0, 1);
     $is_default = mt_rand(0, 1);
-    $ret = json_decode(util::post_data("http://{$host}/api/add_user_patient.php",
+    $ret = json_decode(util::post_data("http://{$host}/api/u/add_patient.php",
           array("sid" => "{$sid}",
             "name" => "彭好宇",
             "id_card" => "{$city1}{$city2}{$birthday}{$end}",
@@ -57,7 +57,7 @@ function test_get_user_patient_list($users) {
   global $all_user_patient_list;
   $get_ok = 0;
   foreach ($users as $phone_num => $sid) {
-    $ret = json_decode(file_get_contents("http://{$host}/api/get_user_patient_list.php?sid={$sid}", false, $get_timeout), true);
+    $ret = json_decode(file_get_contents("http://{$host}/api/u/patient.php?do=get&sid={$sid}", false, $get_timeout), true);
     if ((int)$ret['code'] == 0) {
       $all_user_patient_list[$phone_num] = $ret['list'];
       $get_ok += count($ret['list']);
@@ -84,7 +84,7 @@ function test_del_user_patient() {
     foreach ($my_patients as $patient_info) {
       $patient_id = $patient_info['patient_id'];
       $sid = $login_ok_users[$phone_num];
-      $ret = json_decode(file_get_contents("http://{$host}/api/del_user_patient.php?sid={$sid}&patient_id={$patient_id}", false, $get_timeout), true);
+      $ret = json_decode(file_get_contents("http://{$host}/api/u/patient.php?do=del&sid={$sid}&patient_id={$patient_id}", false, $get_timeout), true);
       if ((int)$ret['code'] == 0) {
         $del_ok++;
         break;
@@ -118,7 +118,7 @@ function test_set_default_patient() {
       if ((int)$patient_info['is_default'] != 1) {
         $patient_id = $patient_info['patient_id'];
         $sid = $login_ok_users[$phone_num];
-        $ret = json_decode(file_get_contents("http://{$host}/api/set_default_patient.php?sid={$sid}&patient_id={$patient_id}", false, $get_timeout), true);
+        $ret = json_decode(file_get_contents("http://{$host}/api/u/patient.php?do=set_default&sid={$sid}&patient_id={$patient_id}", false, $get_timeout), true);
         if ((int)$ret['code'] == 0) {
           $set_ok++;
           break;

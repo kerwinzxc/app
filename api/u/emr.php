@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../init.php';
+require_once __DIR__ . '/../../init.php';
 
 if ($_SERVER['REQUEST_METHOD'] != 'GET') exit;
 
@@ -85,16 +85,18 @@ do {
       } elseif (empty($emr)) {
         $ret_code = ERR_PATIENT_EMR_NOT_EXIST;
         break;
+      } elseif ((int)$emr['user_id'] != (int)$user_id) {
+        $ret_code = ERR_PARAM_INVALID;
+        break;
       }
       $ret_body['emr_id'] = $emr['id'];
       $ret_body['sd_time'] = $emr['sd_time'];
       // TODO
     } elseif ($act == 'del') { // del
-      $ret = tb_patient_emr::del_one($emr_id, $user_id, $patient_id);
+      $ret = tb_patient_emr::del_one($emr_id, $user_id);
       if ($ret === false) {
         $ret_code = ERR_INNER_ERROR;
       } elseif ($ret === 1) {
-        $ret_body['patient_id'] = $patient_id;
         $ret_body['emr_id'] = $emr_id;
       } else {
         $ret_code = ERR_PARAM_INVALID;

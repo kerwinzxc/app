@@ -9,7 +9,7 @@ function test_add_user_gz_doctor($users, $add_ok_doctor_list) {
   $add_ok = 0;
   foreach ($users as $phone_num => $sid) {
     $doctor_id = $add_ok_doctor_list[array_rand($add_ok_doctor_list)];
-    $ret = json_decode(file_get_contents("http://{$host}/api/add_user_gz_doctor.php?sid={$sid}&doctor_id={$doctor_id}", false, $get_timeout), true);
+    $ret = json_decode(file_get_contents("http://{$host}/api/u/gz_doctor.php?do=add&sid={$sid}&doctor_id={$doctor_id}", false, $get_timeout), true);
     if ((int)$ret['code'] == 0) {
       $add_ok++;
       if (isset($add_ok_user_gz_doctor_list[$phone_num])) {
@@ -41,7 +41,7 @@ function test_get_user_gz_doctor_list($users) {
   global $all_user_gz_doctor_list;
   $get_ok = 0;
   foreach ($users as $phone_num => $sid) {
-    $ret = json_decode(file_get_contents("http://{$host}/api/get_user_gz_doctor_list.php?sid={$sid}", false, $get_timeout), true);
+    $ret = json_decode(file_get_contents("http://{$host}/api/u/gz_doctor.php?do=get&sid={$sid}", false, $get_timeout), true);
     if ((int)$ret['code'] == 0) {
       $all_user_gz_doctor_list[$phone_num] = $ret['list'];
       $get_ok += count($ret['list']);
@@ -68,7 +68,7 @@ function test_del_user_gz_doctor() {
     foreach ($my_guan_zhu_list as $guan_zhu_info) {
       $doctor_id = $guan_zhu_info['doctor_id'];
       $sid = $login_ok_users[$phone_num];
-      $ret = json_decode(file_get_contents("http://{$host}/api/del_user_gz_doctor.php?sid={$sid}&doctor_id={$doctor_id}", false, $get_timeout), true);
+      $ret = json_decode(file_get_contents("http://{$host}/api/u/gz_doctor.php?do=del&sid={$sid}&doctor_id={$doctor_id}", false, $get_timeout), true);
       if ((int)$ret['code'] == 0) {
         $del_ok++;
         break;

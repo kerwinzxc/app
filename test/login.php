@@ -10,7 +10,7 @@ function test_login($phone_nums) {
   global $get_timeout;
   global $login_ok_users;
   foreach ($phone_nums as $phone_num) {
-    $ret = json_decode(util::post_data("http://{$host}/api/login.php",
+    $ret = json_decode(util::post_data("http://{$host}/api/u/login.php",
                                        array('user' => "$phone_num",
                                              'passwd' => "000000")), true);
     if ((int)$ret['code'] == 0) {

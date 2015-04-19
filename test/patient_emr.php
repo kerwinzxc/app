@@ -15,7 +15,7 @@ function test_add_patient_emr($users) {
   foreach ($users as $phone_num => $patient_list) {
     $sid = $login_ok_users[$phone_num];
     foreach ($patient_list as $patient_info) {
-      $ret = json_decode(util::post_data("http://{$host}/api/add_patient_emr.php",
+      $ret = json_decode(util::post_data("http://{$host}/api/u/add_emr.php",
                                          array("sid" => "{$sid}",
                                                "patient_id" => $patient_info['patient_id'],
                                                "sd_time" => "2015-03-16 04:15:32",
@@ -67,7 +67,7 @@ function test_get_patient_emr_list($users) {
     $sid = $login_ok_users[$phone_num];
     foreach ($patient_list as $patient_info) {
       $patient_id = $patient_info['patient_id'];
-      $ret = json_decode(file_get_contents("http://{$host}/api/get_patient_emr_list.php?sid={$sid}&patient_id={$patient_id}", false, $get_timeout), true);
+      $ret = json_decode(file_get_contents("http://{$host}/api/u/emr.php?do=get_list&sid={$sid}&patient_id={$patient_id}", false, $get_timeout), true);
       if ((int)$ret['code'] == 0) {
         if (isset($all_patient_emr_list[$phone_num])) {
           $v = $all_patient_emr_list[$phone_num];
@@ -103,7 +103,7 @@ function test_del_patient_emr() {
     foreach ($my_patients as $patient_id => $emr_list) {
       foreach ($emr_list as $emr) {
         $emr_id = $emr['emr_id'];
-        $ret = json_decode(file_get_contents("http://{$host}/api/del_patient_emr.php?sid={$sid}&patient_id={$patient_id}&emr_id={$emr_id}", false, $get_timeout), true);
+        $ret = json_decode(file_get_contents("http://{$host}/api/u/emr.php?do=del&sid={$sid}&patient_id={$patient_id}&emr_id={$emr_id}", false, $get_timeout), true);
         if ((int)$ret['code'] == 0) {
           $del_ok++;
           break;

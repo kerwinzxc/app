@@ -108,8 +108,8 @@ create table if not exists patient_emr (
 drop table if exists doctor;
 create table if not exists doctor (
   id                  int unsigned not null auto_increment,   #
-  phone_num           char(15) not null '',                   # mobile phone number
-  passwd              char(32) not null '',                   # md5
+  phone_num           char(15) not null default '',           # mobile phone 
+  passwd              char(32) not null default '',           # md5
   employe_id          varchar(30) not null default '',        # 录入者
 
   classify            tinyint not null default 0,             # 医生类别

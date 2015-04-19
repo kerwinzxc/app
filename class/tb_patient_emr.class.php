@@ -36,14 +36,14 @@ class tb_patient_emr
     }
     return false;
   }
-  public static function del_one($emr_id, $user_id, $patient_id)
+  public static function del_one($emr_id, $user_id)
   {
     if (empty($emr_id)) { return false; }
 
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     $sql = "delete from "
       . self::$tb_name
-      . " where id={$emr_id} and user_id={$user_id} and patient_id={$patient_id} limit 1";
+      . " where id={$emr_id} and user_id={$user_id} limit 1";
     if ($db->execute($sql) === false) {
       return false;
     }

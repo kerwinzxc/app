@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../init.php';
+require_once __DIR__ . '/../../init.php';
 
 if ($_SERVER['REQUEST_METHOD'] != 'GET') exit;
 
@@ -9,23 +9,13 @@ $ret_body = array();
 
 do {
   if (empty($_GET['sid'])
-      || empty($_GET['emr_id'])
-      || empty($_GET['patient_id'])
-      ) {
+      || empty($_GET['topic_id'])
+      || empty($_GET['do'])) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
 
   $sid = $_GET['sid'];
-  $emr_id = (int)$_GET['emr_id'];
-  $patient_id = (int)$_GET['patient_id'];
-  if (!user_session::is_sid($sid)
-      || $emr_id <= 0
-      || $patient_id <= 0) {
-    $ret_code = ERR_PARAM_INVALID;
-    break;
-  }
-
   $s_info = user_session::get_session($sid);
   if ($s_info === false) {
     $ret_code = ERR_NOT_LOGIN;
@@ -39,17 +29,19 @@ do {
   }
   $user_id = $s_info['user_id'];
 
-  // del
-  $ret = tb_patient_emr::del_one($emr_id, $user_id, $patient_id);
-  if ($ret === false) {
-    $ret_code = ERR_INNER_ERROR;
-    break;
-  } elseif ($ret === 1) {
-    $ret_body['patient_id'] = $patient_id;
-    $ret_body['emr_id'] = $emr_id;
-  } else {
+  $topic_id = (int)$_GET['topic_id'];
+  if ($topic_id <= 0) {
     $ret_code = ERR_PARAM_INVALID;
     break;
+  }
+
+  $act = $_GET['do'];
+  if ($act == 'useful') {
+    $ret = tb_ba_topic::incr_useful_counter($topic_id);
+  } elseif ($act == 'useless') {
+    $ret = tb_ba_topic::incr_useless_counter($topic_id);
+  } else {
+    $ret_code = ERR_PARAM_INVALID;
   }
 } while (false);
 
