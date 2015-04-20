@@ -31,7 +31,7 @@ class fn_doctor
     $doctor_detail['ke_shi'] = (int)$doctor_info['ke_shi'];
     $doctor_detail['tec_title'] = (int)$doctor_info['tec_title'];
     $doctor_detail['aca_title'] = (int)$doctor_info['aca_title'];
-    $doctor_detail['adm_title'] = (int)$doctor_info['adm_title'];
+    $doctor_detail['adm_title'] = $doctor_info['adm_title'];
     $doctor_detail['hospital'] = $doctor_info['hospital'];
     $doctor_detail['expert_in'] = $doctor_info['expert_in'];
 

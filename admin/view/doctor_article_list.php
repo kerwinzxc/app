@@ -31,6 +31,10 @@ do {
     break;
   }
   $total_num = tb_doctor_article::query_article_total_num("doctor_id=$doctor_id");
+  if (($page - 1) * 10 > $total_num) {
+    $page = (int)($total_num / 10) + 1;
+  }
+  if ($page < 1) { $page = 1; }
 
   $article_list = tb_doctor_article::query_article_limit("doctor_id=$doctor_id",
                                                          'id desc',

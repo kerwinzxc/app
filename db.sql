@@ -190,3 +190,4 @@ create table if not exists doctor_article (
   primary key(id),
   index i_did(`doctor_id`)
 )engine=MyISAM default charset=utf8;
+

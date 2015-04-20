@@ -31,7 +31,7 @@ do {
   $total_num = tb_ba_topic_reply::query_topic_reply_total_num($topic_id);
   if ($total_num > 0) {
     if (($page - 1) * ONE_PAGE_ITEMS > $total_num) {
-      $page = (int)($total_num / ONE_PAGE_ITEMS);
+      $page = (int)($total_num / ONE_PAGE_ITEMS) + 1;
     }
     if ($page < 1) { $page = 1; }
 

@@ -42,7 +42,7 @@ do {
     if ($total_num > 0) {
       if (!empty($_GET['p'])) { $page = (int)$_GET['p']; }
       if (($page - 1) * ONE_PAGE_ITEMS > $total_num) {
-        $page = (int)($total_num / ONE_PAGE_ITEMS);
+        $page = (int)($total_num / ONE_PAGE_ITEMS) + 1;
       }
       if ($page < 1) { $page = 1; }
 
