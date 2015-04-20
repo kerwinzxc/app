@@ -12,7 +12,7 @@ class fn_ba_topic
       $author_id = (int)$topic_info['user_id'];
       $topic_brief['author'] = tb_user::query_name_by_id($author_id);
 
-      $topic_brief['title'] = $topic_info['title'];
+      $topic_brief['topic'] = $topic_info['topic'];
       $topic_brief['useful'] = (int)$topic_info['useful'];
       $topic_brief['useless'] = (int)$topic_info['useless'];
       $topic_brief['c_time'] = $topic_info['c_time'];

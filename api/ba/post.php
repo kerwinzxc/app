@@ -10,7 +10,7 @@ $ret_body = array();
 do {
   if (empty($_POST['sid'])
       || empty($_POST['ba_id'])
-      || empty($_POST['title'])
+      || empty($_POST['topic'])
       || empty($_POST['content'])) {
     $ret_code = ERR_PARAM_INVALID;
     break;
@@ -18,17 +18,17 @@ do {
 
   $sid = $_POST['sid'];
   $ba_id = (int)$_POST['ba_id'];
-  $title = $_POST['title'];
+  $topic = $_POST['topic'];
   $content = $_POST['content'];
   if (!user_session::is_sid($sid)
       || $ba_id <= 0
-      || strlen($title > 90)
+      || strlen($topic > 90)
       || strlen($content) > 12000) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
   if (get_magic_quotes_gpc()) {
-    $title = stripslashes($title);
+    $topic = stripslashes($topic);
     $content = stripslashes($content);
   }
 
@@ -47,7 +47,7 @@ do {
 
   $new_topic_id = tb_ba_topic::insert_new_one($ba_id,
                                               $user_id,
-                                              $title,
+                                              $topic,
                                               time());
   if ($new_topic_id === false) {
     $ret_code = ERR_DB_ERROR;

@@ -149,7 +149,7 @@ create table if not exists ba_topic (
 
   user_id             int unsigned not null default 0,        # author
 
-  title               varchar(90) not null default '',        #
+  topic               varchar(90) not null default '',        #
 
   useful              int unsigned not null default 0,        # 有用的
   useless             int unsigned not null default 0,        # 无用的
@@ -183,6 +183,7 @@ create table if not exists doctor_article (
   id                  int unsigned not null auto_increment,   # 文章ID
   doctor_id           int unsigned not null default 0,        # 医生ID
 
+  topic               varchar(90) not null default '',        #
   content             varchar(12000) not null default '',     # 
   c_time              int unsigned not null default 0,
 

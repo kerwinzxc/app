@@ -6,6 +6,7 @@ require_once MNG_ROOT . 'view/fill_menu_name.inc.php';
 require_once MNG_ROOT . 'libs/func.inc.php';
 require_once MNG_ROOT . 'autoload.php'; // below smarty
 
+$err_msg = '';
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
   do {
     if (empty($_GET['id'])) {
@@ -20,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
       break;
     }
 
-    $tpl->assign("id", $doctor_id);
+    $tpl->assign("doctor_id", $doctor_id);
 
     $tpl->assign("content_title", "添加文章 - <b>" . $doctor_info['name'] . "</b>");
     $tpl->assign("new_one", 1);
@@ -35,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
   do {
     $user = $_SESSION['user']['user'];
 
-    $doctor_id = $_POST['id'];
+    $doctor_id = $_POST['doctor_id'];
     $topic = $_POST['topic'];
     $content = $_POST['editorValue'];
 
@@ -50,11 +51,13 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
       $content = stripslashes($content);
     }
 
-    tb_doctor_article::insert_new_one($doctor_id,
-                                      $topic,
-                                      $content,
-                                      time());
-    exit;
+    $new_article_id = tb_doctor_article::insert_new_one($doctor_id,
+                                                        $topic,
+                                                        $content,
+                                                        time());
+    if ($new_article_id !== false) {
+      $err_msg = "添加成功!";
+    }
   } while (false);
   alert_and_redirect($err_msg, $_SERVER['HTTP_REFERER']);
 }

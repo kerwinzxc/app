@@ -73,6 +73,7 @@ do {
   }
 
   $total_num = tb_doctor::query_doctor_total_num($where);
+  $doctor_detail_list = array();
   if ($total_num > 0) {
     if (($page - 1) * ONE_PAGE_ITEMS > $total_num) {
       $page = (int)($total_num / ONE_PAGE_ITEMS);
@@ -88,12 +89,11 @@ do {
       break;
     }
 
-    $ret_body['list'] = fn_doctor::build_doctor_detail_list_from_info_list($doctor_list);
-    $ret_body['total_num'] = $total_num;
-  } else {
-    $ret_body['list'] = array();
-    $ret_body['total_num'] = 0;
+    $doctor_detail_list = fn_doctor::build_doctor_detail_list_from_info_list($doctor_list);
   }
+  $ret_body['list'] = $doctor_detail_list;
+  $ret_body['total_num'] = $total_num;
+  $ret_body['p'] = $page;
 
 } while (false);
 

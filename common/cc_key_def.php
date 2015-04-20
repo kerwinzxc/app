@@ -14,3 +14,4 @@ if (!defined('CK_PHONE_NUM_RECENT_REG_SMS_CODE')) define('CK_PHONE_NUM_RECENT_RE
 if (!defined('CK_PHONE_NUM_TODAY_REG_SMS_CODE')) define('CK_PHONE_NUM_TODAY_REG_SMS_CODE', 'phone_num:reg_today:sms:');
 if (!defined('CK_TOPIC_ID_2_TOPIC')) define('CK_TOPIC_ID_2_TOPIC', 'topic_id:topic:');
 if (!defined('CK_REPLY_ID_2_REPLY')) define('CK_REPLY_ID_2_REPLY', 'ba_replay_id:ba_replay:');
+if (!defined('CK_DOCTOR_ARTICLE_ID_TO_INFO')) define('CK_DOCTOR_ARTICLE_ID_TO_INFO', 'doctor_article:id:');

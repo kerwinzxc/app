@@ -3,8 +3,8 @@
 require_once __DIR__ . '/../init.php';
 
 $host = "127.0.0.1";
-$test_phone_num = 100;
-$doctor_test_phone_num = 100;
+$test_phone_num = 1000;
+$doctor_test_phone_num = 1000;
 $get_timeout = stream_context_create(array('http' => array('timeout' => 5))); 
 
 $phone_nums = array();

@@ -49,8 +49,8 @@ do {
 
     $total_num = tb_patient_emr::query_patient_emrs_num($patient_id);
     $emr_list = array();
+    $page = 1;
     if ($total_num > 0) {
-      $page = 1;
       if (!empty($_GET['p'])) { $page = (int)$_GET['p']; }
       if (($page - 1) * ONE_PAGE_ITEMS > $total_num) {
         $page = (int)($total_num / ONE_PAGE_ITEMS);
@@ -67,6 +67,7 @@ do {
     } // end of `if ($total_num'
     $ret_body['list'] = $emr_list;
     $ret_body['total_num'] = $total_num;
+    $ret_body['p'] = $page;
   } else { // other need emr_id
     if (empty($_GET['emr_id'])) {
       $ret_code = ERR_PARAM_INVALID;

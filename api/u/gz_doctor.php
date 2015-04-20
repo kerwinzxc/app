@@ -38,8 +38,8 @@ do {
   if ($act == 'get') { // get
     $total_num = tb_user_gz_doctor::query_user_guan_zhu_num($user_id);
     $gl = array();
+    $page = 1;
     if ($total_num > 0) {
-      $page = 1;
       if (!empty($_GET['p'])) { $page = (int)$_GET['p']; }
       if (($page - 1) * ONE_PAGE_ITEMS > $total_num) {
         $page = (int)($total_num / ONE_PAGE_ITEMS);
@@ -57,6 +57,7 @@ do {
       $gl = fn_doctor::build_doctor_detail_list_from_id_list($gl);
     } // end of `if ($total_num > 0)'
     $ret_body['total_num'] = $total_num;
+    $ret_body['p'] = $page;
     $ret_body['list'] = $gl;
   } else { // other need params
     if (empty($_GET['doctor_id'])) {

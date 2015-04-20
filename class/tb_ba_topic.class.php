@@ -9,15 +9,15 @@ class tb_ba_topic
 
   public static function insert_new_one($ba_id,
                                         $user_id,
-                                        $title,
+                                        $topic,
                                         $c_time)
   {
     $db = new sql(db_selector::get_db(db_selector::$db_w));
-    $title = $db->escape($title);
+    $topic = $db->escape($topic);
     $sql = "insert into "
       . self::$tb_name
-      . "(ba_id,user_id,title,c_time)"
-      . "value($ba_id,$user_id,'$title',$c_time)";
+      . "(ba_id,user_id,topic,c_time)"
+      . "value($ba_id,$user_id,'$topic',$c_time)";
     if ($db->execute($sql) === false) {
       return false;
     }
