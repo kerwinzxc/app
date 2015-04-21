@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
   } else {
     $tpl->assign("content_title", S_DOCTOR_LU_RU);
   }
-  $tpl->assign("refer", $_SERVER['HTTP_REFERER']);
+  $tpl->assign("refer", '');
   $tpl->assign("doctor_info_title", S_DOCTOR_XIN_XI);
   $tpl->assign("new_one", 1);
   $tpl->assign("inc_name", "doctor_info.html");
