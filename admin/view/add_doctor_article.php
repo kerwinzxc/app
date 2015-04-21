@@ -21,8 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
       break;
     }
 
+    $tpl->assign("refer", $_SERVER['HTTP_REFERER']);
     $tpl->assign("doctor_id", $doctor_id);
-
     $tpl->assign("content_title", "添加文章 - <b>" . $doctor_info['name'] . "</b>");
     $tpl->assign("new_one", 1);
     $tpl->assign("inc_name", "doctor_article.html");
@@ -57,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
                                                         time());
     if ($new_article_id !== false) {
       $err_msg = "添加成功!";
+      alert_and_redirect($err_msg, "view/doctor_article_view.php?id=$new_article_id&doctor_id=$doctor_id");
     }
   } while (false);
   alert_and_redirect($err_msg, $_SERVER['HTTP_REFERER']);

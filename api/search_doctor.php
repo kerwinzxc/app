@@ -20,11 +20,11 @@ do {
   $doctor_list = array();
   $where = '';
 
-  if (!empty($_GET['classify'])) {
-    $classify = (int)$_GET['classify'];
-  }
-  if (!empty($_GET['ke_shi'])) {
-    $ke_shi = (int)$_GET['ke_shi'];
+  if (!empty($_GET['name'])) {
+    $name = $_GET['name'];
+    if (get_magic_quotes_gpc()) {
+      $name = stripslashes($name);
+    }
   }
   if (!empty($_GET['hospital'])) {
     $hospital = $_GET['hospital'];
@@ -32,11 +32,11 @@ do {
       $hospital = stripslashes($hospital);
     }
   }
-  if (!empty($_GET['name'])) {
-    $name = $_GET['name'];
-    if (get_magic_quotes_gpc()) {
-      $name = stripslashes($name);
-    }
+  if (!empty($_GET['classify'])) {
+    $classify = (int)$_GET['classify'];
+  }
+  if (!empty($_GET['ke_shi'])) {
+    $ke_shi = (int)$_GET['ke_shi'];
   }
   if (!empty($_GET['p'])) {
     $page = (int)$_GET['p'];

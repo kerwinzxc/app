@@ -47,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
   alert_and_redirect($err_msg, 'login.php');
 }
 
+$tpl->assign("refer", $_SERVER['HTTP_REFERER']);
 $tpl->assign("err_msg", $err_msg);
 $tpl->assign("content_title", S_GE_REN_SHE_ZHI);
 $tpl->assign("my_info_title", S_GE_REN_SHE_ZHI);

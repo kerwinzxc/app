@@ -14,10 +14,9 @@ define('ERR_USER_PATIENTS_LIMIT', -1104);  $ERRORS[ERR_USER_PATIENTS_LIMIT] = '�
 define('ERR_USER_GZ_DOCTOR_LIMIT', -1105); $ERRORS[ERR_USER_GZ_DOCTOR_LIMIT] = '您的医生关注列表数量已经达到上限';
 define('ERR_USER_GZ_DOCTOR_EXIST', -1106); $ERRORS[ERR_USER_GZ_DOCTOR_EXIST] = '医生已经关注';
 define('ERR_ID_CARD_INVALID', -1107);      $ERRORS[ERR_ID_CARD_INVALID] = '身份证号无效';
-define('ERR_USER_GZ_KE_SHI_LIMIT', -1108); $ERRORS[ERR_USER_GZ_KE_SHI_LIMIT] = 'user guan zhu ke shi out of limit';
-define('ERR_USER_GZ_KE_SHI_EXIST', -1109); $ERRORS[ERR_USER_GZ_KE_SHI_EXIST] = 'user had guan zhu';
-define('ERR_USER_GZ_BA_LIMIT', -1110);     $ERRORS[ERR_USER_GZ_BA_LIMIT] = 'user guan zhu ba out of limit';
-define('ERR_USER_GZ_BA_EXIST', -1111);     $ERRORS[ERR_USER_GZ_BA_EXIST] = 'user had guan zhu';
+define('ERR_USER_GZ_KE_SHI_LIMIT', -1108); $ERRORS[ERR_USER_GZ_KE_SHI_LIMIT] = '您关注科室数量已经达到上限';
+define('ERR_USER_GZ_BA_LIMIT', -1109);     $ERRORS[ERR_USER_GZ_BA_LIMIT] = '您关注的话题吧已经达到上限';
+
 define('ERR_PHONE_NUM_HAD_REG', -1112);    $ERRORS[ERR_PHONE_NUM_HAD_REG] = '手机号码已经注册';
 define('ERR_REG_SMS_TIME_LIMIT', -1113);   $ERRORS[ERR_REG_SMS_TIME_LIMIT] = '您已提交验证码请求，请稍候!';
 define('ERR_REG_SMS_TODAY_LIMIT', -1114);  $ERRORS[ERR_REG_SMS_TODAY_LIMIT] = '您今日请求验证码次数太多，请明日再试!';

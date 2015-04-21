@@ -60,14 +60,11 @@ do {
         $ret_code = ERR_USER_GZ_BA_LIMIT;
         break;
       }
-      if (in_array($ba_id, $had_gz_list)) {
-        $ret_code = ERR_USER_GZ_BA_EXIST;
-        break;
-      }
-
-      if (tb_user_gz_ba::insert_new_one($user_id, $ba_id) === false) {
-        $ret_code = ERR_DB_ERROR;
-        break;
+      if (!in_array($ba_id, $had_gz_list)) {
+        if (tb_user_gz_ba::insert_new_one($user_id, $ba_id) === false) {
+          $ret_code = ERR_DB_ERROR;
+          break;
+        }
       }
       $ret_body['ba_id'] = $ba_id;
     } elseif ($act == 'del') { // del

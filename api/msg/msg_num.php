@@ -13,10 +13,6 @@ do {
     break;
   }
   $sid = $_GET['sid'];
-  if (!user_session::is_sid($sid)) {
-    $ret_code = ERR_PARAM_INVALID;
-    break;
-  }
 
   $s_info = user_session::get_session($sid);
   if ($s_info === false) {
@@ -30,7 +26,12 @@ do {
   }
   $user_id = $s_info['user_id'];
 
-  $ret_body['msg_num'] = 1;
+  $unread_num = tb_user_msg::query_unread_num($user_id);
+  if ($unread_num === false) {
+    $ret_code = ERR_DB_ERROR;
+    break;
+  }
+  $ret_body['msg_num'] = $unread_num;
 
 } while (false);
 

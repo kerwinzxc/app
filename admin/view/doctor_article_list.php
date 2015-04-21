@@ -49,6 +49,7 @@ do {
     $pages -= 1;
   }
 
+  $tpl->assign("refer", $_SERVER['HTTP_REFERER']);
   $tpl->assign("id", $doctor_id);
   $tpl->assign("total_num", $total_num);
   $tpl->assign("page", $page);

@@ -90,7 +90,7 @@ create table if not exists patient_emr (
   user_id             int unsigned not null,                  #
   patient_id          int unsigned not null,                  #
 
-  sd_time             int unsigned not null,                  # see doctor time
+  sd_time             int unsigned not null default 0,        # see doctor time
   hospital            varchar(90) not null default '',        # 就诊医院
   ke_shi              varchar(90) not null default '',        # 科室
   doctor_name         varchar(30) not null default '',        # 医生姓名
@@ -104,6 +104,23 @@ create table if not exists patient_emr (
   index i_pid(`patient_id`)
 )engine=MyISAM default charset=utf8;
 
+-- 用户消息
+drop table if exists user_msg;
+create table if not exists user_msg (
+  id                  int unsigned not null auto_increment,   #
+  user_id             int unsigned not null,                  #
+
+  msg_type            int unsigned not null default 0,        # 消息类型
+  readed              tinyint not null default 0,             # 已读/未读      1/0
+  send_time           int unsigned not null default 0,        # 消息发送时间
+  title               varchar(90) not null default '',        # 消息主题
+  content             varchar(12000) not null default '',     # 消息内容
+
+  primary key(id),
+  index i_u(`user_id`),
+  index i_mtype(`msg_type`)
+)engine=MyISAM default charset=utf8;
+
 -- doctor info
 drop table if exists doctor;
 create table if not exists doctor (
@@ -112,6 +129,7 @@ create table if not exists doctor (
   passwd              char(32) not null default '',           # md5
   employe_id          varchar(30) not null default '',        # 录入者
 
+  master_id           int unsigned not null default 0,        # 所长
   classify            tinyint not null default 0,             # 医生类别
   name                varchar(30) not null default '',        #
   sex                 tinyint not null default 1,             # 0: famale 1: male

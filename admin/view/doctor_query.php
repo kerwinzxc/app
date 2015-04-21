@@ -82,6 +82,7 @@ if (!isset($_GET['kw'])) {
   }
 }
 
+$tpl->assign("refer", $_SERVER['HTTP_REFERER']);
 $tpl->assign("content_title", S_DOCTOR_CHA_XUN);
 $tpl->assign("doctor_rows", $doctor_rows === false ? array() : $doctor_rows);
 $tpl->assign("inc_name", "doctor_query.html");

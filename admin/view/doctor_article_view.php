@@ -33,6 +33,7 @@ do {
     break;
   }
 
+  $tpl->assign("refer", $_SERVER['HTTP_REFERER']);
   $tpl->assign("id", $article_id);
   $tpl->assign("doctor_id", $doctor_id);
   $tpl->assign("topic", $article_info['topic']);

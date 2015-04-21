@@ -142,6 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $err_msg = "query failed";
   } else {
     $doctor_id = $_GET['id'];
+    $tpl->assign("refer", $_SERVER['HTTP_REFERER']);
     build_html($doctor_id);
   }
 }

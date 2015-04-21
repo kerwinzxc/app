@@ -20,8 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
       break;
     }
 
+    $tpl->assign("refer", $_SERVER['HTTP_REFERER']);
     $tpl->assign("id", $doctor_id);
-
     $tpl->assign("content_title", "添加文章 - <b>" . $doctor_info['name'] . "</b>");
     $tpl->assign("new_one", 1);
     $tpl->assign("inc_name", "doctor_article.html");
