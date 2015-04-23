@@ -1,0 +1,21 @@
+
+<div class="input_form" style="margin:20px 25px 0px 25px;padding-bottom:10px;">
+  <form action="view/add_doctor_video.php"
+    method="post"
+    enctype="multipart/form-data">
+  <input type='hidden' name='doctor_id' value='{if isset($doctor_id)}{$doctor_id}{/if}'/>
+  <table>
+    <tr>
+    <td class="form_label">视频标题</td>
+    <td><input style="width:400px;padding-left:2px;" id='topic' type='text' name='topic'><p class='must_p'>*</p></td>
+    </tr>
+    <tr>
+    <td class="form_label">医生视频</td>
+    <td class="upload"><input style='font-size:10px;color:#C00;' name='txt1' type="text" disabled="disabled" value='不能超50M (限定格式：mp4,flv)'/><input type="button" value="浏览"/><input type="file" name='video' onchange="txt1.value=this.value;"/></td>
+  </table>
+  <center>
+  <input style="width:80px;margin-top:40px;" type='submit' value='上传' />
+  </center>
+  </form>
+</div>
+

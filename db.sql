@@ -209,3 +209,17 @@ create table if not exists doctor_article (
   index i_did(`doctor_id`)
 )engine=MyISAM default charset=utf8;
 
+-- 专家视频
+drop table if exists doctor_video;
+create table if not exists doctor_video (
+  id                  int unsigned not null auto_increment,   # 视频ID
+  doctor_id           int unsigned not null default 0,        # 医生ID
+
+  topic               varchar(90) not null default '',        #
+  video_url           varchar(255) not null default '',       #
+  c_time              int unsigned not null default 0,
+
+  primary key(id),
+  index i_did(`doctor_id`)
+)engine=MyISAM default charset=utf8;
+

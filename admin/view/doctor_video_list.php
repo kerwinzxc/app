@@ -30,17 +30,17 @@ do {
     $err_msg = "查找该医生失败";
     break;
   }
-  $total_num = tb_doctor_article::query_article_total_num($doctor_id);
+  $total_num = tb_doctor_video::query_video_total_num($doctor_id);
   if (($page - 1) * 10 > $total_num) {
     $page = (int)($total_num / 10) + 1;
   }
   if ($page < 1) { $page = 1; }
 
-  $article_list = tb_doctor_article::query_article_limit("doctor_id=$doctor_id",
-                                                         'id desc',
-                                                         ($page - 1) * 10,
-                                                         10);
-  if ($article_list === false) {
+  $video_list = tb_doctor_video::query_video_limit("doctor_id=$doctor_id",
+                                                   'id desc',
+                                                   ($page - 1) * 10,
+                                                   10);
+  if ($video_list === false) {
     $err_msg = '访问数据库失败';
     break;
   }
@@ -54,11 +54,11 @@ do {
   $tpl->assign("total_num", $total_num);
   $tpl->assign("page", $page);
   $tpl->assign("pages", $pages);
-  $tpl->assign("article_rows", $article_list);
+  $tpl->assign("video_rows", $video_list);
 
   $tpl->assign("content_title", "文章列表 - <b>" . $doctor_info['name'] . "</b>");
   $tpl->assign("new_one", 1);
-  $tpl->assign("inc_name", "doctor_article_list.html");
+  $tpl->assign("inc_name", "doctor_video_list.html");
   //$tpl->assign("h_inc_name", "editor_header.html");
 
   $tpl->display("home.html");

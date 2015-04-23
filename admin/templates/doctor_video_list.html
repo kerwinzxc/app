@@ -1,0 +1,24 @@
+<div class="query" style="margin:8px;">
+  <table cellspacing="10">
+    <tr style="font-weight:bold;">
+      <th style="width:574px;height:44px;background:#E9893A;">标题</th>
+      <th style="width:120px;height:44px;background:#E9893A;">创建时间</th>
+      <th style="width:100px;height:44px;background:#E9893A;">操作</th>
+    </tr>
+    {foreach from=$video_rows item=row}
+    <tr>
+      <td style="height:42px;"><a href="view/doctor_video_view.php?id={$row.id}&doctor_id={$row.doctor_id}">{$row.topic}</a></td>
+      <td>{$row.c_time|date_format:"%Y-%m-%d %H:%M:%S"}</td>
+      <td><a href="view/doctor_video_del.php?id={$row.id}&doctor_id={$row.doctor_id}">删除</a></td>
+    </tr>
+    {/foreach}
+  </table>
+  <div style="margin-top:5px">
+    <a style="display:inline;margin:10px;" href="view/add_doctor_video.php?id={$id}">添加</a>
+    <div style="float:right;display:inline">
+    <p style="display:inline;">共{if !isset($total_num)}0{else}{$total_num}{/if}篇</p>
+    {if !isset($page) || $page eq 1}<p style="display:inline;">上一页</p>{else}<a href="view/doctor_video_list.php?id={$id}&p={$page-1}">上一页</a>{/if}
+    {if !isset($page) || $page ge $pages}<p style="display:inline;">下一页</p>{else}<a href="view/doctor_video_list.php?id={$id}&p={$page+1}">下一页</a>{/if}
+    </div>
+  </div>
+</div>
