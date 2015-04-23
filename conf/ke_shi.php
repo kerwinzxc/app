@@ -2,6 +2,10 @@
 
 $ke_shi = array(
                 "10" => array("name" => "内科",
+
+                              "sub"  => array("10" => "心血管内科"),
+                                              "11" => array("name" => "神经内科"),
+                                              ),
                               "sub"  => array("10" => array("name" => "消化内科",
                                                             "sub" => array("10" => array("name" => "胃病"),
                                                                            "11" => array("name" => "肠炎"),
@@ -13,7 +17,8 @@ $ke_shi = array(
                                                                            "11" => array("name" => "这疼"),
                                                                           )
                                                            )
-                                              )
+                                              ),
+
                               ),
                 "11" => array("name" => "外科",
                               "sub"  => array("10" => array("name" => "消化内科",

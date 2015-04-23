@@ -19,7 +19,6 @@ create table employe (
   index i_name(`name`)
 )engine=MyISAM default charset=utf8;
 
--- read more than insert/update, so use `MyISAM'
 drop table if exists user;
 create table if not exists user (
   id                  int unsigned not null auto_increment,   #

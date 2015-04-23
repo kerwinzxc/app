@@ -12,15 +12,34 @@ class util
   }
   function post_data($url, $data, $timeout = 1)
   {
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    $ret = curl_exec($ch);
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_POST, 1);
+    curl_setopt($curl, CURLOPT_HEADER, false);
+    curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    $ret = curl_exec($curl);
     curl_close($ch);
     return $ret;
+  }
+  public static function set_image_size($path, $width, $height)
+  {
+    $size = getimagesize($path);
+    if ($size[2] == 1) {
+      $im_in = imagecreatefromgif($path);   
+    } else if ($size[2] == 2) {
+      $im_in = imagecreatefromjpeg($path);   
+    } else if ($size[2] == 3) {
+      $im_in = imagecreatefrompng($path);  
+    }
+
+    $im_out = imagecreatetruecolor($width, $height);
+    imagecopyresampled($im_out,$im_in,0,0,0,0,$width,$height,$size[0],$size[1]);
+    imagejpeg($im_out, $path);
+    chmod($path, 0644);
+    imagedestroy($im_in);
+    imagedestroy($im_out);
   }
   public static function escape($str)
   {
