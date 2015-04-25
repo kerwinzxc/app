@@ -22,6 +22,10 @@ class check
   {
     return preg_match('/^[\w]{3,20}$/', $v);
   }
+  public static function is_sms_code($v)
+  {
+    return preg_match('/^[0-9]{4,6}$/', $v);
+  }
   public static function is_passwd($v)
   {
     return preg_match('/^[\w~!@#$%^&*()\-_=+,.:;]{6,18}$/', $v);

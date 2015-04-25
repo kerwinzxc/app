@@ -9,19 +9,27 @@ $ret_body = array();
 
 do {
   if (empty($_POST['user'])
-      || empty($_POST['passwd'])) {
+      || empty($_POST['passwd'])
+      || empty($_POST['sms_code'])) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
   $phone_num = $_POST['user'];
   $passwd    = $_POST['passwd'];
+  $sms_code  = $_POST['sms_code'];
 
   if (!check::is_phone_num($phone_num)
-      || !check::is_passwd($passwd)) {
+      || !check::is_passwd($passwd)
+      || !check::is_sms_code($sms_code)) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
-  $passwd = md5($passwd);
+
+  /* for test
+  if (sms::verify_reg_sms($phone_num, $sms_code)) {
+    $ret_code = ERR_SMS_ERROR;
+    break;
+  }*/
   $user_info = tb_user::query_user_by_phone_num($phone_num);
   if ($user_info === false) {
     $ret_code = ERR_DB_ERROR;
@@ -32,6 +40,7 @@ do {
     break;
   }
 
+  $passwd = md5($passwd);
   $new_user_id = tb_user::insert_new_one($phone_num, $passwd, time());
   if ($new_user_id === false) {
     $ret_code = ERR_DB_ERROR;
