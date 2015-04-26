@@ -1,8 +1,29 @@
-<div style="margin:20px 25px 0px 25px;padding-bottom:10px;">
-<div><p style="text-align:center;font-size:16px;font-weight:bold;">{$topic}</p>
-<hr style="margin-top:20px;height:1px;border:0;background-color:#FF9900;"/>
-<div style="padding:10px 15px 0px 15px;word-wrap:break-word;word-break:break-all;">{$content}</div>
-<center>
-<input style='text-indent:10px;letter-spacing:10px;font-size:14px;width:80px;height:30px;margin:15px 0 0 0;' type='button' value='编辑' onclick="javascript:location.href='view/doctor_article_modify.php?id={$id}&doctor_id={$doctor_id}'" />
-</center>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    <base href="{$base_url}" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>滴滴快医-后台管理系统</title>
+    <link href="{$base_url}editor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet"/>
+    <script type="text/javascript" src="{$base_url}editor/third-party/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="{$base_url}editor/umeditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="{$base_url}editor/umeditor.min.js"></script>
+    <script type="text/javascript" src="{$base_url}editor/lang/zh-cn/zh-cn.js"></script>
+  </head>
+  <body>
+<div style="width:1024px;margin:0 auto;padding-bottom:10px;">
+  <div style="height:45px;background:#FF9900;line-height:45px;padding-left:10px;margin-bottom:10px;">
+    <p style="padding-left:0px;display:inline;">{$content_title}</p>
+  </div>
+  <div style="margin:20px 25px 0px 25px;padding-bottom:10px;">
+  <div><p style="text-align:center;font-size:16px;font-weight:bold;">{$topic}</p>
+  <hr style="margin-top:20px;height:1px;border:0;background-color:#FF9900;"/>
+  <div style="padding:10px 15px 0px 15px;word-wrap:break-word;word-break:break-all;">{$content}</div>
+  <center>
+  <input style='text-indent:10px;letter-spacing:10px;font-size:14px;width:80px;height:30px;margin:15px 0 0 0;' type='button' value='编辑' onclick="javascript:location.href='view/doctor_article_modify.php?id={$id}&doctor_id={$doctor_id}'" />
+  </center>
+  </div>
 </div>
+
+</body>
+</html>

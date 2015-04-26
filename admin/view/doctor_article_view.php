@@ -40,9 +40,8 @@ do {
   $tpl->assign("content", $article_info['content']);
 
   $tpl->assign("content_title", "查看文章 - <b>" . $doctor_info['name'] . "</b>");
-  $tpl->assign("inc_name", "doctor_article_view.html");
 
-  $tpl->display("home.html");
+  $tpl->display("doctor_article_view.html");
   exit;
 } while (false);
 alert_and_redirect($err_msg, $_SERVER['HTTP_REFERER']);

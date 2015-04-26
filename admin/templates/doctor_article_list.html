@@ -7,14 +7,14 @@
     </tr>
     {foreach from=$article_rows item=row}
     <tr>
-      <td style="height:42px;"><a href="view/doctor_article_view.php?id={$row.id}&doctor_id={$row.doctor_id}">{$row.topic}</a></td>
+      <td style="height:42px;"><a href="view/doctor_article_view.php?id={$row.id}&doctor_id={$row.doctor_id}" target="_blank">{$row.topic}</a></td>
       <td>{$row.c_time|date_format:"%Y-%m-%d %H:%M:%S"}</td>
-      <td><a href="view/doctor_article_modify.php?id={$row.id}&doctor_id={$row.doctor_id}">编辑</a></td>
+      <td><a href="view/doctor_article_modify.php?id={$row.id}&doctor_id={$row.doctor_id}" target="_blank">编辑</a></td>
     </tr>
     {/foreach}
   </table>
   <div style="margin-top:5px">
-    <a style="display:inline;margin:10px;" href="view/add_doctor_article.php?id={$id}">添加</a>
+    <a style="display:inline;margin:10px;" href="view/add_doctor_article.php?id={$id}" target="_blank">添加</a>
     <div style="float:right;display:inline">
     <p style="display:inline;">共{if !isset($total_num)}0{else}{$total_num}{/if}篇</p>
     {if !isset($page) || $page eq 1}<p style="display:inline;">上一页</p>{else}<a href="view/doctor_article_list.php?id={$id}&p={$page-1}">上一页</a>{/if}

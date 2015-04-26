@@ -1,3 +1,16 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    <base href="{$base_url}" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>滴滴快医-后台管理系统</title>
+    <link href="{$base_url}editor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet"/>
+    <script type="text/javascript" src="{$base_url}editor/third-party/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="{$base_url}editor/umeditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="{$base_url}editor/umeditor.min.js"></script>
+    <script type="text/javascript" src="{$base_url}editor/lang/zh-cn/zh-cn.js"></script>
+  </head>
+  <body>
 <script type="text/javascript">
 {literal}
 function submitArticleValidate(){
@@ -18,7 +31,10 @@ function submitArticleValidate(){
 }
 {/literal}
 </script>
-<div style="margin:20px 25px 0px 25px;padding-bottom:10px;">
+<div style="width:1024px;margin:0 auto;padding-bottom:10px;">
+  <div style="height:45px;background:#FF9900;line-height:45px;padding-left:10px;margin-bottom:10px;">
+    <p style="padding-left:0px;display:inline;">{$content_title}</p>
+  </div>
   <form action={if $new_one eq 1}"view/add_doctor_article.php"{else}"view/doctor_article_modify.php"{/if}
     method="post"
     enctype="multipart/form-data"
@@ -41,3 +57,5 @@ var um = UM.getEditor('umEditor');
 {/literal}
 </script>
 
+</body>
+</html>

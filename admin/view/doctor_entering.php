@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         . $mime[1];
 
       move_uploaded_file($_FILES[$photo]['tmp_name'], MNG_ROOT . 'image/' . $filename);
-      //util::set_image_size(MNG_ROOT . 'image/' . $filename, 120, 120);
+      util::set_image_size(MNG_ROOT . 'image/' . $filename, 120, 120);
     }
     if ($err_msg != '') {
       break;

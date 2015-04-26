@@ -21,14 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
       break;
     }
 
-    $tpl->assign("refer", $_SERVER['HTTP_REFERER']);
     $tpl->assign("doctor_id", $doctor_id);
     $tpl->assign("content_title", "添加文章 - <b>" . $doctor_info['name'] . "</b>");
     $tpl->assign("new_one", 1);
     $tpl->assign("inc_name", "doctor_article.html");
-    $tpl->assign("h_inc_name", "editor_header.html");
 
-    $tpl->display("home.html");
+    $tpl->display("doctor_article.html");
     exit;
   } while (false);
   alert_and_redirect($err_msg, $_SERVER['HTTP_REFERER']);
