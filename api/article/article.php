@@ -41,7 +41,7 @@ do {
   $ret_body['list'] = $article_list;
 } while (false);
 
-$ret_body['code'] = $ret_code;
+$ret_body['code'] = (int)$ret_code;
 $ret_body['desc'] = $ERRORS[$ret_code];
 
 echo json_encode($ret_body);
