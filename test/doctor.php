@@ -18,7 +18,7 @@ function test_add_doctor($users) {
                                                  1,
                                                  $doctor_names[array_rand($doctor_names)],
                                                  mt_rand(0, 1),
-                                                 '1e7371a8cdfb8752a3d289c9200f68b6.png',
+                                                 'http://www.didikuaiyi.com/admin/image/1e7371a8cdfb8752a3d289c9200f68b6.png',
                                                  1,
                                                  1,
                                                  1,

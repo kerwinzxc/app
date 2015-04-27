@@ -160,11 +160,7 @@ function build_html($doctor_id)
     $tpl->assign("phone_num", $doctor_info['phone_num']);
     $tpl->assign("classify", $doctor_info['classify']);
     $tpl->assign("sex", $doctor_info['sex']);
-
-    $icon_url = $doctor_info['icon_url'];
-    $icon_url = empty($icon_url) ? '' : BASE_URL . "image/{$icon_url}";
-    $tpl->assign("icon_url", $icon_url);
-
+    $tpl->assign("icon_url", $doctor_info['icon_url']);
     $tpl->assign("ke_shi", $doctor_info['ke_shi']);
     $tpl->assign("tec_title", $doctor_info['tec_title']);
     $tpl->assign("aca_title", $doctor_info['aca_title']);

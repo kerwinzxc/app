@@ -6,7 +6,6 @@
 
 define('APP_ROOT', __DIR__);
 define('LOG_DIR', APP_ROOT . '/logs');
-define('ASSETS_BASE_URL', 'http://192.168.0.220/admin/');
 
 require_once APP_ROOT . '/common/error.php';
 

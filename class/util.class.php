@@ -20,7 +20,7 @@ class util
     curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
     $ret = curl_exec($curl);
-    curl_close($ch);
+    curl_close($curl);
     return $ret;
   }
   public static function set_image_size($path, $width, $height)

@@ -35,18 +35,17 @@ class sms
     $ck = CK_PHONE_NUM_RECENT_REG_SMS_CODE . $phone_num;
     $cc_ret = $cc->get($ck);
     if ($cc_ret !== false) {
-      $cc_ret = json_decode($cc_ret, true);
-      if (time() - (int)$cc_ret['time'] < $ltime) {
+      if (time() - (int)$cc_ret < $ltime) {
         return true;
       }
     }
     return false;
   }
-  public static function update_recent_reg($phone_num, $code)
+  public static function update_recent_reg($phone_num)
   {
     $cc = new cache();
     $ck = CK_PHONE_NUM_RECENT_REG_SMS_CODE . $phone_num;
-    $cc_v = json_encode(array('time' => time(), 'code' => $code));
+    $cc_v = (string)time();
     $cc->set($ck, $cc_v);
   }
   public static function check_today_reg_limit($phone_num, $limit = 5)
@@ -77,14 +76,13 @@ class sms
     }
     return $ret == $code;
   }
-  public static function send_reg_sms_code($phone_num)
+  public static function send_reg_sms_code($phone_num, $code)
   {
-    $code = self::verify_code(4);
-    $post_data = array('account' => 'cf_shaovi',
-                       'password' => 'zhongwei',
-                       'mobile' => $phone_num,
-                       'content' => "您的验证码是：【{$code}】。请不要把验证码泄露给其他人。");
-    $post_result = util::post_data('http://106.ihuyi.cn/webservice/sms.php?method=Submit', $post_data, 1);
+    $data = array('account' => 'cf_shaovi',
+                  'password' => 'zhongwei',
+                  'mobile' => $phone_num,
+                  'content' => "您的验证码是：【{$code}】。请不要把验证码泄露给其他人。");
+    $post_result = util::post_data('http://106.ihuyi.cn/webservice/sms.php?method=Submit', $data, 1);
     if (!empty($post_result)) {
       $post_result = self::xml_to_array($post_result);
       if ($post_result['SubmitResult']['code'] == 2) {

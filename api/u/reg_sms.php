@@ -26,7 +26,7 @@ do {
     $ret_code = ERR_REG_SMS_TODAY_LIMIT;
     break;
   }
-  sms::update_recent_reg($phone_num, $code);
+  sms::update_recent_reg($phone_num);
 
   $user_info = tb_user::query_user_by_phone_num($phone_num);
   if ($user_info === false) {
@@ -38,7 +38,8 @@ do {
     break;
   }
 
-  if (sms::send_reg_sms_code($phone_num)) {
+  $code = sms::verify_code(4);
+  if (sms::send_reg_sms_code($phone_num, $code)) {
     sms::save_reg_sms_code($phone_num, $code);
   } else {
     $ret_code = ERR_REG_SMS_FAILED;

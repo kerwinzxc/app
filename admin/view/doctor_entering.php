@@ -108,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
                                                $classify,
                                                $name,
                                                $sex,
-                                               $filename,
+                                               empty($filename) ? '' : BASE_URL . "image/$filename",
                                                $ke_shi,
                                                $tec_title,
                                                $aca_title,

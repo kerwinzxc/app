@@ -27,11 +27,7 @@ class fn_doctor
     $doctor_detail['name'] = $doctor_info['name'];
     $doctor_detail['sex'] = (int)$doctor_info['sex'];
     $doctor_detail['classify'] = (int)$doctor_info['classify'];
-
-    $icon_url = $doctor_info['icon_url'];
-    $icon_url = empty($icon_url) ? '' : ASSETS_BASE_URL . "image/{$icon_url}";
-    $doctor_detail['icon_url'] = $icon_url;
-
+    $doctor_detail['icon_url'] = $doctor_info['icon_url'];
     $doctor_detail['ke_shi'] = (int)$doctor_info['ke_shi'];
     $doctor_detail['tec_title'] = (int)$doctor_info['tec_title'];
     $doctor_detail['aca_title'] = (int)$doctor_info['aca_title'];

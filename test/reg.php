@@ -9,7 +9,8 @@ function test_reg_user($phone_nums) {
   foreach ($phone_nums as $phone_num) {
     $ret = json_decode(util::post_data("http://{$host}/api/u/reg.php",
                                        array('user' => "$phone_num",
-                                             'passwd' => "000000")), true);
+                                             'passwd' => "000000",
+                                             'sms_code' => '2323')), true);
     if ((int)$ret['code'] == 0) {
       $reg_ok_users[] = $phone_num;
     } else {
