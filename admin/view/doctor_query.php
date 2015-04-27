@@ -50,7 +50,7 @@ if (!isset($_GET['kw'])) {
     if (!empty($where)) {
       $where = $where . " and name like '%%{$name}%%'";
     } else {
-      $where = "name='$name'";
+      $where = "name like '%%{$name}%%'";
     }
   }
   if (!empty($classify) && is_numeric($classify)) {
@@ -75,7 +75,7 @@ if (!isset($_GET['kw'])) {
         'id desc',
         ($page - 1) * 10,
         10);
-    $pages = $total_num / 10 + 1;
+    $pages = (int)($total_num / 10) + 1;
     if ($total_num % 10 == 0) {
       $pages -= 1;
     }
