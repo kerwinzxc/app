@@ -96,7 +96,10 @@ window.onload = loadFun;
             <li><a href="view/add_doctor_article.php?id={$row.id}" target="_blank">添加文章</a></li>
             <li><a href="view/doctor_video_list.php?id={$row.id}">视频列表</a></li>
             <li><a href="view/add_doctor_video.php?id={$row.id}">添加视频</a></li>
-            <li><a href="view/doctor_entering.php?master_id={$row.id}">添加助手</a></li>
+            {if $row.classify eq 2}
+            <li><a href="view/doctor_entering.php?master_id={$row.id}">添加下属</a></li>
+            <li><a href="view/doctor_xiashu.php?master_id={$row.id}">下属列表</a></li>
+            {/if}
           </ul>  
           </li>
         </ul>

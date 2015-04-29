@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
   $sex = $_POST['sex'];
   $phone_num = $_POST['phone_num'];
   $master_id = 0;
-  if (!isset($_POST['master_id'])) {
+  if (!empty($_POST['master_id'])) {
     $master_id = $_POST['master_id'];
   }
   $classify = $_POST['classify'];
@@ -73,6 +73,8 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     //upload file
     $err_msg = '';
     $filename = '';
+    $origin_icon_url = '';
+    $real_icon_url = '';
     $photo = 'photo';
     if (!empty($_FILES[$photo]["name"])) {
       $filename = $_FILES[$photo]["name"];
@@ -89,12 +91,20 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         break;
       }
       $mime = explode('/', $_FILES[$photo]['type']);
-      $filename = md5($phone_num . "doctor_icon")
-        . "."
-        . $mime[1];
+      $ext = $mime[1];
+      $basename = md5($phone_num . "doctor_icon");
 
-      move_uploaded_file($_FILES[$photo]['tmp_name'], MNG_ROOT . 'image/' . $filename);
-      util::set_image_size(MNG_ROOT . 'image/' . $filename, 120, 120);
+      $filename = $basename . "." . $ext;
+      $path = MNG_ROOT . 'image/';
+
+      move_uploaded_file($_FILES[$photo]['tmp_name'], $path . $filename);
+
+      $filename_200x200 = $basename . "_200x200." . $ext;
+      copy($path . $filename, $path . $filename_200x200);
+      util::set_image_size($path . $filename_200x200, 200, 200);
+
+      $origin_icon_url = BASE_URL . "image/$filename";
+      $real_icon_url = BASE_URL . "image/$filename_200x200";
     }
     if ($err_msg != '') {
       break;
@@ -108,7 +118,8 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
                                                $classify,
                                                $name,
                                                $sex,
-                                               empty($filename) ? '' : BASE_URL . "image/$filename",
+                                               $origin_icon_url,
+                                               $real_icon_url,
                                                $ke_shi,
                                                $tec_title,
                                                $aca_title,

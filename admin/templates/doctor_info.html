@@ -39,7 +39,9 @@
           <select style="display:inline;width:100px;" id='classify' name='classify'>
           <option value=""  >--医生类别--</option>
           <option value="1" {if isset($classify) && $classify eq 1} selected="selected"{/if}>普通医生</option>
+         {if ! isset($master_name)}
           <option value="2" {if isset($classify) && $classify eq 2} selected="selected"{/if}>医学泰斗</option>
+         {/if}
           </select>
           <p class='must_p' style='font-size:14px;'>* &nbsp;(内部定义类别)</p></td>
         </tr>

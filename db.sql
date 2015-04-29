@@ -132,6 +132,7 @@ create table if not exists doctor (
   classify            tinyint not null default 0,             # 医生类别
   name                varchar(30) not null default '',        #
   sex                 tinyint not null default 1,             # 0: famale 1: male
+  origin_icon_url     varchar(255) not null default '',       #
   icon_url            varchar(255) not null default '',       #
 
   ke_shi              int unsigned not null default 0,        # 科室

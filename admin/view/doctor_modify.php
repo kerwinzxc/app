@@ -13,7 +13,6 @@ $recent_jh_num = 0;
 
 $tpl->assign("content_title", S_DOCTOR_XIN_XI);
 $tpl->assign("doctor_info_title", S_DOCTOR_XIN_XI);
-$tpl->assign("show_recent_jh", 1);
 $tpl->assign("new_one", 0);
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -69,6 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     //upload file
     $err_msg = '';
     $filename = '';
+    $origin_icon_url = '';
+    $real_icon_url = '';
     $photo = 'photo';
     if (!empty($_FILES[$photo]["name"])) {
       $filename = $_FILES[$photo]["name"];
@@ -85,11 +86,20 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         break;
       }
       $mime = explode('/', $_FILES[$photo]['type']);
-      $filename = md5($phone_num . "doctor_icon")
-        . "."
-        . $mime[1];
+      $ext = $mime[1];
+      $basename = md5($phone_num . "doctor_icon");
 
-      move_uploaded_file($_FILES[$photo]['tmp_name'], MNG_ROOT . 'image/' . $filename);
+      $filename = $basename . "." . $ext;
+      $path = MNG_ROOT . 'image/';
+
+      move_uploaded_file($_FILES[$photo]['tmp_name'], $path . $filename);
+
+      $filename_200x200 = $basename . "_200x200." . $ext;
+      copy($path . $filename, $path . $filename_200x200);
+      util::set_image_size($path . $filename_200x200, 200, 200);
+
+      $origin_icon_url = BASE_URL . "image/$filename";
+      $real_icon_url = BASE_URL . "image/$filename_200x200";
     }
     if ($err_msg != '') {
       break;
@@ -108,7 +118,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
     $update_info['sex'] = $sex;
     if (!empty($filename)) {
-      $update_info['icon_url'] = $filename;
+      $update_info['icon_url'] = $real_icon_url;
+      $update_info['origin_icon_url'] = $origin_icon_url;
     }
     if (!empty($ke_shi)) {
       $update_info['ke_shi'] = $ke_shi;
@@ -173,6 +184,5 @@ function build_html($doctor_id)
 }
 
 $tpl->assign("err_msg", $err_msg);
-$tpl->assign("recent_jh_num", $recent_jh_num);
 $tpl->assign("inc_name", "doctor_info.html");
 $tpl->display("home.html");
