@@ -13,9 +13,11 @@ do {
   $total_num = 0;
   $page = 1;
   $classify = 0;
-  $ke_shi = 0;
+  $ke_shi = '';
+  $ke_shi_id = 0;
   $hospital = '';
   $name = '';
+  $ke_shi_list = array();
 
   $doctor_list = array();
   $where = '';
@@ -35,12 +37,17 @@ do {
   if (!empty($_GET['classify'])) {
     $classify = (int)$_GET['classify'];
   }
-  if (!empty($_GET['ke_shi'])) {
-    $ke_shi = (int)$_GET['ke_shi'];
+  if (!empty($_GET['ke_shi_id'])) {
+    $ke_shi_list[] = (int)$_GET['ke_shi_id'];
+  } else if (!empty($_GET['ke_shi'])) {
+    $ke_shi = $_GET['ke_shi'];
+    $ke_shi_list = ke_shi::get_match_id_list($ke_shi);
   }
   if (!empty($_GET['p'])) {
     $page = (int)$_GET['p'];
   }
+
+  // build where
   if ($classify != 0) {
     if (!empty($where)) {
       $where = $where . " and classify=$classify";
@@ -48,11 +55,12 @@ do {
       $where = "classify=$classify";
     }
   }
-  if ($ke_shi != 0) {
+  if (!empty($ke_shi_list)) {
+    $ke_shi_list = implode(",", $ke_shi_list);
     if (!empty($where)) {
-      $where = $where . " and ke_shi=$ke_shi";
+      $where = $where . " and ke_shi in($ke_shi_list)";
     } else {
-      $where = "ke_shi=$ke_shi";
+      $where = "ke_shi in($ke_shi_list)";
     }
   }
   if (!empty($hospital)) {

@@ -11,16 +11,17 @@ function test_add_doctor($users) {
     $di = tb_doctor::query_doctor_by_phone_num($phone_num);
     if (empty($di)) {
       $hospital_rand = 300 + mt_rand(0, 99);
+      $ke_shi = array(1414,1510,1421,1612,1618,1418,1013,1021);
       $new_doctor_id = tb_doctor::insert_new_one($phone_num,
                                                  md5('000000'),
                                                  'cuisw',
                                                  0,
-                                                 1,
+                                                 mt_rand(1,2),
                                                  $doctor_names[array_rand($doctor_names)],
                                                  mt_rand(0, 1),
                                                  'http://www.didikuaiyi.com/admin/image/1e7371a8cdfb8752a3d289c9200f68b6.png',
                                                  'http://www.didikuaiyi.com/admin/image/1e7371a8cdfb8752a3d289c9200f68b6_200x200.png',
-                                                 1,
+                                                 $ke_shi[array_rand($ke_shi)],
                                                  1,
                                                  1,
                                                  0,
