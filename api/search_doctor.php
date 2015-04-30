@@ -27,12 +27,14 @@ do {
     if (get_magic_quotes_gpc()) {
       $name = stripslashes($name);
     }
+    $name = util::escape($name);
   }
   if (!empty($_GET['hospital'])) {
     $hospital = $_GET['hospital'];
     if (get_magic_quotes_gpc()) {
       $hospital = stripslashes($hospital);
     }
+    $hospital = util::escape($hospital);
   }
   if (!empty($_GET['classify'])) {
     $classify = (int)$_GET['classify'];
@@ -41,6 +43,10 @@ do {
     $ke_shi_list[] = (int)$_GET['ke_shi_id'];
   } else if (!empty($_GET['ke_shi'])) {
     $ke_shi = $_GET['ke_shi'];
+    if (get_magic_quotes_gpc()) {
+      $ke_shi = stripslashes($ke_shi);
+    }
+    $ke_shi = util::escape($ke_shi);
     $ke_shi_list = ke_shi::get_match_id_list($ke_shi);
   }
   if (!empty($_GET['p'])) {
@@ -64,7 +70,6 @@ do {
     }
   }
   if (!empty($hospital)) {
-    $hospital = util::escape($hospital);
     if (!empty($where)) {
       $where = $where . " and hospital like '%%{$hospital}%%'";
     } else {
@@ -72,7 +77,6 @@ do {
     }
   }
   if (!empty($name)) {
-    $name = util::escape($name);
     if (!empty($where)) {
       $where = $where . " and name like '%%{$name}%%'";
     } else {

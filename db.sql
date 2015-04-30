@@ -1,14 +1,14 @@
--- tinyint     0~127
--- smallint    0~32767
--- int         0~2187483647
--- bigint
--- )engine=InnoDB default charset=utf8  or  engine=MyISAM
--- user id len = 63
--- nick name len = 30
--- md5 len = 32
--- mobile phone number = 15
+--#tinyint     0~127
+--#smallint    0~32767
+--#int         0~2187483647
+--#bigint
+--#)engine=InnoDB default charset=utf8  or  engine=MyISAM
+--#user id len = 63
+--#nick name len = 30
+--#md5 len = 32
+--#mobile phone number = 15
 
--- 员工信息
+--#员工信息
 drop table if exists employe;
 create table employe (
   user                varchar(30) not null primary key,       #
@@ -37,7 +37,7 @@ create table if not exists user (
   index i_id_card(`id_card`)
 )engine=MyISAM default charset=utf8 auto_increment=10000;
 
--- user's patient info 用户的常用就诊人
+--#user's patient info 用户的常用就诊人
 drop table if exists user_patient;
 create table if not exists user_patient (
   id                  int unsigned not null auto_increment,   #
@@ -54,7 +54,7 @@ create table if not exists user_patient (
   unique key(`id_card`)
 )engine=MyISAM default charset=utf8 auto_increment=10000;
 
--- 用户关注的医生
+--#用户关注的医生
 drop table if exists user_gz_doctor;
 create table if not exists user_gz_doctor (
   user_id             int unsigned not null,                  # master id
@@ -63,7 +63,7 @@ create table if not exists user_gz_doctor (
   primary key(`user_id`, `doctor_id`)
 )engine=MyISAM default charset=utf8;
 
--- 用户关注的科室
+--#用户关注的科室
 drop table if exists user_gz_ke_shi;
 create table if not exists user_gz_ke_shi (
   user_id             int unsigned not null,                  # master id
@@ -72,7 +72,7 @@ create table if not exists user_gz_ke_shi (
   primary key(`user_id`, `ke_shi`)
 )engine=MyISAM default charset=utf8;
 
--- 用户关注的病友吧
+--#用户关注的病友吧
 drop table if exists user_gz_ba;
 create table if not exists user_gz_ba (
   user_id             int unsigned not null,                  # master id
@@ -82,7 +82,7 @@ create table if not exists user_gz_ba (
   index i_ba_id(`ba_id`)
 )engine=MyISAM default charset=utf8;
 
--- 就诊人病历 electronic medical record
+--#就诊人病历 electronic medical record
 drop table if exists patient_emr;
 create table if not exists patient_emr (
   id                  int unsigned not null auto_increment,   #
@@ -103,7 +103,7 @@ create table if not exists patient_emr (
   index i_pid(`patient_id`)
 )engine=MyISAM default charset=utf8;
 
--- 用户消息
+--#用户消息
 drop table if exists user_msg;
 create table if not exists user_msg (
   id                  int unsigned not null auto_increment,   #
@@ -120,7 +120,7 @@ create table if not exists user_msg (
   index i_mtype(`msg_type`)
 )engine=MyISAM default charset=utf8;
 
--- doctor info
+--#doctor info
 drop table if exists doctor;
 create table if not exists doctor (
   id                  int unsigned not null auto_increment,   #
@@ -152,14 +152,14 @@ create table if not exists doctor (
   index i_ke_shi(`ke_shi`)
 )engine=MyISAM default charset=utf8 auto_increment=10000;
 
--- 病友吧
+--#病友吧
 drop table if exists ba;
 create table if not exists ba (
   id                  int unsigned not null,                  # 病种ID
   primary key(id)
 )engine=MyISAM default charset=utf8;
 
--- 病友吧-帖子
+--#病友吧-帖子
 drop table if exists ba_topic;
 create table if not exists ba_topic (
   id                  int unsigned not null auto_increment,   # 帖子ID
@@ -179,7 +179,7 @@ create table if not exists ba_topic (
   index i_useful(`useful`)
 )engine=MyISAM default charset=utf8;
 
--- 病友吧-帖子回复
+--#病友吧-帖子回复
 drop table if exists ba_topic_reply;
 create table if not exists ba_topic_reply (
   id                  int unsigned not null auto_increment,   # 回帖ID
@@ -195,7 +195,7 @@ create table if not exists ba_topic_reply (
   index i_tid(`topic_id`)
 )engine=MyISAM default charset=utf8;
 
--- 专家文章
+--#专家文章
 drop table if exists doctor_article;
 create table if not exists doctor_article (
   id                  int unsigned not null auto_increment,   # 文章ID
@@ -209,7 +209,7 @@ create table if not exists doctor_article (
   index i_did(`doctor_id`)
 )engine=MyISAM default charset=utf8;
 
--- 专家视频
+--#专家视频
 drop table if exists doctor_video;
 create table if not exists doctor_video (
   id                  int unsigned not null auto_increment,   # 视频ID
