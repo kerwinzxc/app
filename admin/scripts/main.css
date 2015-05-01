@@ -30,13 +30,28 @@ q:before, q:after {
 abbr, acronym {
   border: 0;
 }
+.clearfix{
+  *zoom: 1;
+}
+.clearfix:after, .clearfix:before{
+  content: ' ';
+  display: table;
+  line-height: 0;
+}
+.clearfix:after{
+  clear: both;
+}
 
 body{
   padding:0px;
-  width:1024px;
-  height:100%;
-  margin:0 auto;
   font-family:"微软雅黑";
+  width: 100%;
+  text-align: center;
+}
+#main{
+  width: 1024px;
+  margin: 0 auto;
+  text-align: left;
 }
 #header{
   height:80px;
@@ -92,7 +107,7 @@ body{
   height:40px;
   line-height:40px;
   text-align:center;
-  #background:#90C;
+  /*#background:#90C;*/
   margin-top:20px;
 }
 .query th{
@@ -106,6 +121,11 @@ body{
 .query input,
 .query select{
   height:31px;
+  line-height: 31px;
+  vertical-align: middle;
+}
+.query input{
+  line-height: 31px;
 }
 .query input[type="text"],
 .query select{
