@@ -19,3 +19,4 @@ function class_loader($cls)
 spl_autoload_register('class_loader');
 
 error_reporting(E_ALL);
+
