@@ -40,8 +40,12 @@ do {
     $classify = (int)$_GET['classify'];
   }
   if (!empty($_GET['ke_shi_id'])) {
-    $ke_shi_list[] = (int)$_GET['ke_shi_id'];
-  } else if (!empty($_GET['ke_shi'])) {
+    $ke_shi_id = (int)$_GET['ke_shi_id'];
+    if ($ke_shi_id > 0) {
+      $ke_shi_list[] = $ke_shi_id;
+    }
+  }
+  if (!empty($ke_shi_list) && !empty($_GET['ke_shi'])) {
     $ke_shi = $_GET['ke_shi'];
     if (get_magic_quotes_gpc()) {
       $ke_shi = stripslashes($ke_shi);
@@ -84,24 +88,26 @@ do {
     }
   }
 
-  $total_num = tb_doctor::query_doctor_total_num($where);
   $doctor_detail_list = array();
-  if ($total_num > 0) {
-    if (($page - 1) * ONE_PAGE_ITEMS > $total_num) {
-      $page = (int)($total_num / ONE_PAGE_ITEMS);
-    }
-    if ($page < 1) { $page = 1; }
+  if (!empty($where)) {
+    $total_num = tb_doctor::query_doctor_total_num($where);
+    if ($total_num > 0) {
+      if (($page - 1) * ONE_PAGE_ITEMS > $total_num) {
+        $page = (int)($total_num / ONE_PAGE_ITEMS);
+      }
+      if ($page < 1) { $page = 1; }
 
-    $doctor_list = tb_doctor::query_doctor_limit($where,
-                                                 'id desc', // order by
-                                                 ($page - 1) * ONE_PAGE_ITEMS,
-                                                 ONE_PAGE_ITEMS);
-    if ($doctor_list === false) {
-      $ret_code = ERR_DB_ERROR;
-      break;
-    }
+      $doctor_list = tb_doctor::query_doctor_limit($where,
+                                                   'id desc', // order by
+                                                   ($page - 1) * ONE_PAGE_ITEMS,
+                                                   ONE_PAGE_ITEMS);
+      if ($doctor_list === false) {
+        $ret_code = ERR_DB_ERROR;
+        break;
+      }
 
-    $doctor_detail_list = fn_doctor::build_doctor_detail_list_from_info_list($doctor_list);
+      $doctor_detail_list = fn_doctor::build_doctor_detail_list_from_info_list($doctor_list);
+    }
   }
   $ret_body['list'] = $doctor_detail_list;
   $ret_body['total_num'] = $total_num;
