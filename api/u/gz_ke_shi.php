@@ -62,6 +62,7 @@ do {
 
     $real_ke_shi_list = array();
     foreach ($to_gz_ke_shi_list as $ke_shi) {
+      $ke_shi = (int)$ke_shi;
       if (check::is_ke_shi($ke_shi)) {
         $real_ke_shi_list[] = $ke_shi;
       }
@@ -80,7 +81,7 @@ do {
       $ret_code = ERR_PARAM_INVALID;
       break;
     }
-    $ke_shi = $_GET['ke_shi'];
+    $ke_shi = (int)$_GET['ke_shi'];
     if (tb_user_gz_ke_shi::del_one($user_id, $ke_shi) === false) {
       $ret_code = ERR_INNER_ERROR;
       break;

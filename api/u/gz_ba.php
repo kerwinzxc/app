@@ -77,7 +77,7 @@ do {
       $ret_code = ERR_PARAM_INVALID;
       break;
     }
-  } // // end of `if ($act'
+  } // end of `if ($act'
 } while (false);
 
 $ret_body['code'] = (int)$ret_code;

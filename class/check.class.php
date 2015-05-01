@@ -72,6 +72,6 @@ class check
   }
   public static function is_ke_shi($v)
   {
-    return $v > 0;
+    return $v > 1000 && $v < 9999;
   }
 };

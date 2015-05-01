@@ -52,18 +52,17 @@ do {
     $page = 1;
     if ($total_num > 0) {
       if (!empty($_GET['p'])) { $page = (int)$_GET['p']; }
-      if (($page - 1) * ONE_PAGE_ITEMS > $total_num) {
-        $page = (int)($total_num / ONE_PAGE_ITEMS) + 1;
+      if (($page - 1) * ONE_PAGE_ITEMS <= $total_num
+          && $page >= 1) {
+        $emr_list = tb_patient_emr::query_patient_emr_limit($patient_id,
+                                                            ($page - 1) * ONE_PAGE_ITEMS,
+                                                            ONE_PAGE_ITEMS);
+        if ($emr_list === false) {
+          $ret_code = ERR_DB_ERROR;
+          break;
+        }
+        $emr_list = fn_patient_emr::build_emr_detail_list($emr_list);
       }
-      if ($page < 1) { $page = 1; }
-      $emr_list = tb_patient_emr::query_patient_emr_limit($patient_id,
-                                                          ($page - 1) * ONE_PAGE_ITEMS,
-                                                          ONE_PAGE_ITEMS);
-      if ($emr_list === false) {
-        $ret_code = ERR_DB_ERROR;
-        break;
-      }
-      $emr_list = fn_patient_emr::build_emr_detail_list($emr_list);
     } // end of `if ($total_num'
     $ret_body['list'] = $emr_list;
     $ret_body['total_num'] = $total_num;

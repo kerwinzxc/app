@@ -41,20 +41,18 @@ do {
     $page = 1;
     if ($total_num > 0) {
       if (!empty($_GET['p'])) { $page = (int)$_GET['p']; }
-      if (($page - 1) * ONE_PAGE_ITEMS > $total_num) {
-        $page = (int)($total_num / ONE_PAGE_ITEMS) + 1;
+      if (($page - 1) * ONE_PAGE_ITEMS <= $total_num
+          && $page >= 1) {
+        $gl = tb_user_gz_doctor::query_user_guan_zhu_list($user_id,
+                                                          ($page - 1) * ONE_PAGE_ITEMS,
+                                                          ONE_PAGE_ITEMS);
+        if ($gl === false) {
+          $ret_code = ERR_DB_ERROR;
+          break;
+        }
+        $gl = array_slice($gl, ($page - 1) * ONE_PAGE_ITEMS, ONE_PAGE_ITEMS);
+        $gl = fn_doctor::build_doctor_detail_list_from_id_list($gl);
       }
-      if ($page < 1) { $page = 1; }
-
-      $gl = tb_user_gz_doctor::query_user_guan_zhu_list($user_id,
-                                                        ($page - 1) * ONE_PAGE_ITEMS,
-                                                        ONE_PAGE_ITEMS);
-      if ($gl === false) {
-        $ret_code = ERR_DB_ERROR;
-        break;
-      }
-      $gl = array_slice($gl, ($page - 1) * ONE_PAGE_ITEMS, ONE_PAGE_ITEMS);
-      $gl = fn_doctor::build_doctor_detail_list_from_id_list($gl);
     } // end of `if ($total_num > 0)'
     $ret_body['total_num'] = $total_num;
     $ret_body['p'] = $page;
