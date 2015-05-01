@@ -1,6 +1,6 @@
 <?php
 
-$ke_shi = array(
+$ke_shi = array("list" => array(
                 array("name" => "内科",
                       "sub"  => array(array("id" => 1010, "name" => "心血管内科"),
                                       array("id" => 1011, "name" => "神经内科"),
@@ -240,7 +240,8 @@ $ke_shi = array(
                                       array("id" => 3817, "name" => "护理咨询"),
                                      ),
                      ),
-                );
+                ),
+           );
 
 printf("%s\n", json_encode($ke_shi));
 
