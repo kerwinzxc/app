@@ -56,7 +56,7 @@ window.onload = loadFun;
       <th style="width:10%;background:#E9893A;">操作</th>
     </tr>
     {foreach from=$doctor_rows item=row}
-      <tr>
+      <tr {if $row.id % 2 eq 0} class="odd"{/if}>
         <td style="height:36px;"><a href='view/doctor_modify.php?id={$row.id}'>{$row.name}</a></td>
         <td>{$row.phone_num}</td>
         <td>
