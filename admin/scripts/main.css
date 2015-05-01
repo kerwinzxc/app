@@ -41,6 +41,10 @@ abbr, acronym {
 .clearfix:after{
   clear: both;
 }
+th, td{
+  word-break: break-all;
+}
+
 
 body{
   padding:0px;

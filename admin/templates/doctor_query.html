@@ -45,15 +45,15 @@ window.onload = loadFun;
       <input style='width:60px;margin-left:30px;' type='submit' value='查询' onclick='return clrDoctorQueryDefaultVal();'/>
     </form>
   </div>
-  <table cellspacing="10" style="width:100%">
+  <table style="width:100%;table-layout:fixed;">
     <tr style="font-weight:bold;">
-      <th style="width:90px;height:44px;background:#E9893A;">医生姓名</th>
-      <th style="width:120px;background:#E9893A;">电话</th>
-      <th style="width:100px;background:#E9893A;">类别</th>
-      <th style="width:150px;background:#E9893A;">职称</th>
-      <th style="width:200px;background:#E9893A;">所属医院</th>
-      <th style="width:150px;background:#E9893A;">科室</th>
-      <th style="width:70px;background:#E9893A;">操作</th>
+      <th style="width:12%;height:44px;background:#E9893A;">医生姓名</th>
+      <th style="width:13%;background:#E9893A;">电话</th>
+      <th style="width:12%;background:#E9893A;">类别</th>
+      <th style="width:18%;background:#E9893A;">职称</th>
+      <th style="width:20%;background:#E9893A;">所属医院</th>
+      <th style="width:15%;background:#E9893A;">科室</th>
+      <th style="width:10%;background:#E9893A;">操作</th>
     </tr>
     {foreach from=$doctor_rows item=row}
       <tr>
