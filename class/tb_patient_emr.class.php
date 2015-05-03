@@ -86,7 +86,9 @@ class tb_patient_emr
       . " from "
       . self::$tb_name
       . " where patient_id={$patient_id}";
-    return (int)$db->get_one_row_col($sql, 0);
+    $ret = $db->get_one_row_col($sql, 0);
+    if ($ret === false) return false;
+    return (int)$ret;
   }
   // return false on error, return array on ok.
   public static function query_patient_emr_limit($patient_id,

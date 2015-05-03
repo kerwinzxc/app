@@ -49,9 +49,7 @@ class tb_user_msg
       . self::$tb_name
       . " where user_id=$user_id and readed=0";
     $ret = $db->get_one_row_col($sql, 0);
-    if ($ret === false) {
-      return false;
-    }
+    if ($ret === false) { return false; }
     return (int)$ret;
   }
   public static function query_msg_detail_by_id($id)

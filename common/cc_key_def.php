@@ -1,6 +1,5 @@
 <?php
 
-if (!defined('CK_USER_SID')) define('CK_USER_SID', 'user_id:sid:');
 if (!defined('CK_USER_ID_2_USER')) define('CK_USER_ID_2_USER', 'user_id:user:');
 if (!defined('CK_USER_PATIENT_LIST')) define('CK_USER_PATIENT_LIST', 'user_id:patient_list:');
 if (!defined('CK_USER_GZ_DOCTOR_LIST')) define('CK_USER_GZ_DOCTOR_LIST', 'user_id::gz_doctor_list:');

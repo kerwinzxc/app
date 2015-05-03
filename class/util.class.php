@@ -38,7 +38,7 @@ class util
   }
   public static function escape($str)
   {
-    return mysql_escape_string($str);
+    return mysql_real_escape_string($str);
   }
 
   public static function array_get($key, $arr, $default_v)  

@@ -2,9 +2,9 @@
 
 require_once APP_ROOT . '/common/cc_key_def.php';
 
-class tb_ba_topic_reply
+class tb_ba_topic_comment
 {
-  private static $tb_name  = 'ba_topic_reply';
+  private static $tb_name  = 'ba_topic_comment';
   private static $all_cols = '*';
 
   public static function insert_new_one($topic_id,
@@ -43,7 +43,7 @@ class tb_ba_topic_reply
   }
 
   // return false on error, return array on ok.
-  public static function query_topic_reply_by_id($id)
+  public static function query_topic_comment_by_id($id)
   {
     if (empty($id)) {
       return false;
@@ -70,7 +70,7 @@ class tb_ba_topic_reply
     }
     return $result;
   }
-  public static function query_topic_reply_total_num($topic_id)
+  public static function query_topic_comment_total_num($topic_id)
   {
     $db = new sql(db_selector::get_db(db_selector::$db_r));
     $sql = "select count(*) from "
@@ -82,23 +82,14 @@ class tb_ba_topic_reply
     }
     return (int)$ret;
   }
-  public static function query_topic_reply_limit($where,
-                                                 $order_by,
-                                                 $start,
-                                                 $offset)
+  public static function query_topic_comment_limit($topic_id, $start, $offset)
   {
-    if (!empty($where)) {
-      $where = " where $where";
-    }
-    if (!empty($order_by)) {
-      $order_by = " order by $order_by";
-    }
     $db = new sql(db_selector::get_db(db_selector::$db_r));
     $sql = "select "
       . self::$all_cols
       . " from "
       . self::$tb_name
-      . " {$where} {$order_by} limit {$start},{$offset}";
+      . " where topic_id=$topic_id order by id asc limit {$start},{$offset}";
     return $db->get_rows($sql);
   }
 };

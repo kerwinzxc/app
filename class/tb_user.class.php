@@ -121,21 +121,36 @@ class tb_user
   }
   public static function query_user_id_card_exist_or_not($id_card)
   {
-    if (empty($id_card)) {
-      return true;
-    }
+    if (empty($id_card)) { return true; }
+
     $db = new sql(db_selector::get_db(db_selector::$db_r));
     $sql = "select 1 from "
       . self::$tb_name
-      . " where id_card='{$id_card}'";
-    return $db->get_one_row_col($sql, 0) == '1';
+      . " where id_card='{$id_card}' limit 1";
+    $ret = $db->get_one_row_col($sql, 0);
+    if ($ret === false) return false;
+    return $ret == '1';
   }
-  public static function query_name_by_id($id)
+  public static function query_user_nick_name_exist_or_not($nick_name)
+  {
+    if (empty($nick_name)) { return true; }
+
+    $db = new sql(db_selector::get_db(db_selector::$db_r));
+    $sql = "select 1 from "
+      . self::$tb_name
+      . " where nick_name='{$nick_name}' limit 1";
+    $ret = $db->get_one_row_col($sql, 0);
+    if ($ret === false) return false;
+    return $ret == '1';
+  }
+  public static function query_name_by_id($id, &$name, &$icon_url)
   {
     $user_info = self::query_user_by_id($id);
     if ($user_info === false) {
       return false;
     }
-    return $user_info['name'];
+    $name = $user_info['name'];
+    $icon_url = $user_info['icon_url'];
+    return true;
   }
 };

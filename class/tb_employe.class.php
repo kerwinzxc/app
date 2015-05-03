@@ -39,7 +39,9 @@ class tb_employe
     $sql = "select 1 from "
       . self::$tb_name
       . " where user='{$user}' and passwd='{$passwd}' limit 1";
-    return $db->get_one_row_col($sql, 0) == '1';
+    $ret = $db->get_one_row_col($sql, 0);
+    if ($ret === false) return false;
+    return $ret == '1';
   }
   public static function query_employe_is_exist($user)
   {

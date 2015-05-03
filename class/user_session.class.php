@@ -1,6 +1,6 @@
 <?php
 
-require_once APP_ROOT . '/common/cc_key_def.php';
+require_once APP_ROOT . '/common/nosql_key_def.php';
 
 class user_session
 {
@@ -9,7 +9,6 @@ class user_session
   /**
    * { 
    *   "user_id":1234,
-   *
    * }
    */
   public static function generate_sid()
@@ -19,14 +18,12 @@ class user_session
 
   public static function get_session($sid)
   {
-    if (!isset(self::$nosql))
-      self::$nosql = new nosql();
-    return self::$nosql->get(CK_USER_SID . $sid);
+    if (!isset(self::$nosql)) self::$nosql = new nosql();
+    return self::$nosql->get(NK_USER_SID . $sid);
   }
   public static function set_session($sid, $v)
   {
-    if (!isset(self::$nosql))
-      self::$nosql = new nosql();
-    return self::$nosql->set(CK_USER_SID . $sid, $v);
+    if (!isset(self::$nosql)) self::$nosql = new nosql();
+    return self::$nosql->set(NK_USER_SID . $sid, $v);
   }
 };

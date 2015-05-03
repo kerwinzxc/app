@@ -27,6 +27,7 @@ create table if not exists user (
 
   name                varchar(30) not null default '',        #
   id_card             char(18) not null default '',           # person id card
+  nick_name           varchar(30) not null default '',        #
   icon_url            varchar(255) not null default '',       #
   default_patient     int unsigned not null default 0,        #
 
@@ -34,7 +35,8 @@ create table if not exists user (
 
   primary key(id),
   unique key phone(`phone_num`),
-  index i_id_card(`id_card`)
+  index i_id_card(`id_card`),
+  index i_nick_name(`nick_name`)
 )engine=MyISAM default charset=utf8 auto_increment=10000;
 
 --#user's patient info 用户的常用就诊人
@@ -168,20 +170,32 @@ create table if not exists ba_topic (
   user_id             int unsigned not null default 0,        # author
 
   topic               varchar(90) not null default '',        #
-
-  useful              int unsigned not null default 0,        # 有用的
-  useless             int unsigned not null default 0,        # 无用的
+  content             varchar(12000) not null default '',     # 
+  zan                 int unsigned not null default 0,        # 赞(冗余数据)
+  coment              int unsigned not null default 0,        # 评论(冗余数据)
 
   c_time              int unsigned not null default 0,
 
   primary key(id),
   index i_ba_id(`ba_id`),
-  index i_useful(`useful`)
+  index i_zan(`zan`)
 )engine=MyISAM default charset=utf8;
 
---#病友吧-帖子回复
-drop table if exists ba_topic_reply;
-create table if not exists ba_topic_reply (
+--#贴吧点赞记录
+drop table if exists ba_topic_zan;
+create table if not exists ba_topic_zan (
+  id                  int unsigned not null auto_increment,   # ID
+
+  topic_id            int unsigned not null default 0,        # 贴子ID
+  user_id             int unsigned not null default 0,        # 赞
+
+  primary key(id),
+  unique key i_key(`topic_id`, `user_id`)
+)engine=MyISAM default charset=utf8;
+
+--#病友吧-话题评论
+drop table if exists ba_topic_comment;
+create table if not exists ba_topic_comment (
   id                  int unsigned not null auto_increment,   # 回帖ID
   topic_id            int unsigned not null default 0,        # 所属帖子ID
 

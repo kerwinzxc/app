@@ -106,7 +106,6 @@ do {
       $doctor_detail_list = fn_doctor::build_doctor_detail_list_from_info_list($doctor_list);
     }
   }
-  }
   $ret_body['list'] = $doctor_detail_list;
   $ret_body['total_num'] = $total_num;
   $ret_body['p'] = $page;

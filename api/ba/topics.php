@@ -10,21 +10,19 @@ $ret_code = 0;
 $ret_body = array();
 
 do {
-  $page = 1;
-
   if (empty($_GET['ba_id'])) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
-
-  if (!empty($_GET['p'])) {
-    $page = (int)$_GET['p'];
-  }
-
   $ba_id = (int)$_GET['ba_id'];
   if ($ba_id <= 0) {
     $ret_code = ERR_PARAM_INVALID;
     break;
+  }
+
+  $page = 1;
+  if (!empty($_GET['p'])) {
+    $page = (int)$_GET['p'];
   }
 
   $topic_brief_list = array();
@@ -32,8 +30,7 @@ do {
   if ($total_num > 0
       && ($page - 1) * ONE_PAGE_ITEMS <= $total_num
       && $page >= 1) {
-    $topic_list = tb_ba_topic::query_topic_limit("ba_id=$ba_id",
-                                                 'useful desc, id asc',
+    $topic_list = tb_ba_topic::query_topic_limit($ba_id,
                                                  ($page - 1) * ONE_PAGE_ITEMS,
                                                  ONE_PAGE_ITEMS);
     if ($topic_list === false) {

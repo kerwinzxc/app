@@ -64,7 +64,9 @@ class tb_user_gz_doctor
       . " from "
       . self::$tb_name
       . " where user_id={$user_id}";
-    return (int)$db->get_one_row_col($sql, 0);
+    $ret = $db->get_one_row_col($sql, 0);
+    if ($ret === false) return false;
+    return (int)$ret;
   }
   // return false on error, return array(12,1,2).
   public static function query_user_guan_zhu_list($user_id)
@@ -113,6 +115,8 @@ class tb_user_gz_doctor
     $sql = "select 1 from "
       . self::$tb_name
       . " where user_id={$user_id} and doctor_id={$doctor_id}";
-    return $db->get_one_row_col($sql, 0) == '1';
+    $ret = $db->get_one_row_col($sql, 0);
+    if ($ret === false) return false;
+    return $ret == '1';
   }
 };

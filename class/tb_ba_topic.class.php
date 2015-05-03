@@ -10,14 +10,16 @@ class tb_ba_topic
   public static function insert_new_one($ba_id,
                                         $user_id,
                                         $topic,
+                                        $content,
                                         $c_time)
   {
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     $topic = $db->escape($topic);
+    $content = $db->escape($content);
     $sql = "insert into "
       . self::$tb_name
-      . "(ba_id,user_id,topic,c_time)"
-      . "value($ba_id,$user_id,'$topic',$c_time)";
+      . "(ba_id,user_id,topic,content,c_time)"
+      . "value($ba_id,$user_id,'$topic','$content',$c_time)";
     if ($db->execute($sql) === false) {
       return false;
     }
@@ -39,14 +41,14 @@ class tb_ba_topic
     }
     return $db->affected_rows() == 1 ? 1 : 0;
   }
-  public static function incr_useful_counter($topic_id)
+  public static function incr_zan_counter($topic_id)
   {
     if (empty($topic_id)) { return false; }
 
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     $sql = "update "
       . self::$tb_name
-      . " set useful=useful+1 where id=$topic_id limit 1";
+      . " set zan=zan+1 where id=$topic_id limit 1";
     if ($db->execute($sql) === false) {
       return false;
     }
@@ -58,14 +60,33 @@ class tb_ba_topic
     }
     return true;
   }
-  public static function incr_useless_counter($topic_id)
+  public static function decr_zan_counter($topic_id)
   {
     if (empty($topic_id)) { return false; }
 
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     $sql = "update "
       . self::$tb_name
-      . " set useless=useless+1 where id=$topic_id limit 1";
+      . " set zan=zan-1 where id=$topic_id and zan > 0 limit 1";
+    if ($db->execute($sql) === false) {
+      return false;
+    }
+    if ($db->affected_rows() == 1) {
+      // for cache
+      $cc = new cache();
+      $ck = CK_TOPIC_ID_2_TOPIC . $topic_id;
+      $cc->del($ck);
+    }
+    return true;
+  }
+  public static function incr_comment_counter($topic_id)
+  {
+    if (empty($topic_id)) { return false; }
+
+    $db = new sql(db_selector::get_db(db_selector::$db_w));
+    $sql = "update "
+      . self::$tb_name
+      . " set coment=coment+1 where id=$topic_id limit 1";
     if ($db->execute($sql) === false) {
       return false;
     }
@@ -117,23 +138,13 @@ class tb_ba_topic
     }
     return $result;
   }
-  public static function query_topic_limit($where,
-                                           $order_by,
-                                           $start,
-                                           $offset)
+  public static function query_topic_limit($ba_id, $start, $offset)
   {
-    if (!empty($where)) {
-      $where = " where $where";
-    }
-    if (!empty($order_by)) {
-      $order_by = " order by $order_by";
-    }
     $db = new sql(db_selector::get_db(db_selector::$db_r));
-    $sql = "select "
-      . self::$all_cols
+    $sql = "select ba_id,user_id,topic,c_time"
       . " from "
       . self::$tb_name
-      . " {$where} {$order_by} limit {$start},{$offset}";
+      . " where ba_id=$ba_id order by zan desc limit {$start},{$offset}";
     return $db->get_rows($sql);
   }
 };

@@ -54,6 +54,8 @@ do {
   user_session::set_session($sid, json_encode($s_info));
 
   $ret_body['sid'] = $sid;
+  $ret_body['nick_name'] = '';
+  $ret_body['icon_url'] = '';
 
 } while (false);
 

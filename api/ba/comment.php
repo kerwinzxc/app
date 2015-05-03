@@ -2,20 +2,35 @@
 
 require_once __DIR__ . '/../../init.php';
 
-if ($_SERVER['REQUEST_METHOD'] != 'GET') exit;
+if ($_SERVER['REQUEST_METHOD'] != 'POST') exit;
 
 $ret_code = 0;
 $ret_body = array();
 
 do {
-  if (empty($_GET['sid'])
-      || empty($_GET['topic_id'])
-      || empty($_GET['do'])) {
+  if (empty($_POST['sid'])
+      || empty($_POST['topic_id'])
+      || empty($_POST['content'])) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
 
-  $sid = $_GET['sid'];
+  $sid = $_POST['sid'];
+  $topic_id = (int)$_POST['topic_id'];
+  $content = $_POST['content'];
+  if (!user_session::is_sid($sid)
+      || $topic_id <= 0) {
+    $ret_code = ERR_PARAM_INVALID;
+    break;
+  }
+  if (strlen($content) > 12000) {
+    $ret_code = ERR_BA_TOPIC_COMMENT_TOO_LONG;
+    break;
+  }
+  if (get_magic_quotes_gpc()) {
+    $content = stripslashes($content);
+  }
+
   $s_info = user_session::get_session($sid);
   if ($s_info === false) {
     $ret_code = ERR_NOT_LOGIN;
@@ -29,20 +44,28 @@ do {
   }
   $user_id = $s_info['user_id'];
 
-  $topic_id = (int)$_GET['topic_id'];
-  if ($topic_id <= 0) {
-    $ret_code = ERR_PARAM_INVALID;
+  $topic_info = tb_ba_topic::query_topic_by_id($topic_id);
+  if ($topic_info === false) {
+    $ret_code = ERR_DB_ERROR;
+    break;
+  }
+  if (empty($topic_info)) {
+    $ret_code = ERR_BA_TOPIC_NOT_EXIST;
+    break;
+  }
+  $new_comment_id = tb_ba_topic_comment::insert_new_one($topic_id,
+                                                        $user_id,
+                                                        $topic_info['user_id'],
+                                                        $content,
+                                                        time());
+
+  if ($new_comment_id !== false) {
+    $ret = tb_ba_topic::incr_comment_counter($topic_id);
+  } else {
+    $ret_code = ERR_DB_ERROR;
     break;
   }
 
-  $act = $_GET['do'];
-  if ($act == 'useful') {
-    $ret = tb_ba_topic::incr_useful_counter($topic_id);
-  } elseif ($act == 'useless') {
-    $ret = tb_ba_topic::incr_useless_counter($topic_id);
-  } else {
-    $ret_code = ERR_PARAM_INVALID;
-  }
 } while (false);
 
 $ret_body['code'] = (int)$ret_code;

@@ -74,9 +74,7 @@ class tb_doctor_video
       . self::$tb_name
       . " where doctor_id=$doctor_id";
     $ret = $db->get_one_row_col($sql, 0);
-    if ($ret === false) {
-      return false;
-    }
+    if ($ret === false) { return false; }
     return (int)$ret;
   }
   public static function query_video_limit($where,
