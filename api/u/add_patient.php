@@ -58,6 +58,10 @@ do {
     $ret_code = ERR_DB_ERROR;
     break;
   }
+  if (count($cur_patient_list) >= 6) {
+    $ret_code = ERR_USER_PATIENTS_LIMIT;
+    break;
+  }
   foreach ($cur_patient_list as $patient) {
     if ($patient['id_card'] == $id_card) {
       $ret_code = ERR_PATIENT_ID_CARD_EXIST;

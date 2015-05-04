@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
       }
       $mime = explode('/', $_FILES[$photo]['type']);
       $ext = $mime[1];
-      $basename = md5($phone_num . "doctor_icon");
+      $basename = md5($phone_num . "ddky_doctor_icon" . time());
 
       $filename = $basename . "." . $ext;
       $path = MNG_ROOT . 'image/';

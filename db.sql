@@ -157,7 +157,12 @@ create table if not exists doctor (
 --#病友吧
 drop table if exists ba;
 create table if not exists ba (
-  id                  int unsigned not null,                  # 病种ID
+  id                  int unsigned not null auto_increment,   # 病友吧ID
+
+  name                varchar(30) not null,                   #
+  ba_desc             varchar(90) not null,                   #
+  icon_url            varchar(255) not null default '',       #
+
   primary key(id)
 )engine=MyISAM default charset=utf8;
 

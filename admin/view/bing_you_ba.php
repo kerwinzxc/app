@@ -1,0 +1,115 @@
+<?php
+
+require_once dirname(__FILE__) . '/../conf/settings.php';
+require_once MNG_ROOT . 'init.php';
+require_once MNG_ROOT . 'view/fill_menu_name.inc.php';
+require_once MNG_ROOT . 'libs/func.inc.php';
+
+require_once MNG_ROOT . 'autoload.php'; // below smarty
+require_once MNG_ROOT . '../common/cc_key_def.php'; // below smarty
+
+$err_msg = '';
+
+$tpl->assign("content_title", S_DOCTOR_XIN_XI);
+$tpl->assign("doctor_info_title", S_DOCTOR_XIN_XI);
+$tpl->assign("new_one", 0);
+
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+  $name = trim($_POST['name']);
+  $desc = trim($_POST['desc']);
+  $id = $_POST['id'];
+
+  do {
+    if (empty($id)
+        || empty($name) || strlen($name) > 27 || strlen($name) < 6
+        || empty($desc) || strlen($desc) > 90 || strlen($desc) < 9) {
+      $err_msg = '输入参数错误';
+      break;
+    }
+    if (get_magic_quotes_gpc()) {
+      $name = stripslashes($name);
+      $desc = stripslashes($desc);
+    }
+    $user = $_SESSION['user']['user'];
+
+    //upload file
+    $err_msg = '';
+    $filename = '';
+    $icon_url = '';
+    $photo = 'icon';
+    if (!empty($_FILES[$photo]["name"])) {
+      $filename = $_FILES[$photo]["name"];
+      if ($_FILES[$photo]["error"] > 0) {
+        $err_msg = 'Return Code: ' . $_FILES[$photo]["error"];
+        break;
+      }
+      if ($_FILES[$photo]["size"] > 2*1024*1024) {
+        $err_msg = $filename . " 图片大小超出限制(2M)";
+        break;
+      }
+      if (!check::can_upload($_FILES[$photo]['type'])) {
+        $err_msg = "图片格式不支持";
+        break;
+      }
+      $mime = explode('/', $_FILES[$photo]['type']);
+      $ext = $mime[1];
+      $basename = md5($name . "ddky_bing_you_ba_icon" . time());
+
+      $filename = $basename . "." . $ext;
+      $path = MNG_ROOT . 'image/';
+
+      move_uploaded_file($_FILES[$photo]['tmp_name'], $path . $filename);
+
+      $icon_url = BASE_URL . "image/$filename";
+    }
+    if ($err_msg != '') {
+      break;
+    }
+    // upload end
+
+    $update_info = array();
+    if (!empty($name)) {
+      $update_info['name'] = $name;
+    }
+    if (!empty($desc)) {
+      $update_info['ba_desc'] = $desc;
+    }
+    if (!empty($icon_url)) {
+      $update_info['icon_url'] = $icon_url;
+    }
+
+    if (tb_ba::update($id, $update_info) !== false) {
+      $err_msg = '编辑成功';
+    } else {
+      $err_msg = '系统内部错误，编辑失败';
+    }
+  } while (false);
+  build_html($id);
+  alert($err_msg);
+} else {
+  if (empty($_GET['id'])) {
+    $err_msg = "query failed";
+  } else {
+    $id = $_GET['id'];
+    build_html($id);
+  }
+}
+
+function build_html($id)
+{
+  global $tpl;
+  $ba_info = tb_ba::query_ba_by_id($id);
+  if ($ba_info === false || empty($ba_info)) {
+    $err_msg = "query failed";
+  } else {
+    $tpl->assign("id", $id);
+    $tpl->assign("name", $ba_info['name']);
+    $tpl->assign("desc", $ba_info['ba_desc']);
+    $tpl->assign("icon_url", $ba_info['icon_url']);
+  }
+}
+
+$tpl->assign("refer", $_SERVER['HTTP_REFERER']);
+$tpl->assign("err_msg", $err_msg);
+$tpl->assign("inc_name", "bing_you_ba.html");
+$tpl->display("home.html");

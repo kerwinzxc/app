@@ -4,7 +4,6 @@ class check
 {
   static $can_upload_photos = array("image/jpg",
                                     "image/jpeg",
-                                    "image/gif",
                                     "image/png");
 
   public static function is_phone_num($v)

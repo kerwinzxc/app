@@ -43,6 +43,25 @@ class tb_user
 
     return true;
   }
+  public static function set_icon_url($user_id, $icon_url)
+  {
+    $db = new sql(db_selector::get_db(db_selector::$db_w));
+    $sql = "update "
+      . self::$tb_name
+      . " set "
+      . "icon_url='{$icon_url}'"
+      . " where id={$user_id} limit 1";
+    if ($db->execute($sql) === false) {
+      return false;
+    }
+
+    // for cache
+    $cc = new cache();
+    $ck = CK_USER_ID_2_USER . $user_id;
+    $cc->del($ck);
+
+    return true;
+  }
   public static function set_default_patient($user_id, $patient_id)
   {
     $db = new sql(db_selector::get_db(db_selector::$db_w));
