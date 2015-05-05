@@ -1,7 +1,7 @@
 <script type="text/javascript">
 {literal}
-function checkConfirm(){
-  return confirm("确认要删除吗？");
+function checkConfirm(s){
+  return confirm(s);
 }
 {/literal}
 </script>
@@ -9,16 +9,18 @@ function checkConfirm(){
   <table style="width:100%;table-layout:fixed;">
     <tr style="font-weight:bold;">
       <th style="width:10%;height:44px;background:#E9893A;">图标</th>
+      <th style="width:8%;background:#E9893A;">优先级</th>
       <th style="width:15%;background:#E9893A;">贴吧名</th>
-      <th style="width:60%;background:#E9893A;">描述</th>
+      <th style="width:52%;background:#E9893A;">描述</th>
       <th style="width:15%;background:#E9893A;">操作</th>
     </tr>
     {foreach from=$ba_rows item=row name=r}
       <tr {if $smarty.foreach.r.index % 2 eq 1}class="odd"{/if}>
         <td style="height:64px;padding:2px;"><a href="view/bing_you_ba.php?id={$row.id}"><img src="{$row.icon_url}" height="60" width="60"></img></a></td>
+        <td>{$row.priority}</td>
         <td><a href="view/bing_you_ba.php?id={$row.id}">{$row.name}</a></td>
         <td>{$row.ba_desc}</td>
-        <td><a href="view/bing_you_ba.php?id={$row.id}">查看</a>｜<a href="view/bing_you_ba.php?id={$row.id}" onclick="return checkConfirm()">下架</a></td>
+        <td><a href="view/bing_you_ba.php?id={$row.id}">查看</a>｜{if $row.open eq 1}<a href="view/bing_you_ba_opt.php?id={$row.id}&opt=close" onclick="return checkConfirm('确认要关闭吗？')">关闭</a>{else}<a href="view/bing_you_ba_opt.php?id={$row.id}&opt=open" onclick="return checkConfirm('确认要打开吗？')">打开</a>{/if}</td>
       </tr>
     {/foreach}
   </table>

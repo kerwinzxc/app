@@ -248,3 +248,8 @@ left: 0;
   color:#000000;
   text-decoration:none;
 }
+.query a:link,
+.query a:visited {
+  color:blue;
+  text-decoration:underline;
+}

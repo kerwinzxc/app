@@ -6,7 +6,6 @@ require_once MNG_ROOT . 'view/fill_menu_name.inc.php';
 require_once MNG_ROOT . 'libs/func.inc.php';
 require_once MNG_ROOT . 'autoload.php'; // below smarty
 
-$err_msg = '';
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
   do {
     if (empty($_GET['id'])) {
@@ -21,11 +20,20 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
       break;
     }
 
-    $tpl->assign("doctor_id", $doctor_id);
-    $tpl->assign("content_title", "添加文章 - <b>" . $doctor_info['name'] . "</b>");
-    $tpl->assign("new_one", 1);
+    $doctor_intro = tb_doctor_introduction::query_introduction_by_doctor_id($doctor_id);
+    if ($doctor_intro === false) {
+      $err_msg = "访问数据库失败";
+      break;
+    }
 
-    $tpl->display("doctor_article.html");
+    $tpl->assign("doctor_id", $doctor_id);
+    $tpl->assign("content", empty($doctor_intro) ? '' : $doctor_intro['content']);
+    $tpl->assign("content_title", "医生简介 - <b>" . $doctor_info['name'] . "</b>");
+
+    if (!empty($_GET['edit']))
+      $tpl->display("doctor_introduction.html");
+    else
+      $tpl->display("doctor_introduction_view.html");
     exit;
   } while (false);
   alert_and_redirect($err_msg, $_SERVER['HTTP_REFERER']);
@@ -34,28 +42,21 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     $user = $_SESSION['user']['user'];
 
     $doctor_id = $_POST['doctor_id'];
-    $topic = $_POST['topic'];
     $content = $_POST['editorValue'];
 
-    if (strlen($topic) > 90
-        || strlen($content) > 12000) {
-      $err_msg = "标题或内容太长";
+    if (strlen($content) > 12000) {
+      $err_msg = "内容太长";
       break;
     }
 
     if (get_magic_quotes_gpc()) {
-      $topic = stripslashes($topic);
       $content = stripslashes($content);
     }
-
-    $new_article_id = tb_doctor_article::insert_new_one($doctor_id,
-                                                        $topic,
-                                                        $content,
-                                                        time());
-    if ($new_article_id !== false) {
-      $err_msg = "添加成功!";
-      alert_and_redirect($err_msg, "view/doctor_article_view.php?id=$new_article_id&doctor_id=$doctor_id");
+    if (tb_doctor_introduction::update($doctor_id, $content)) {
+      $err_msg = "修改成功";
+      alert_and_redirect($err_msg, "view/doctor_introduction.php?id=$doctor_id");
     }
+    exit;
   } while (false);
   alert_and_redirect($err_msg, $_SERVER['HTTP_REFERER']);
 }

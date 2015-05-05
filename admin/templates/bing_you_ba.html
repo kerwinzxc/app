@@ -1,5 +1,18 @@
 <script type="text/javascript">
 {literal}
+function checkPriority(obj) {
+  if (isNaN(obj.value)) {
+    alert('请输入数字(1~10000)');
+    return false;
+  }
+  var v = Number(obj.value);
+  if (v < 1 
+      || v > 10000) {
+    alert('请输入数字(1~10000)');
+    return false;
+  }
+  return true;
+}
 function checkBaName(obj) {
   if (obj.value.length == 0) {
     alert('请输入贴吧名!');
@@ -24,6 +37,8 @@ function checkDesc(obj) {
 }
 function submitBaValidate($new_one)
 {
+  if (!checkPriority(document.getElementById("priority")))
+    return false;
   if (!checkBaName(document.getElementById("name")))
     return false;
   if (!checkDesc(document.getElementById("desc")))
@@ -45,6 +60,10 @@ function submitBaValidate($new_one)
         <tr>
           <td class="form_label">贴吧名</td>
           <td><input style="width:100px;padding-left:2px;" id='name' type='text' name='name' value='{if isset($name)}{$name}{/if}' onchange='checkBaName(this)'/><p class='must_p'>*</p></td>
+        </tr>
+        <tr>
+          <td class="form_label">优先级</td>
+          <td><input style="width:100px;padding-left:2px;" id='priority' type='number' min='1' max='10000' name='priority' value='{if isset($priority)}{$priority}{else}1{/if}' onchange='checkPriority(this)'/><p class='must_p' style='font-size:13px;'>1~10000</p></td>
         </tr>
         <tr>
           <td class="form_label">描述</td>

@@ -9,6 +9,7 @@ $ret_body = array();
 
 do {
   if (empty($_POST['sid'])
+      || empty($_POST['nick_name'])
       || empty($_POST['name'])
       || empty($_POST['id_card'])) {
     $ret_code = ERR_PARAM_INVALID;
@@ -16,16 +17,19 @@ do {
   }
 
   $sid = $_POST['sid'];
+  $nick_name = $_POST['nick_name'];
   $name = $_POST['name'];
   $id_card = $_POST['id_card'];
 
   if (!user_session::is_sid($sid)
       || !check::is_id_card($id_card)
+      || !check::is_name($nick_name)
       || !check::is_name($name)) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
   if (get_magic_quotes_gpc()) {
+    $nick_name = stripslashes($nick_name);
     $name = stripslashes($name);
   }
 
@@ -50,7 +54,7 @@ do {
     $ret_code = ERR_DB_ERROR;
     break;
   }
-  $ret_body['name'] = $user_info['name'];
+  $ret_body['nick_name'] = $nick_name;
 
 } while (false);
 

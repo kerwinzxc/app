@@ -154,16 +154,58 @@ create table if not exists doctor (
   index i_ke_shi(`ke_shi`)
 )engine=MyISAM default charset=utf8 auto_increment=10000;
 
+--#医生简介
+drop table if exists doctor_introduction;
+create table if not exists doctor_introduction (
+  doctor_id           int unsigned not null default 0,        # 医生ID
+
+  content             varchar(12000) not null default '',     # 
+
+  primary key(doctor_id)
+)engine=MyISAM default charset=utf8;
+
+--#专家文章
+drop table if exists doctor_article;
+create table if not exists doctor_article (
+  id                  int unsigned not null auto_increment,   # 文章ID
+  doctor_id           int unsigned not null default 0,        # 医生ID
+
+  topic               varchar(90) not null default '',        #
+  content             varchar(12000) not null default '',     # 
+  c_time              int unsigned not null default 0,
+
+  primary key(id),
+  index i_did(`doctor_id`)
+)engine=MyISAM default charset=utf8;
+
+--#专家视频
+drop table if exists doctor_video;
+create table if not exists doctor_video (
+  id                  int unsigned not null auto_increment,   # 视频ID
+  doctor_id           int unsigned not null default 0,        # 医生ID
+
+  topic               varchar(90) not null default '',        #
+  video_url           varchar(255) not null default '',       #
+  c_time              int unsigned not null default 0,
+
+  primary key(id),
+  index i_did(`doctor_id`)
+)engine=MyISAM default charset=utf8;
+
 --#病友吧
 drop table if exists ba;
 create table if not exists ba (
   id                  int unsigned not null auto_increment,   # 病友吧ID
 
+  open                tinyint not null default 1,             #
+  priority            int unsigned not null default 1;        #
   name                varchar(30) not null,                   #
   ba_desc             varchar(90) not null,                   #
   icon_url            varchar(255) not null default '',       #
 
-  primary key(id)
+  primary key(id),
+  index i_show(`show`),
+  index i_pri(`priority`)
 )engine=MyISAM default charset=utf8;
 
 --#病友吧-帖子
@@ -214,31 +256,4 @@ create table if not exists ba_topic_comment (
   index i_tid(`topic_id`)
 )engine=MyISAM default charset=utf8;
 
---#专家文章
-drop table if exists doctor_article;
-create table if not exists doctor_article (
-  id                  int unsigned not null auto_increment,   # 文章ID
-  doctor_id           int unsigned not null default 0,        # 医生ID
-
-  topic               varchar(90) not null default '',        #
-  content             varchar(12000) not null default '',     # 
-  c_time              int unsigned not null default 0,
-
-  primary key(id),
-  index i_did(`doctor_id`)
-)engine=MyISAM default charset=utf8;
-
---#专家视频
-drop table if exists doctor_video;
-create table if not exists doctor_video (
-  id                  int unsigned not null auto_increment,   # 视频ID
-  doctor_id           int unsigned not null default 0,        # 医生ID
-
-  topic               varchar(90) not null default '',        #
-  video_url           varchar(255) not null default '',       #
-  c_time              int unsigned not null default 0,
-
-  primary key(id),
-  index i_did(`doctor_id`)
-)engine=MyISAM default charset=utf8;
 

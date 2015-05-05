@@ -26,6 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       $err_msg = '输入参数错误';
       break;
     }
+    $priority = 0;
+    if (!empty($_POST['priority'])) {
+      $priority = (int)$_POST['priority'];
+    }
+    if ($priority < 1) $priority = 1;
+    if ($priority > 10000) $priority = 10000;
+
     if (get_magic_quotes_gpc()) {
       $name = stripslashes($name);
       $desc = stripslashes($desc);
@@ -68,6 +75,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     // upload end
 
     $update_info = array();
+    if (!empty($priority)) {
+      $update_info['priority'] = $priority;
+    }
     if (!empty($name)) {
       $update_info['name'] = $name;
     }
@@ -103,6 +113,7 @@ function build_html($id)
     $err_msg = "query failed";
   } else {
     $tpl->assign("id", $id);
+    $tpl->assign("priority", $ba_info['priority']);
     $tpl->assign("name", $ba_info['name']);
     $tpl->assign("desc", $ba_info['ba_desc']);
     $tpl->assign("icon_url", $ba_info['icon_url']);

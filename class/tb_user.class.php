@@ -23,14 +23,15 @@ class tb_user
     }
     return false;
   }
-  public static function set_profile($user_id, $name, $id_card)
+  public static function set_profile($user_id, $nick_name, $name, $id_card)
   {
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     $name = $db->escape($name);
+    $nick_name = $db->escape($nick_name);
     $sql = "update "
       . self::$tb_name
       . " set "
-      . "name='{$name}',id_card='{$id_card}'"
+      . "name='{$name}',id_card='{$id_card}',nick_name='{$nick_name}'"
       . " where id={$user_id} limit 1";
     if ($db->execute($sql) === false) {
       return false;

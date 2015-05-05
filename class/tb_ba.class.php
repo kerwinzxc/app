@@ -7,19 +7,27 @@ class tb_ba
   private static $tb_name  = 'ba';
   private static $all_cols = '*';
 
-  public static function insert_new_one($name, $desc, $icon_url)
+  public static function insert_new_one($priority,
+                                        $name,
+                                        $desc,
+                                        $icon_url)
   {
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     $name = $db->escape($name);
     $desc = $db->escape($desc);
     $sql = "insert into "
       . self::$tb_name
-      . "(name,ba_desc,icon_url)"
-      . "value('$name','$desc','$icon_url')";
+      . "(priority,name,ba_desc,icon_url)"
+      . "value($priority,'$name','$desc','$icon_url')";
     if ($db->execute($sql) === false) {
       return false;
     }
     if ($db->affected_rows() == 1) {
+      // for cache
+      $cc = new cache();
+      $ck = CK_ALL_BA_SHOW_LIST;
+      $cc->del($ck);
+
       return $db->get_insert_id();
     }
     return false;
@@ -37,23 +45,10 @@ class tb_ba
 
     // for cache
     $cc = new cache();
-    $ck = CK_BA_ID_2_BA_INFO . $id;
+    $ck = CK_ALL_BA_SHOW_LIST;
     $cc->del($ck);
 
     return true;
-  }
-  public static function del_one($id)
-  {
-    if (empty($id)) { return false; }
-
-    $db = new sql(db_selector::get_db(db_selector::$db_w));
-    $sql = "delete from "
-      . self::$tb_name
-      . " where id=$id limit 1";
-    if ($db->execute($sql) === false) {
-      return false;
-    }
-    return $db->affected_rows() == 1 ? 1 : 0;
   }
 
   public static function query_ba_total_num()
@@ -72,9 +67,19 @@ class tb_ba
   {
     if (empty($id)) { return false; }
 
+    $db = new sql(db_selector::get_db(db_selector::$db_r));
+    $sql = "select "
+    . self::$all_cols
+    . " from "
+    . self::$tb_name
+    . " where id=$id limit 1";
+    return $db->get_row($sql);
+  }
+  public static function query_ba_all_open_list()
+  {
     // for cache
     $cc = new cache();
-    $ck = CK_BA_ID_2_BA_INFO . $id;
+    $ck = CK_ALL_BA_SHOW_LIST;
     $result = $cc->get($ck);
     if ($result !== false) {
       return json_decode($result, true);
@@ -82,11 +87,11 @@ class tb_ba
 
     $db = new sql(db_selector::get_db(db_selector::$db_r));
     $sql = "select "
-    . self::$all_cols
-    . " from "
-    . self::$tb_name
-    . " where id=$id limit 1";
-    $result = $db->get_row($sql);
+      . self::$all_cols
+      . " from "
+      . self::$tb_name
+      . " where open=1 order by priority asc";
+    $result = $db->get_rows($sql);
 
     // for cache
     if ($result !== false) {
@@ -101,7 +106,7 @@ class tb_ba
       . self::$all_cols
       . " from "
       . self::$tb_name
-      . " order by id desc limit {$start},{$offset}";
+      . " order by priority asc limit {$start},{$offset}";
     return $db->get_rows($sql);
   }
 };

@@ -24,6 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
       $err_msg = '输入参数错误';
       break;
     }
+    $priority = 0;
+    if (!empty($_POST['priority'])) {
+      $priority = (int)$_POST['priority'];
+    }
+    if ($priority < 1) $priority = 1;
+    if ($priority > 10000) $priority = 10000;
 
     if (get_magic_quotes_gpc()) {
       $name = stripslashes($name);
@@ -66,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     }
     // upload end
 
-    $new_ba_id = tb_ba::insert_new_one($name, $desc, $icon_url);
+    $new_ba_id = tb_ba::insert_new_one($priority, $name, $desc, $icon_url);
     if ($new_ba_id != false) {
       $err_msg = '添加成功';
     } else {

@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    <base href="{$base_url}" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>滴滴快医-后台管理系统</title>
+    <link href="{$base_url}editor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet"/>
+    <script type="text/javascript" src="{$base_url}editor/third-party/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="{$base_url}editor/umeditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="{$base_url}editor/umeditor.min.js"></script>
+    <script type="text/javascript" src="{$base_url}editor/lang/zh-cn/zh-cn.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="{$base_url}scripts/main.js"></script>
+  </head>
+  <body>
+<script type="text/javascript">
+{literal}
+function submitArticleValidate(){
+  if (!UE.getEditor('umEditor').hasContents()) {
+    alert('请先填写内容!');
+    return false;
+  }
+  return true;
+}
+{/literal}
+</script>
+<div style="width:1024px;margin:0 auto;padding-bottom:10px;">
+  <div style="height:45px;background:#FF9900;line-height:45px;padding-left:10px;margin-bottom:10px;">
+    <p style="padding-left:0px;display:inline;">{$content_title}</p>
+  </div>
+  <form action="view/doctor_introduction.php"
+    method="post"
+    enctype="multipart/form-data"
+    onsubmit="return submitArticleValidate()">
+  <input type='hidden' name='doctor_id' value='{if isset($doctor_id)}{$doctor_id}{/if}'/>
+  <script type="text/plain" id="umEditor" style="width:100%;height:500px;">{if isset($content)}{$content}{/if}</script>
+  <center>
+    <input style='text-indent:10px;letter-spacing:10px;font-size:14px;width:80px;height:30px;margin:15px 0 0 0;' type='submit' value='提交'/>
+  </center>
+  </form>
+</div>
+<script type="text/javascript">
+{literal}
+var um = UM.getEditor('umEditor');
+{/literal}
+</script>
+
+</body>
+</html>
