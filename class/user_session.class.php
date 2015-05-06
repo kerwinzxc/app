@@ -26,4 +26,9 @@ class user_session
     if (!isset(self::$nosql)) self::$nosql = new nosql();
     return self::$nosql->set(NK_USER_SID . $sid, $v);
   }
+  public static function del_session($sid)
+  {
+    if (!isset(self::$nosql)) self::$nosql = new nosql();
+    return self::$nosql->del(NK_USER_SID . $sid);
+  }
 };

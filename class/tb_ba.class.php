@@ -50,6 +50,23 @@ class tb_ba
 
     return true;
   }
+  public static function del_one($id)
+  {
+    $db = new sql(db_selector::get_db(db_selector::$db_w));
+    $sql = "delete from "
+      . self::$tb_name
+      . " where id={$id} limit 1";
+    if ($db->execute($sql) === false) {
+      return false;
+    }
+
+    // for cache
+    $cc = new cache();
+    $ck = CK_ALL_BA_SHOW_LIST;
+    $cc->del($ck);
+
+    return true;
+  }
 
   public static function query_ba_total_num()
   {

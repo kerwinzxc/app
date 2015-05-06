@@ -1,0 +1,16 @@
+<div style="margin:20px 25px 0px 25px;padding-bottom:10px;">
+  <div>
+    <form method="post" action='view/relation_ba.php'>
+      <input type='hidden' name='doctor_id' value='{$doctor_id}'/></td></tr>
+      <p style="float:left;height:31px;line-height:31px;margin-right:40;">病友吧</p>
+      <select style="height:31px;line-height:31px;width:150px;" id='ba' name='ba'>
+        <option value="" >选择</option>
+        {foreach from=$ba_rows item=row name=r}
+          <option value="{$row.id}" {if $ba_id eq $row.id} selected="selected"{/if}>{$row.name}</option>
+        {/foreach}
+      </select>
+      <input style='width:60px;height:31px;margin-left:30px;' type='submit' value='确认'/>
+    </form>
+  </div>
+</div>
+

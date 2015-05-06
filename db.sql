@@ -150,6 +150,7 @@ create table if not exists doctor (
   unique key(phone_num),
   index i_name(`name`),
   index i_employe(`employe_id`),
+  index i_master_id(`master_id`),
   index i_cls(`classify`),
   index i_ke_shi(`ke_shi`)
 )engine=MyISAM default charset=utf8 auto_increment=10000;
@@ -170,6 +171,7 @@ create table if not exists doctor_article (
   id                  int unsigned not null auto_increment,   # 文章ID
   doctor_id           int unsigned not null default 0,        # 医生ID
 
+  icon_url            varchar(255) not null default '',       #
   topic               varchar(90) not null default '',        #
   content             varchar(12000) not null default '',     # 
   c_time              int unsigned not null default 0,
@@ -206,6 +208,16 @@ create table if not exists ba (
   primary key(id),
   index i_show(`show`),
   index i_pri(`priority`)
+)engine=MyISAM default charset=utf8;
+
+--#病友吧关联医生
+drop table if exists ba_rel_doctor;
+create table if not exists ba_rel_doctor (
+  doctor_id           int unsigned not null default 0,        #
+  ba_id               int unsigned not null default 0,        # 病友吧ID
+
+  primary key(doctor_id),
+  index i_ba_id(`ba_id`)
 )engine=MyISAM default charset=utf8;
 
 --#病友吧-帖子

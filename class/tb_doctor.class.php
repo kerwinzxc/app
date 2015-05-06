@@ -131,4 +131,14 @@ class tb_doctor
       . " {$where} {$order_by} limit {$start},{$offset}";
     return $db->get_rows($sql);
   }
+  public static function query_slave_doctor_list($doctor_id)
+  {
+    $db = new sql(db_selector::get_db(db_selector::$db_r));
+    $sql = "select "
+      . self::$all_cols
+      . " from "
+      . self::$tb_name
+      . " where master_id={$doctor_id}";
+    return $db->get_rows($sql);
+  }
 };

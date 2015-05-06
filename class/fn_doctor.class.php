@@ -4,6 +4,7 @@ class fn_doctor
 {
   public static function build_doctor_detail_list_from_id_list($doctor_list)
   {
+    $doctor_detail_list = array();
     foreach ($doctor_list as $doctor_id) {
       $doctor_info = tb_doctor::query_doctor_by_id($doctor_id);
       if (empty($doctor_info)) {
@@ -15,6 +16,7 @@ class fn_doctor
   }
   public static function build_doctor_detail_list_from_info_list($doctor_list)
   {
+    $doctor_detail_list = array();
     foreach ($doctor_list as $doctor_info) {
       $doctor_detail_list[] = self::build_doctor_detail($doctor_info);
     }

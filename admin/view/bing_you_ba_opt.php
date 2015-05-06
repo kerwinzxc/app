@@ -32,17 +32,24 @@ do {
     if ($opt == 'open'
         && $ba_info['open'] == '0') {
       $update_info['open'] = 1;
-    } else {
-      if ($opt == 'close'
-          && $ba_info['open'] == '1') {
-        $update_info['open'] = 0;
-      }
+    } else if ($opt == 'close'
+               && $ba_info['open'] == '1') {
+      $update_info['open'] = 0;
     }
     if (!empty($update_info)) {
       if (tb_ba::update($id, $update_info) !== false) {
         $err_msg = "修改成功";
       } else {
         $err_msg = '系统内部错误，修改失败';
+      }
+    } else if ($opt == 'del'
+               && $ba_info['open'] == '0') {
+      $ret = tb_ba::del_one($id);
+      if ($ret === false) {
+        $err_msg = '访问数据库失败';
+        break;
+      } else {
+        $err_msg = "删除成功";
       }
     }
   }

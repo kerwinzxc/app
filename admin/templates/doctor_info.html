@@ -38,8 +38,9 @@
           <td>
           <select style="display:inline;width:100px;" id='classify' name='classify'>
           <option value=""  >--医生类别--</option>
+         {if isset($master_name)}
           <option value="1" {if isset($classify) && $classify eq 1} selected="selected"{/if}>普通医生</option>
-         {if ! isset($master_name)}
+         {else}
           <option value="2" {if isset($classify) && $classify eq 2} selected="selected"{/if}>医学泰斗</option>
          {/if}
           </select>

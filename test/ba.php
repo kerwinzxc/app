@@ -8,7 +8,7 @@ function test_get_topics_list($users) {
   $get_ok = 0;
   $p = mt_rand(0, 100);
   foreach ($users as $phone_num => $sid) {
-    $ret = json_decode(file_get_contents("http://{$host}/api/ba/topics.php?ba_id=2003&p={$p}", false, $get_timeout), true);
+    $ret = json_decode(file_get_contents("http://{$host}/api/ba/topics.php?ba_id=9&p={$p}", false, $get_timeout), true);
     if ((int)$ret['code'] == 0) {
       $get_ok += count($ret['list']);
     } else {
@@ -35,7 +35,7 @@ function test_add_topic($users) {
   foreach ($users as $phone_num => $sid) {
     $ret = json_decode(util::post_data("http://{$host}/api/ba/post.php",
                                        array("sid" => "{$sid}",
-                                             "ba_id" => 2003,
+                                             "ba_id" => 9,
                                              "topic" => $topics[array_rand($topics)],
                                              "content" => "张斌很久不见了吧，还在广州吗，孩子会跑了吧，我仍然会回答，是啊，都很好，还是都很好。只不%过真正的张斌已经去了，'只'存在我的电话簿里，我的微信好友里\.",
                                             )),

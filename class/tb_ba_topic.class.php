@@ -141,7 +141,7 @@ class tb_ba_topic
   public static function query_topic_limit($ba_id, $start, $offset)
   {
     $db = new sql(db_selector::get_db(db_selector::$db_r));
-    $sql = "select ba_id,user_id,topic,c_time"
+    $sql = "select id,ba_id,user_id,topic,zan,coment,c_time"
       . " from "
       . self::$tb_name
       . " where ba_id=$ba_id order by zan desc limit {$start},{$offset}";

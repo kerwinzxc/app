@@ -29,7 +29,7 @@ do {
     $ret_code = ERR_BA_TOPIC_TOO_LONG;
     break;
   }
-  if (strlen($content) > 12000)) {
+  if (strlen($content) > 12000) {
     $ret_code = ERR_BA_TOPIC_CONTENT_TOO_LONG;
     break;
   }

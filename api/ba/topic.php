@@ -27,7 +27,7 @@ do {
     break;
   }
 
-  if ($page > 1) { // 只在第一次加载时加载话题内容，翻页时就没必要返回了
+  if ($page <= 1) { // 只在第一次加载时加载话题内容，翻页时就没必要返回了
     $topic_info = tb_ba_topic::query_topic_by_id($topic_id);
     if ($topic_info === false) {
       $ret_code = ERR_DB_ERROR;
