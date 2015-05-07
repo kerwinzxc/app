@@ -65,7 +65,7 @@ if ($total_num % 10 == 0) {
 }
 
 $tpl->assign("refer", $_SERVER['HTTP_REFERER']);
-$tpl->assign("content_title", "病友吧");
+$tpl->assign("content_title", "病友吧列表");
 $tpl->assign("ba_rows", $ba_rows === false ? array() : $ba_rows);
 $tpl->assign("inc_name", "bing_you_ba_list.html");
 $tpl->assign("page", $page);

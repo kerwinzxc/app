@@ -93,6 +93,12 @@ do {
         break;
       }
       $ret_body['doctor_id'] = $doctor_id;
+    } elseif ($act == 'had_gz') { //
+      if (tb_user_gz_doctor::query_user_had_guan_zhu_or_not($user_id, $doctor_id)) {
+        $ret_body['had_gz'] = 1;
+      } else {
+        $ret_body['had_gz'] = 0;
+      }
     } else {
       $ret_code = ERR_PARAM_INVALID;
       break;

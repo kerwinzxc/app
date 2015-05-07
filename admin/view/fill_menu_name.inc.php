@@ -6,7 +6,8 @@ $tpl->assign("s_menu_func_g",     '常用功能');
 $tpl->assign("s_doctor_lu_ru",    '专家录入');
 $tpl->assign("s_doctor_cha_xun",  '医生查询');
 $tpl->assign("s_my_doctor",       '我的医生');
-$tpl->assign("s_bing_you_ba",     '病友吧');
+$tpl->assign("s_bing_you_ba",     '病友吧列表');
+$tpl->assign("s_bing_you_ba_banner",'病友吧推广');
 $tpl->assign("s_doctor_article",  '专家文章');
 
 $tpl->assign("s_menu_setting_g",  '系统设置');

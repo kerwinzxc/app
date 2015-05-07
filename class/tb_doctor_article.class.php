@@ -8,6 +8,7 @@ class tb_doctor_article
   private static $all_cols = '*';
 
   public static function insert_new_one($doctor_id,
+                                        $icon_url,
                                         $topic,
                                         $content,
                                         $c_time)
@@ -17,8 +18,8 @@ class tb_doctor_article
     $content = $db->escape($content);
     $sql = "insert into "
       . self::$tb_name
-      . "(doctor_id,topic,content,c_time)"
-      . "value($doctor_id,'$topic','$content',$c_time)";
+      . "(doctor_id,icon_url,topic,content,c_time)"
+      . "value($doctor_id,'$icon_url','$topic','$content',$c_time)";
     if ($db->execute($sql) === false) {
       return false;
     }
@@ -27,17 +28,12 @@ class tb_doctor_article
     }
     return false;
   }
-  public static function update($article_id,
-                                $doctor_id,
-                                $topic,
-                                $content)
+  public static function update($article_id, $doctor_id, $update_info)
   {
     $db = new sql(db_selector::get_db(db_selector::$db_w));
-    $topic = $db->escape($topic);
-    $content = $db->escape($content);
     $sql = "update "
       . self::$tb_name
-      . " set topic='$topic',content='$content'"
+      . " set " . $db->get_set($update_info)
       . " where id={$article_id} and doctor_id=$doctor_id limit 1";
     if ($db->execute($sql) === false) {
       return false;

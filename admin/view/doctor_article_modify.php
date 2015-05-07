@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     $tpl->assign("id", $article_id);
     $tpl->assign("doctor_id", $doctor_id);
     $tpl->assign("topic", $article_info['topic']);
+    $tpl->assign("icon_url", $article_info['icon_url']);
     $tpl->assign("content", $article_info['content']);
 
     $tpl->assign("content_title", "编辑文章 - <b>" . $doctor_info['name'] . "</b>");
@@ -80,10 +81,56 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
       break;
     }
 
-    tb_doctor_article::update($article_id,
-                              $doctor_id,
-                              $topic,
-                              $content);
+    //upload file
+    $err_msg = '';
+    $filename = '';
+    $icon_url = '';
+    $photo = 'icon';
+    if (!empty($_FILES[$photo]["name"])) {
+      $filename = $_FILES[$photo]["name"];
+      if ($_FILES[$photo]["error"] > 0) {
+        $err_msg = 'Return Code: ' . $_FILES[$photo]["error"];
+        break;
+      }
+      if ($_FILES[$photo]["size"] > 2*1024*1024) {
+        $err_msg = $filename . " 图片大小超出限制(2M)";
+        break;
+      }
+      if (!check::can_upload($_FILES[$photo]['type'])) {
+        $err_msg = "图片格式不支持";
+        break;
+      }
+      $mime = explode('/', $_FILES[$photo]['type']);
+      $ext = $mime[1];
+      $basename = md5($topic . "doctor_article_icon" . time());
+
+      $filename = $basename . "." . $ext;
+      $path = MNG_ROOT . 'image/';
+
+      $filename = $basename . "." . $ext;
+      $path = MNG_ROOT . 'image/';
+
+      move_uploaded_file($_FILES[$photo]['tmp_name'], $path . $filename);
+
+      $icon_url = BASE_URL . "image/$filename";
+    }
+    if ($err_msg != '') {
+      break;
+    }
+    // upload end
+
+    $update_info = array();
+    if (!empty($topic)) {
+      $update_info['topic'] = $topic;
+    }
+    if (!empty($icon_url)) {
+      $update_info['icon_url'] = $icon_url;
+    }
+    if (!empty($content)) {
+      $update_info['content'] = $content;
+    }
+    tb_doctor_article::update($article_id, $doctor_id, $update_info);
+
     $err_msg = "编辑成功";
     alert_and_redirect($err_msg, "view/doctor_article_view.php?id={$article_id}&doctor_id={$doctor_id}");
   } while (false);

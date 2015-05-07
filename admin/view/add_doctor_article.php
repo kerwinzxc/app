@@ -48,7 +48,46 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
       $content = stripslashes($content);
     }
 
+    //upload file
+    $err_msg = '';
+    $filename = '';
+    $icon_url = '';
+    $photo = 'icon';
+    if (!empty($_FILES[$photo]["name"])) {
+      $filename = $_FILES[$photo]["name"];
+      if ($_FILES[$photo]["error"] > 0) {
+        $err_msg = 'Return Code: ' . $_FILES[$photo]["error"];
+        break;
+      }
+      if ($_FILES[$photo]["size"] > 2*1024*1024) {
+        $err_msg = $filename . " 图片大小超出限制(2M)";
+        break;
+      }
+      if (!check::can_upload($_FILES[$photo]['type'])) {
+        $err_msg = "图片格式不支持";
+        break;
+      }
+      $mime = explode('/', $_FILES[$photo]['type']);
+      $ext = $mime[1];
+      $basename = md5($topic . "doctor_article_icon" . time());
+
+      $filename = $basename . "." . $ext;
+      $path = MNG_ROOT . 'image/';
+
+      $filename = $basename . "." . $ext;
+      $path = MNG_ROOT . 'image/';
+
+      move_uploaded_file($_FILES[$photo]['tmp_name'], $path . $filename);
+
+      $icon_url = BASE_URL . "image/$filename";
+    }
+    if ($err_msg != '') {
+      break;
+    }
+    // upload end
+
     $new_article_id = tb_doctor_article::insert_new_one($doctor_id,
+                                                        $icon_url,
                                                         $topic,
                                                         $content,
                                                         time());

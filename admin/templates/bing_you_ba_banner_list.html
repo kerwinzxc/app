@@ -1,0 +1,26 @@
+<script type="text/javascript">
+{literal}
+function checkConfirm(s){
+  return confirm(s);
+}
+{/literal}
+</script>
+<div class="query" style="margin:8px;width: 829px \9;">
+  <table style="width:100%;table-layout:fixed;">
+    <tr style="font-weight:bold;">
+      <th style="height:44px;width:10%;background:#E9893A;">优先</th>
+      <th style="width:80%;background:#E9893A;">推广图</th>
+      <th style="width:10%;background:#E9893A;">操作</th>
+    </tr>
+    {foreach from=$banner_rows item=row name=r}
+      <tr {if $smarty.foreach.r.index % 2 eq 1}class="odd"{/if}>
+        <td>{$row.priority}</td>
+        <td style="height:64px;padding:2px;"><a href="view/bing_you_ba.php?id={$row.id}"><img src="{$row.img_url}" ></img></a></td>
+        <td><a href="view/bing_you_ba_banner_opt.php?id={$row.id}&opt=del" onclick="return checkConfirm('确认要删除吗？')">删除</a></td>
+      </tr>
+    {/foreach}
+  </table>
+  <div style="margin-top:5px">
+    <a style="display:inline;margin-left:10px;float:left;" href="view/add_bing_you_ba_banner.php">添加</a>
+  </div>
+</div>

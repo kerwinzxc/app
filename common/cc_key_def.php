@@ -17,3 +17,4 @@ if (!defined('CK_DOCTOR_ARTICLE_ID_TO_INFO')) define('CK_DOCTOR_ARTICLE_ID_TO_IN
 if (!defined('CK_ALL_BA_SHOW_LIST')) define('CK_ALL_BA_SHOW_LIST', 'all_ba_show_list:');
 if (!defined('CK_DOCTOR_ID_2_INTRODUCTION')) define('CK_DOCTOR_ID_2_INTRODUCTION', 'doctor_introduction:');
 if (!defined('CK_BA_REL_DOCTOR_LIST')) define('CK_BA_REL_DOCTOR_LIST', 'ba_rel_doctor:');
+if (!defined('CK_BA_BANNER_LIST')) define('CK_BA_BANNER_LIST', 'ba_banner_list:');

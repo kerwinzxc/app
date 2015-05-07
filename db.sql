@@ -200,14 +200,26 @@ create table if not exists ba (
   id                  int unsigned not null auto_increment,   # 病友吧ID
 
   open                tinyint not null default 1,             #
-  priority            int unsigned not null default 1;        #
+  priority            int unsigned not null default 1,        #
   name                varchar(30) not null,                   #
   ba_desc             varchar(90) not null,                   #
   icon_url            varchar(255) not null default '',       #
 
   primary key(id),
-  index i_show(`show`),
+  index i_open(`open`),
   index i_pri(`priority`)
+)engine=MyISAM default charset=utf8;
+
+--#病友吧首页banner
+drop table if exists ba_banner;
+create table if not exists ba_banner (
+  id                  int unsigned not null auto_increment,   # ID
+
+  priority            int unsigned not null default 1,        #
+  img_url             varchar(255) not null default '',       #
+  target              varchar(255) not null default '',       #
+
+  primary key(id)
 )engine=MyISAM default charset=utf8;
 
 --#病友吧关联医生

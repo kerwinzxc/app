@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
       }
       $filename = md5($user . $doctor_id . time())
         . "."
-        . util::get_file_ext($filename);
+        . end(explode('.', $filename));
 
       move_uploaded_file($_FILES[$video]['tmp_name'], MNG_ROOT . 'video/' . $filename);
     } else {

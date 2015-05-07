@@ -75,4 +75,17 @@ class tb_user_gz_ba
     }
     return $result;
   }
+  // return false on error, return array on ok.
+  public static function query_gz_ba_num($ba_id)
+  {
+    $db = new sql(db_selector::get_db(db_selector::$db_r));
+    $sql = "select count(*) from "
+      . self::$tb_name
+      . " where ba_id={$ba_id}";
+    $ret = $db->get_one_row_col($sql, 0);
+    if ($ret === false) {
+      return false;
+    }
+    return (int)$ret;
+  }
 };

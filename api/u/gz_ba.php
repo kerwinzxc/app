@@ -73,6 +73,17 @@ do {
         break;
       }
       $ret_body['ba_id'] = $ba_id;
+    } elseif ($act == 'had_gz') { // had guan zhu
+      $had_gz_list = tb_user_gz_ba::query_user_guan_zhu_list($user_id);
+      if ($had_gz_list === false) {
+        $ret_code = ERR_DB_ERROR;
+        break;
+      }
+      if (!in_array($ba_id, $had_gz_list)) {
+        $ret_body['had_gz'] = 0;
+      } else {
+        $ret_body['had_gz'] = 1;
+      }
     } else {
       $ret_code = ERR_PARAM_INVALID;
       break;

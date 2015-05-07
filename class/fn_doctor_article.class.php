@@ -13,6 +13,7 @@ class fn_doctor_article
       $article_brief = array();
       $article_brief['name'] = $doctor_info['name'];
       $article_brief['article_id'] = (int)$article['id'];
+      $article_brief['icon_url'] = $article['icon_url'];
       $article_brief['topic'] = $article['topic'];
       $article_brief['c_time'] = (int)$article['c_time'];
       $real_article_list[] = $article_brief;
