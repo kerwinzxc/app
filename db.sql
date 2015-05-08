@@ -225,11 +225,10 @@ create table if not exists ba_banner (
 --#病友吧关联医生
 drop table if exists ba_rel_doctor;
 create table if not exists ba_rel_doctor (
-  doctor_id           int unsigned not null default 0,        #
   ba_id               int unsigned not null default 0,        # 病友吧ID
+  doctor_id           int unsigned not null default 0,        #
 
-  primary key(doctor_id),
-  index i_ba_id(`ba_id`)
+  primary key(ba_id, doctor_id)
 )engine=MyISAM default charset=utf8;
 
 --#病友吧-帖子
@@ -280,4 +279,40 @@ create table if not exists ba_topic_comment (
   index i_tid(`topic_id`)
 )engine=MyISAM default charset=utf8;
 
+--#线上网络问诊预约单
+drop table if exists ol_yuyue_order;
+create table if not exists ol_yuyue_order (
+  id                  int unsigned not null auto_increment,   # ID
 
+  name                varchar(30) not null default '',        #
+  sex                 tinyint not null default 1,             # 0: famale 1: male
+  id_card             char(18) not null default '',           # person id card
+  phone_num           char(15) not null,                      # mobile phone number
+  disease_desc        varchar(900) not null default '',       # 疾病描述
+
+  expected_time       int unsigned not null default 0,        # 期望时间
+  emr_url             varchar(770) not null default '',       #
+
+  c_time              int unsigned not null default 0,
+
+  primary key(id)
+)engine=MyISAM default charset=utf8 auto_increment=10000;
+
+--#电话问诊预约单
+drop table if exists tel_yuyue_order;
+create table if not exists tel_yuyue_order (
+  id                  int unsigned not null auto_increment,   # ID
+
+  name                varchar(30) not null default '',        #
+  sex                 tinyint not null default 1,             # 0: famale 1: male
+  id_card             char(18) not null default '',           # person id card
+  phone_num           char(15) not null,                      # mobile phone number
+  disease_desc        varchar(900) not null default '',       # 疾病描述
+
+  expected_time       int unsigned not null default 0,        # 期望时间
+  emr_url             varchar(770) not null default '',       #
+
+  c_time              int unsigned not null default 0,
+
+  primary key(id)
+)engine=MyISAM default charset=utf8 auto_increment=10000;

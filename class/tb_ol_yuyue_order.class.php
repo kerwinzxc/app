@@ -2,21 +2,19 @@
 
 require_once APP_ROOT . '/common/cc_key_def.php';
 
-class tb_patient_emr
+class tb_ol_yuyue_order
 {
-  private static $tb_name  = 'patient_emr';
+  private static $tb_name  = 'ol_yuyue_order';
   private static $all_cols = '*';
 
-  public static function insert_new_one($user_id,
-                                        $patient_id,
-                                        $sd_time,
-                                        $hospital,
-                                        $ke_shi,
-                                        $doctor_name,
-                                        $photoes_1,
-                                        $photoes_2,
-                                        $doctor_diagnosis,
-                                        $doctor_tell)
+  public static function insert_new_one($name,
+                                        $sex,
+                                        $id_card,
+                                        $phone_num,
+                                        $disease_desc,
+                                        $expected_time,
+                                        $emr_url,
+                                        $c_time)
   {
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     $hospital = $db->escape($hospital);

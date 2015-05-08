@@ -66,6 +66,8 @@ do {
       $ret_code = ERR_UPLOAD_ICON_MV_FAILED;
       break;
     }
+
+    $ret_body['icon_url'] = $icon_url;
   } else {
     $ret_code = ERR_INNER_ERROR;
     break;

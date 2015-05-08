@@ -133,7 +133,7 @@ class tb_ba_topic
     $result = $db->get_row($sql);
 
     // for cache
-    if ($result !== false) {
+    if (!empty($result)) {
       $cc->set($ck, json_encode($result));
     }
     return $result;
@@ -145,6 +145,18 @@ class tb_ba_topic
       . " from "
       . self::$tb_name
       . " where ba_id=$ba_id order by zan desc limit {$start},{$offset}";
+    return $db->get_rows($sql);
+  }
+  public static function query_topic_limit_ex($where, $start, $offset)
+  {
+    if (!empty($where)) {
+      $where = " where $where";
+    }
+    $db = new sql(db_selector::get_db(db_selector::$db_r));
+    $sql = "select id,ba_id,user_id,topic,zan,coment,c_time"
+      . " from "
+      . self::$tb_name
+      . " {$where} order by id desc limit {$start},{$offset}";
     return $db->get_rows($sql);
   }
 };

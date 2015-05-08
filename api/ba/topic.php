@@ -11,6 +11,27 @@ $ret_body = array();
 
 do {
   $page = 1;
+  $sid = '';
+  $user_id = 0;
+  if (!empty($_GET['sid'])) {
+    $sid = $_GET['sid'];
+    if (!user_session::is_sid($sid)) {
+      $ret_code = ERR_PARAM_INVALID;
+      break;
+    }
+    $s_info = user_session::get_session($sid);
+    if ($s_info === false) {
+      $ret_code = ERR_NOT_LOGIN;
+      break;
+    }
+
+    $s_info = json_decode($s_info, true);
+    if (empty($s_info)) {
+      $ret_code = ERR_NOT_LOGIN;
+      break;
+    }
+    $user_id = $s_info['user_id'];
+  }
 
   if (empty($_GET['topic_id'])) {
     $ret_code = ERR_PARAM_INVALID;
@@ -38,6 +59,11 @@ do {
       break;
     }
     fn_ba_topic::build_topic_info($topic_info, $ret_body);
+    if ($user_id !== 0) {
+      $ret_body['zan'] = tb_ba_topic_zan::user_had_zan($topic_id, $user_id) ? 1 : 0;
+    } else {
+      $ret_body['zan'] = 0;
+    }
   }
 
   $comment = array();

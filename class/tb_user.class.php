@@ -134,7 +134,7 @@ class tb_user
     $result = $db->get_row($sql);
 
     // for cache
-    if ($result !== false) {
+    if (!empty($result)) {
       $cc->set($ck, json_encode($result));
     }
     return $result;

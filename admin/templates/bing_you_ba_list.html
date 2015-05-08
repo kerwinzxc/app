@@ -12,8 +12,9 @@ function checkConfirm(s){
       <th style="width:7%;background:#E9893A;">优先级</th>
       <th style="width:9%;background:#E9893A;">关联医生</th>
       <th style="width:15%;background:#E9893A;">贴吧名</th>
-      <th style="width:44%;background:#E9893A;">描述</th>
-      <th style="width:17%;background:#E9893A;">操作</th>
+      <th style="width:43%;background:#E9893A;">描述</th>
+      <th style="width:6%;background:#E9893A;">话题</th>
+      <th style="width:12%;background:#E9893A;">操作</th>
     </tr>
     {foreach from=$ba_rows item=row name=r}
       <tr {if $smarty.foreach.r.index % 2 eq 1}class="odd"{/if}>
@@ -29,6 +30,7 @@ function checkConfirm(s){
         {if $row.open eq 1}
           <td><a href="view/bing_you_ba.php?id={$row.id}">{$row.name}</a></td>
           <td>{$row.ba_desc}</td>
+          <td><a href="view/ba_topic_query.php?id={$row.id}">话题</a></td>
           <td><a href="view/bing_you_ba.php?id={$row.id}">查看</a>｜<a href="view/bing_you_ba_opt.php?id={$row.id}&opt=close" onclick="return checkConfirm('确认要关闭吗？')">关闭</a></td>
         {else}
           <td><i><a href="view/bing_you_ba.php?id={$row.id}">{$row.name}</a></i></td>

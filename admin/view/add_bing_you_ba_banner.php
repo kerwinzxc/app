@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
       }
       $mime = explode('/', $_FILES[$photo]['type']);
       $ext = $mime[1];
-      $basename = md5($name . "ddky_bing_you_ba_icon" . time());
+      $basename = md5($filename . "ddky_bing_you_ba_icon" . time());
 
       $filename = $basename . "." . $ext;
       $path = MNG_ROOT . 'image/';

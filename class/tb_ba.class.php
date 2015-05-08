@@ -111,7 +111,7 @@ class tb_ba
     $result = $db->get_rows($sql);
 
     // for cache
-    if ($result !== false) {
+    if (!empty($result)) {
       $cc->set($ck, json_encode($result));
     }
     return $result;

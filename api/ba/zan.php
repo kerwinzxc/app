@@ -37,7 +37,7 @@ do {
 
   $act = $_GET['do'];
   if ($act == 'zan') {
-    if ($tb_ba_topic_zan::user_had_zan($topic_id, $user_id)) {
+    if (tb_ba_topic_zan::user_had_zan($topic_id, $user_id)) {
       $ret_code = ERR_BA_TOPIC_HAD_ZAN;
       break;
     }
@@ -47,13 +47,15 @@ do {
     }
     tb_ba_topic::incr_zan_counter($topic_id);
   } elseif ($act == 'cancel') {
-    if ($tb_ba_topic_zan::user_had_zan($topic_id, $user_id) === false) {
+    if (tb_ba_topic_zan::user_had_zan($topic_id, $user_id) === false) {
       $ret_code = ERR_BA_TOPIC_HAD_NOT_ZAN;
       break;
     }
     if (tb_ba_topic_zan::del_one($topic_id, $user_id) === false) {
-      tb_ba_topic::decr_zan_counter($topic_id);
+      $ret_code = ERR_DB_ERROR;
+      break;
     }
+    tb_ba_topic::decr_zan_counter($topic_id);
   } else {
     $ret_code = ERR_PARAM_INVALID;
   }

@@ -71,9 +71,8 @@ class tb_user_gz_ke_shi
       . " where user_id={$user_id}";
     $result = $db->get_rows($sql);
 
-    if ($result !== false) {
+    if (!empty($result)) {
       $result = array_map(function ($r) { return (int)$r['ke_shi'];}, $result);
-
       // for cache
       $cc->set($ck, json_encode($result));
     }

@@ -85,7 +85,7 @@ class tb_ba_banner
     $result = $db->get_rows($sql);
 
     // for cache
-    if ($result !== false) {
+    if (!empty($result)) {
       $cc->set($ck, json_encode($result));
     }
     return $result;

@@ -16,6 +16,7 @@ do {
   $ba_detail_list = array();
   foreach ($ba_list as $ba) {
     $ba_info = array();
+    $ba_info['ba_id'] = $ba['id'];
     $ba_info['name'] = $ba['name'];
     $ba_info['icon_url'] = $ba['icon_url'];
     $gz_num = tb_user_gz_ba::query_gz_ba_num($ba['id']);

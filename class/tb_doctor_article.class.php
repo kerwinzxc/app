@@ -69,7 +69,7 @@ class tb_doctor_article
     $result = $db->get_row($sql);
 
     // for cache
-    if ($result !== false) {
+    if (!empty($result)) {
       $cc->set($ck, json_encode($result));
     }
     return $result;

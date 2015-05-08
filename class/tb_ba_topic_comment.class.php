@@ -29,9 +29,8 @@ class tb_ba_topic_comment
   }
   public static function del_one($id)
   {
-    if (empty($id)) {
-      return false;
-    }
+    if (empty($id)) { return false; }
+
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     $sql = "delete from "
       . self::$tb_name
@@ -40,6 +39,19 @@ class tb_ba_topic_comment
       return false;
     }
     return $db->affected_rows() == 1 ? 1 : 0;
+  }
+  public static function del_commens_by_topic_id($topic_id)
+  {
+    if (empty($topic_id)) { return false; }
+
+    $db = new sql(db_selector::get_db(db_selector::$db_w));
+    $sql = "delete from "
+      . self::$tb_name
+      . " where topic_id=$topic_id";
+    if ($db->execute($sql) === false) {
+      return false;
+    }
+    return $db->affected_rows() > 0 ? 1 : 0;
   }
 
   // return false on error, return array on ok.
@@ -50,7 +62,7 @@ class tb_ba_topic_comment
     }
     // for cache
     $cc = new cache();
-    $ck = CK_REPLY_ID_2_REPLY . $id;
+    $ck = CK_COMMENT_ID_2_COMMENT . $id;
     $result = $cc->get($ck);
     if ($result !== false) {
       return json_decode($result, true);
@@ -65,7 +77,7 @@ class tb_ba_topic_comment
     $result = $db->get_row($sql);
 
     // for cache
-    if ($result !== false) {
+    if (!empty($result)) {
       $cc->set($ck, json_encode($result));
     }
     return $result;

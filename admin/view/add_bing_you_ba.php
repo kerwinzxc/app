@@ -74,7 +74,24 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     $new_ba_id = tb_ba::insert_new_one($priority, $name, $desc, $icon_url);
     if ($new_ba_id != false) {
-      $err_msg = '添加成功';
+      for ($i = 1; $i <= 5; $i++) {
+        if (!empty($_POST['doctor' . $i])) {
+          $doctor_id = trim($_POST['doctor' . $i]);
+          $doctor_info = tb_doctor::query_doctor_by_id($doctor_id);
+          if ($doctor_info === false || empty($doctor_info)) {
+            $err_msg = "查找该医生失败";
+            break;
+          }
+          if (tb_ba_rel_doctor::update($new_ba_id, $doctor_id) === false) {
+            $err_msg = "保存数据库失败";
+            break;
+          }
+        }
+      }
+      if (empty($err_msg)) {
+        $err_msg = '添加成功';
+      }
+      // end
     } else {
       $err_msg = '系统内部错误，添加失败';
     }

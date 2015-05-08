@@ -68,7 +68,7 @@ class tb_user_gz_ba
       . " where user_id={$user_id}";
     $result = $db->get_rows($sql);
 
-    if ($result !== false) {
+    if (!empty($result)) {
       $result = array_map(function ($r) { return (int)$r['ba_id'];}, $result);
       // for cache
       $cc->set($ck, json_encode($result));

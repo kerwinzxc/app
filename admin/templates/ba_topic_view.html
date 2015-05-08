@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <link type="text/css" rel="stylesheet" href="{$base_url}scripts/main.css"/>
+  </head>
+  <body>
+    <div style="width:800px;margin:0 auto;">
+    <p style="margin:20px;text-align:center"><b>{$topic}</b></p>
+    <hr style="height:1px;border:0;background-color:#FF9900;"/>
+    <p style="margin:20px;">{$content}</p>
+    <br/>
+    {if empty($comment_list)}
+    <hr style="margin:0 0 10px 0;height:1px;border:0;background-color:#CCC;"/>
+    暂无评论
+    {else}
+      <hr style="margin:0 0 10px 0;height:1px;border:0;background-color:#CCC;"/>
+      <div style="margin:0 0 15px 0;"><p><b>评论列表</b></p></div>
+      {foreach from=$comment_list item=comment}
+        <div><p style="margin:0;text-align:center">{$comment.content}</p></div>
+        <div style="margin-top:15px;">
+        <p style="margin:0 0 5px 0;float:left;">作者：{$comment.author}</p>
+        <p style="margin:0 0 5px 0;float:right;">{$comment.c_time|date_format:"%Y-%m-%d %H:%M:%S"}</p>
+        </div>
+        <div><hr style="width:100%;margin:0 0 20px 0;height:1px;border:0;background-color:#CCC;"/></div>
+      {/foreach}
+      <div class="page_v">
+        <p style="display:inline">共{if !isset($total_num)}0{else}{$total_num}{/if}篇</p>
+        {if !isset($page) || $page eq 1}上一页{else}<a href="view/ba_topic_query.php?p={$page-1}">上一页</a>{/if}
+        {if !isset($page) || $page ge $pages}下一页{else}<a href="view/ba_topic_query.php?p={$page+1}">下一页</a>{/if}
+      </div>
+    {/if}
+    </div>
+</body>
+</html>

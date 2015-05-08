@@ -10,8 +10,7 @@ require_once MNG_ROOT . '../common/cc_key_def.php'; // below smarty
 
 $err_msg = '';
 
-$tpl->assign("content_title", S_DOCTOR_XIN_XI);
-$tpl->assign("doctor_info_title", S_DOCTOR_XIN_XI);
+$tpl->assign("content_title", "病友吧信息");
 $tpl->assign("new_one", 0);
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -89,7 +88,23 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 
     if (tb_ba::update($id, $update_info) !== false) {
-      $err_msg = '编辑成功';
+      for ($i = 1; $i <= 5; $i++) {
+        if (!empty($_POST['doctor' . $i])) {
+          $doctor_id = trim($_POST['doctor' . $i]);
+          $doctor_info = tb_doctor::query_doctor_by_id($doctor_id);
+          if ($doctor_info === false || empty($doctor_info)) {
+            $err_msg = "查找该医生失败";
+            break;
+          }
+          if (tb_ba_rel_doctor::update($id, $doctor_id) === false) {
+            $err_msg = "保存数据库失败";
+            break;
+          }
+        }
+      }
+      if (empty($err_msg)) {
+        $err_msg = '编辑成功';
+      }
     } else {
       $err_msg = '系统内部错误，编辑失败';
     }
@@ -117,6 +132,12 @@ function build_html($id)
     $tpl->assign("name", $ba_info['name']);
     $tpl->assign("desc", $ba_info['ba_desc']);
     $tpl->assign("icon_url", $ba_info['icon_url']);
+
+    $ret = tb_ba_rel_doctor::query_ba_rel_doctor_list($id);
+    if (!empty($ret)) {
+      $ret = array_map(function ($r) { return (int)$r['doctor_id'];}, $ret);
+    }
+    $tpl->assign("rel_doctors", empty($ret) ? array() : $ret);
   }
 }
 

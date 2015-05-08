@@ -12,8 +12,8 @@ class tb_ba_rel_doctor
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     $sql = "replace into "
       . self::$tb_name
-      . "(doctor_id,ba_id)"
-      . "value($doctor_id,$ba_id)";
+      . "(ba_id,doctor_id)"
+      . "value($ba_id,$doctor_id)";
     if ($db->execute($sql) === false) {
       return false;
     }
@@ -32,7 +32,7 @@ class tb_ba_rel_doctor
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     $sql = "delete from "
       . self::$tb_name
-      . " where doctor_id={$doctor_id} and ba_id={$ba_id} limit 1";
+      . " where ba_id={$ba_id} and doctor_id={$doctor_id} limit 1";
     if ($db->execute($sql) === false) {
       return false;
     }
@@ -69,7 +69,7 @@ class tb_ba_rel_doctor
     $result = $db->get_rows($sql);
 
     // for cache
-    if ($result !== false) {
+    if (!empty($result)) {
       $cc->set($ck, json_encode($result));
     }
     return $result;

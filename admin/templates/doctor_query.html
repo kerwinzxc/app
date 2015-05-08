@@ -36,8 +36,8 @@ window.onload = loadFun;
       <input style="width:100px;padding-left:5px;" type='text' id='q_phone_num' name='phone_num' value='{if isset($phone_num)}{$phone_num}{else}电话{/if}' onchange='checkPhoneNum(this)' onfocus='onQueryInputFocus(this,"电话")' onblur='onQueryInputBlur(this,"电话")'/>
       <select style="width:100px;padding-left:2px;" id='q_classify' name='classify'>
         <option value=""  >--医生类别--</option>
-        <option value="1" {if isset($classify) && $classify eq 1} selected="selected"{/if}>普通医生</option>
-        <option value="2" {if isset($classify) && $classify eq 2} selected="selected"{/if}>医学泰斗</option>
+        <option value="1" {if isset($classify) && $classify eq 1} selected="selected"{/if}>普通</option>
+        <option value="2" {if isset($classify) && $classify eq 2} selected="selected"{/if}>泰斗</option>
       </select>
       {if ! isset($my_doctor) }
       <input style="width:100px;padding-left:5px;" type='text' id='q_employe_id' name='employe_id' value='{if isset($employe_id)}{$employe_id}{else}录入者ID{/if}' onfocus='onQueryInputFocus(this,"录入者ID")' onblur='onQueryInputBlur(this,"录入者ID")'/>
@@ -47,21 +47,23 @@ window.onload = loadFun;
   </div>
   <table style="width:100%;table-layout:fixed;">
     <tr style="font-weight:bold;">
+      <th style="width:8%;height:44px;background:#E9893A;">ID</th>
       <th style="width:12%;height:44px;background:#E9893A;">医生姓名</th>
       <th style="width:13%;background:#E9893A;">电话</th>
-      <th style="width:12%;background:#E9893A;">类别</th>
+      <th style="width:6%;background:#E9893A;">类别</th>
       <th style="width:18%;background:#E9893A;">职称</th>
       <th style="width:20%;background:#E9893A;">所属医院</th>
-      <th style="width:15%;background:#E9893A;">科室</th>
+      <th style="width:13%;background:#E9893A;">科室</th>
       <th style="width:10%;background:#E9893A;">操作</th>
     </tr>
     {foreach from=$doctor_rows item=row name=r}
       <tr {if $smarty.foreach.r.index % 2 eq 1}class="odd"{/if}>
+        <td>{$row.id}</td>
         <td style="height:36px;"><a href='view/doctor_modify.php?id={$row.id}'>{$row.name}</a></td>
         <td>{$row.phone_num}</td>
         <td>
-          {if $row.classify eq 1}普通医生
-          {elseif $row.classify eq 2}医学泰斗
+          {if $row.classify eq 1}普通
+          {elseif $row.classify eq 2}泰斗
           {else}未知
           {/if}
         </td>
@@ -260,7 +262,6 @@ window.onload = loadFun;
             <li><a href="view/add_doctor_video.php?id={$row.id}">添加视频</a></li>
             <li><a href="view/doctor_entering.php?master_id={$row.id}">添加下属</a></li>
             <li><a href="view/doctor_xiashu.php?master_id={$row.id}">下属列表</a></li>
-            <li><a href="view/relation_ba.php?doctor_id={$row.id}">关联病友吧</a></li>
             {/if}
           </ul>  
           </li>

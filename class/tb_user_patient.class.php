@@ -78,9 +78,24 @@ class tb_user_patient
     $result = $db->get_rows($sql);
 
     // for cache
-    if ($result !== false) {
+    if (!empty($result)) {
       $cc->set($ck, json_encode($result));
     }
     return $result;
+  }
+
+  public static function get_default_patient_name($user_id, $default_patient)
+  {
+    if (!empty($default_patient)) {
+      $pl = self::query_user_patient_list($user_id);
+      if ($pl !== false) {
+        foreach ($pl as $p) {
+          if ((int)$p['id'] === $default_patient) {
+            return $p['name'];
+          }
+        }
+      }
+    }
+    return '';
   }
 };

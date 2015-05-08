@@ -10,8 +10,7 @@ $ret_body = array();
 do {
   if (empty($_POST['sid'])
       || empty($_POST['ba_id'])
-      || empty($_POST['topic'])
-      || empty($_POST['content'])) {
+      || empty($_POST['topic'])) {
     $ret_code = ERR_PARAM_INVALID;
     break;
   }
@@ -19,7 +18,6 @@ do {
   $sid = $_POST['sid'];
   $ba_id = (int)$_POST['ba_id'];
   $topic = $_POST['topic'];
-  $content = $_POST['content'];
   if (!user_session::is_sid($sid)
       || $ba_id <= 0) {
     $ret_code = ERR_PARAM_INVALID;
@@ -28,6 +26,10 @@ do {
   if (strlen($topic > 90)) {
     $ret_code = ERR_BA_TOPIC_TOO_LONG;
     break;
+  }
+  $content = '';
+  if (!empty($_POST['content'])) {
+    $content = $_POST['content'];
   }
   if (strlen($content) > 12000) {
     $ret_code = ERR_BA_TOPIC_CONTENT_TOO_LONG;

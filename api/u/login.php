@@ -39,13 +39,12 @@ do {
   $sid = user_session::generate_sid(); 
 
   $s_info = array('user_id' => $user_info['id'],
-                  "default_patient" => 0);
+                  "default_patient" => (int)$user_info['default_patient']);
   user_session::set_session($sid, json_encode($s_info));
 
   $ret_body['sid'] = $sid;
   $ret_body['nick_name'] = $user_info['nick_name'];
   $ret_body['icon_url'] = $user_info['icon_url'];
-
 } while (false);
 
 $ret_body['code'] = (int)$ret_code;
