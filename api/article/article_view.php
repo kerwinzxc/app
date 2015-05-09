@@ -22,6 +22,11 @@ if (!empty($doctor_info)) {
 ?>
 <!DOCTYPE html>
 <html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
 <style type="text/css">
 html { height: 100%; margin-bottom: 1px; }
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
@@ -76,14 +81,15 @@ body{
 }
 </style>
 <body>
-<div style="margin:20px;">
-  <div> <p style="font-size:40px;"><b><?php echo $article_info['topic']?></b></p> </div>
+<div style="margin:15px;">
+  <div> <p style="font-size:18px;"><b><?php echo $article_info['topic']?></b></p> </div>
   <hr style="height:1px;border:0;background-color:#e6e6e6;"/>
-  <div style="font-size:30px;">
-   <p style="display:inline"><?php echo date("Y-m-d", $article_info['c_time'])?></p>
+  <div style="font-size:15px;color:#999999;">
+   <p style="display:inline;"><?php echo date("Y-m-d", $article_info['c_time'])?></p>
    <p style="margin-left:40px;display:inline"><?php echo $article_info['author']?></p>
   </div>
-  <div style="margin-top:20px;font-size:40px;"><?php echo $article_info['content']?></div>
+  <div style="margin-top:20px;"><?php echo $article_info['content']?></div>
+  <br/>
 </div>
 </body>
 </head></html>

@@ -30,7 +30,7 @@ do {
     $err_msg = "查找该医生失败";
     break;
   }
-  $total_num = tb_doctor_article::query_article_total_num($doctor_id);
+  $total_num = tb_doctor_article::query_article_total_num("doctor_id=$doctor_id");
   if (($page - 1) * 10 > $total_num) {
     $page = (int)($total_num / 10) + 1;
   }

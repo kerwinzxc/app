@@ -85,14 +85,16 @@ class tb_doctor_article
       . " where doctor_id=$doctor_id";
     return $db->get_rows($sql);
   }
-  public static function query_article_total_num($doctor_id)
+  public static function query_article_total_num($where)
   {
-    if (empty($doctor_id)) { return false; }
+    if (!empty($where)) {
+      $where = " where $where";
+    }
     
     $db = new sql(db_selector::get_db(db_selector::$db_r));
     $sql = "select count(*) from "
       . self::$tb_name
-      . " where doctor_id=$doctor_id";
+      . " {$where}";
     $ret = $db->get_one_row_col($sql, 0);
     if ($ret === false) {
       return false;
