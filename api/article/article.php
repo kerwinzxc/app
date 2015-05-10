@@ -22,6 +22,14 @@ do {
   if (!empty($_GET['doctor_id'])) { //
     $doctor_id = (int)$_GET['doctor_id'];
     $where = "doctor_id=$doctor_id";
+  } else if (!empty($_GET['type'])) { //
+    $article_type = (int)$_GET['type'];
+    if ($article_type < 1
+        || $article_type > 10) {
+      $ret_code = ERR_PARAM_INVALID;
+      break;
+    }
+    $where = "article_type=$article_type";
   }
   $total_num = tb_doctor_article::query_article_total_num($where);
   if ($total_num > 0) {

@@ -18,30 +18,28 @@ class ilog
     if ($type === self::$DEBUG) {
       if (self::$debug_fp === false) {
         self::$debug_fp = @fopen(LOG_DIR . "/debug.log", "a+");
-        $fp = self::$debug_fp;
       }
+      $fp = self::$debug_fp;
     } elseif ($type === self::$RINFO) {
       if (self::$rinfo_fp === false) {
         self::$rinfo_fp = @fopen(LOG_DIR . "/rinfo.log", "a+");
-        $fp = self::$rinfo_fp;
       }
+      $fp = self::$rinfo_fp;
     } elseif ($type === self::$ERROR) {
       if (self::$error_fp === false) {
         self::$error_fp = @fopen(LOG_DIR . "/error.log", "a+");
-        $fp = self::$error_fp;
       }
+      $fp = self::$error_fp;
     } elseif ($type === self::$FATAL) {
       if (self::$fatal_fp === false) {
         self::$fatal_fp = @fopen(LOG_DIR . "/fatal.log", "a+");
-        $fp = self::$fatal_fp;
       }
+      $fp = self::$fatal_fp;
     }
+
     if ($fp !== false) {
       $log_str = date('Y-m-d H:i:s') . " > " . $str . "\n";
       @fwrite($fp, $log_str, strlen($log_str));
-      @fflush($fp);
-      @fclose($fp);
-      $fp = false;
     }
   }
 

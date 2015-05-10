@@ -7,10 +7,10 @@ require_once MNG_ROOT . 'libs/func.inc.php';
 require_once MNG_ROOT . 'autoload.php'; // below smarty
 
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
-  $tpl->assign("content_title", "添加病友吧推广图");
+  $tpl->assign("content_title", "添加专家文章推广图");
   $tpl->assign("refer", $_SERVER['HTTP_REFERER']);
   $tpl->assign("new_one", 1);
-  $tpl->assign("inc_name", "bing_you_ba_banner.html");
+  $tpl->assign("inc_name", "article_banner.html");
 
   $tpl->display("home.html");
 }else if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
       }
       $mime = explode('/', $_FILES[$photo]['type']);
       $ext = $mime[1];
-      $basename = md5($filename . "ddky_bing_you_ba_banner" . time());
+      $basename = md5($filename . "ddky_article_banner" . time());
 
       $filename = $basename . "." . $ext;
       $path = MNG_ROOT . 'image/';
@@ -61,12 +61,12 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     }
     // upload end
 
-    $new_ba_banner_id = tb_ba_banner::insert_new_one($priority, $img_url, "");
-    if ($new_ba_banner_id != false) {
+    $new_banner_id = tb_article_banner::insert_new_one($priority, $img_url, "");
+    if ($new_banner_id !== false) {
       $err_msg = '添加成功';
     } else {
       $err_msg = '系统内部错误，添加失败';
     }
   } while (false);
-  alert_and_redirect($err_msg, 'view/add_bing_you_ba_banner.php');
+  alert_and_redirect($err_msg, 'view/add_article_banner.php');
 }

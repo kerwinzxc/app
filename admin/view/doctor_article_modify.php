@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     $tpl->assign("id", $article_id);
     $tpl->assign("doctor_id", $doctor_id);
     $tpl->assign("topic", $article_info['topic']);
+    $tpl->assign("article_type", $article_info['article_type']);
     $tpl->assign("icon_url", $article_info['icon_url']);
     $tpl->assign("content", $article_info['content']);
 
@@ -51,10 +52,12 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     $article_id = $_POST['id'];
     $doctor_id = $_POST['doctor_id'];
+    $article_type = (int)$_POST['article_type'];
     $topic = $_POST['topic'];
     $content = $_POST['editorValue'];
 
     if (strlen($topic) > 90
+        || ($article_type < 1 || $article_type > 4)
         || strlen($content) > 12000) {
       $err_msg = "标题或内容太长";
       break;
@@ -120,6 +123,9 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     // upload end
 
     $update_info = array();
+    if (!empty($article_type)) {
+      $update_info['article_type'] = $article_type;
+    }
     if (!empty($topic)) {
       $update_info['topic'] = $topic;
     }

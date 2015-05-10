@@ -24,7 +24,8 @@ do {
     break;
   }
 
-  $ret_body['content'] = empty($info) ? '' : $info['content'];
+  $default_content = '<br/><p>暂时无简介</p>';
+  $ret_body['content'] = empty($info) ? $default_content : $info['content'];
 } while (false);
 
 $ret_body['code'] = (int)$ret_code;

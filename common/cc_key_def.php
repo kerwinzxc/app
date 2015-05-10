@@ -18,3 +18,4 @@ if (!defined('CK_ALL_BA_SHOW_LIST')) define('CK_ALL_BA_SHOW_LIST', 'all_ba_show_
 if (!defined('CK_DOCTOR_ID_2_INTRODUCTION')) define('CK_DOCTOR_ID_2_INTRODUCTION', 'doctor_introduction:');
 if (!defined('CK_BA_REL_DOCTOR_LIST')) define('CK_BA_REL_DOCTOR_LIST', 'ba_rel_doctor:');
 if (!defined('CK_BA_BANNER_LIST')) define('CK_BA_BANNER_LIST', 'ba_banner_list:');
+if (!defined('CK_ARTICLE_BANNER_LIST')) define('CK_ARTICLE_BANNER_LIST', 'article_banner_list:');

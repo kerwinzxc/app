@@ -35,9 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     $doctor_id = $_POST['doctor_id'];
     $topic = $_POST['topic'];
+    $article_type = (int)$_POST['article_type'];
     $content = $_POST['editorValue'];
 
     if (strlen($topic) > 90
+        || ($article_type < 1 || $article_type > 4)
         || strlen($content) > 12000) {
       $err_msg = "标题或内容太长";
       break;
@@ -88,6 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     $new_article_id = tb_doctor_article::insert_new_one($doctor_id,
                                                         $icon_url,
+                                                        $article_type,
                                                         $topic,
                                                         $content,
                                                         time());

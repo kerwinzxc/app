@@ -16,11 +16,11 @@ function checkConfirm(s){
       <tr {if $smarty.foreach.r.index % 2 eq 1}class="odd"{/if}>
         <td>{$row.priority}</td>
         <td style="height:64px;padding:2px;"><img src="{$row.img_url}" width="300" height="80" /></td>
-        <td><a href="view/bing_you_ba_banner_del.php?id={$row.id}" onclick="return checkConfirm('确认要删除吗？')">删除</a></td>
+        <td><a href="view/article_banner_del.php?id={$row.id}" onclick="return checkConfirm('确认要删除吗？')">删除</a></td>
       </tr>
     {/foreach}
   </table>
   <div style="margin-top:5px">
-    <a style="display:inline;margin-left:10px;float:left;" href="view/add_bing_you_ba_banner.php">添加</a>
+    <a style="display:inline;margin-left:10px;float:left;" href="view/add_article_banner.php">添加</a>
   </div>
 </div>

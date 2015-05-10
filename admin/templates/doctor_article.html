@@ -12,7 +12,7 @@
 
     <script type="text/javascript" charset="utf-8" src="{$base_url}scripts/main.js"></script>
   </head>
-  <body>
+  <body style="padding:0px;">
 <script type="text/javascript">
 {literal}
 function submitArticleValidate(new_one){
@@ -23,6 +23,10 @@ function submitArticleValidate(new_one){
   }
   if (document.getElementById("topic").value.length < 3) {
     alert('主题太短');
+    return false;
+  }
+  if (document.getElementById("article_type").value.length == 0) {
+    alert('请选择文章类别');
     return false;
   }
   if (new_one == 1
@@ -48,10 +52,24 @@ function submitArticleValidate(new_one){
     onsubmit="return submitArticleValidate({$new_one})">
   <input type='hidden' name='id' value='{if isset($id)}{$id}{/if}'/>
   <input type='hidden' name='doctor_id' value='{if isset($doctor_id)}{$doctor_id}{/if}'/>
-  <div style="margin-top:15px;">
-  <p style="float:left;margin:0">选择图标(120x120):</p>
-  <input type="file" id='icon' name='icon' style='float:left;color:#C00;margin-left:40px;'/>
-  {if !empty($icon_url)}<a href='{$icon_url}' target='_blank'><img src='{$icon_url}' height="120" width="120"</img></a>{/if}
+  <div style="clear:both;margin-top:15px">
+    <table >
+    <tr>
+    <td width="120px" height="40px"><p style="float:left;margin:0;">图标(120x120)</p></td>
+    <td><input type="file" id='icon' name='icon' style='float:left;color:#C00;margin-left:20px;'/></td>
+    {if !empty($icon_url)}<td><a href='{$icon_url}' target='_blank'><img src='{$icon_url}' height="120" width="120"</img></a></td>{/if}
+    </tr>
+    <tr>
+      <td><p style="display:inline;">文章类别</p></td>
+      <td><select style="margin-left:20px;width:80px;height:27px" name='article_type' id='article_type'>
+        <option value="" >--选择--</option>
+        <option value="1" {if isset($article_type) && $article_type eq 1} selected="selected"{/if}>健康推荐</option>
+        <option value="2" {if isset($article_type) && $article_type eq 2} selected="selected"{/if}>养生专题</option>
+        <option value="3" {if isset($article_type) && $article_type eq 3} selected="selected"{/if}>慢性疾病</option>
+        <option value="4" {if isset($article_type) && $article_type eq 4} selected="selected"{/if}>专家名著</option>
+      </select></td>
+    </tr>
+    </table>
   </div>
   <input style="width:100%;height:40px;color:#999;padding-left:5px;font-size:16px;margin:15px 0 12px 1px;" id='topic' type='text' name='topic'
    value='{if isset($topic)}{$topic}{else}请填写主题{/if}'

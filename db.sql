@@ -172,12 +172,14 @@ create table if not exists doctor_article (
   doctor_id           int unsigned not null default 0,        # 医生ID
 
   icon_url            varchar(255) not null default '',       #
+  article_type        tinyint not null default 0,             #
   topic               varchar(90) not null default '',        #
   content             varchar(12000) not null default '',     # 
   c_time              int unsigned not null default 0,
 
   primary key(id),
-  index i_did(`doctor_id`)
+  index i_did(`doctor_id`),
+  index i_type(`article_type`)
 )engine=MyISAM default charset=utf8;
 
 --#专家视频
@@ -316,3 +318,15 @@ create table if not exists tel_yuyue_order (
 
   primary key(id)
 )engine=MyISAM default charset=utf8 auto_increment=10000;
+
+--#专家名著首页banner
+drop table if exists article_banner;
+create table if not exists article_banner (
+  id                  int unsigned not null auto_increment,   # ID
+
+  priority            int unsigned not null default 1,        #
+  img_url             varchar(255) not null default '',       #
+  target              varchar(255) not null default '',       #
+
+  primary key(id)
+)engine=MyISAM default charset=utf8;

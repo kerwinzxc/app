@@ -9,6 +9,7 @@ class tb_doctor_article
 
   public static function insert_new_one($doctor_id,
                                         $icon_url,
+                                        $article_type,
                                         $topic,
                                         $content,
                                         $c_time)
@@ -18,8 +19,8 @@ class tb_doctor_article
     $content = $db->escape($content);
     $sql = "insert into "
       . self::$tb_name
-      . "(doctor_id,icon_url,topic,content,c_time)"
-      . "value($doctor_id,'$icon_url','$topic','$content',$c_time)";
+      . "(doctor_id,icon_url,article_type,topic,content,c_time)"
+      . "value($doctor_id,'$icon_url',$article_type,'$topic','$content',$c_time)";
     if ($db->execute($sql) === false) {
       return false;
     }
