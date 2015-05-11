@@ -66,45 +66,20 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 
     //upload file
-    $err_msg = '';
-    $filename = '';
-    $origin_icon_url = '';
-    $real_icon_url = '';
-    $photo = 'photo';
-    if (!empty($_FILES[$photo]["name"])) {
-      $filename = $_FILES[$photo]["name"];
-      if ($_FILES[$photo]["error"] > 0) {
-        $err_msg = 'Return Code: ' . $_FILES[$photo]["error"];
+    $icon_url = '';
+    if (!empty($_FILES['photo']["name"])) {
+      $path = "image/doctor/icon/" . date("Ymd");
+      $up = new upload($_FILES['photo'],
+                       IMG_ROOT . "/" . $path,
+                       2*1024*1024,
+                       array('.jpg', '.jpeg', '.png')
+                      );
+      if ($up->just_do_it() === false) {
+        $err_msg = $up->error();
         break;
       }
-      if ($_FILES[$photo]["size"] > 2*1024*1024) {
-        $err_msg = $filename . " 图片大小超出限制(2M)";
-        break;
-      }
-      if (!check::can_upload($_FILES[$photo]['type'])) {
-        $err_msg = "图片格式不支持";
-        break;
-      }
-      $mime = explode('/', $_FILES[$photo]['type']);
-      $ext = $mime[1];
-      $basename = md5($phone_num . "doctor_icon");
-
-      $filename = $basename . "." . $ext;
-      $path = MNG_ROOT . 'image/';
-
-      move_uploaded_file($_FILES[$photo]['tmp_name'], $path . $filename);
-
-      $filename_200x200 = $basename . "_200x200." . $ext;
-      copy($path . $filename, $path . $filename_200x200);
-      util::set_image_size($path . $filename_200x200, 200, 200);
-
-      $origin_icon_url = BASE_URL . "image/$filename";
-      $real_icon_url = BASE_URL . "image/$filename_200x200";
+      $icon_url = IMG_BASE_URL . $path . "/" . $up->filename();
     }
-    if ($err_msg != '') {
-      break;
-    }
-    // upload end
 
     $update_info = array();
     if (!empty($name)) {
@@ -117,9 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       $update_info['classify'] = $classify;
     }
     $update_info['sex'] = $sex;
-    if (!empty($filename)) {
-      $update_info['icon_url'] = $real_icon_url;
-      $update_info['origin_icon_url'] = $origin_icon_url;
+    if (!empty($icon_url)) {
+      $update_info['icon_url'] = $icon_url;
     }
     if (!empty($ke_shi)) {
       $update_info['ke_shi'] = $ke_shi;
@@ -136,8 +110,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (!empty($hospital)) {
       $update_info['hospital'] = $hospital;
     }
-    if (!empty($gexpert_in)) {
-      $update_info['gexpert_in'] = $gexpert_in;
+    if (!empty($expert_in)) {
+      $update_info['expert_in'] = $expert_in;
     }
 
     if (tb_doctor::update($doctor_id, $update_info) !== false) {

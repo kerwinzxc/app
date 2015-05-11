@@ -5,6 +5,7 @@ class upload
   private $file_field;
   private $save_dir;
   private $file_name;
+  private $full_file_name;
   private $max_size;
   private $allow_types = array();
 
@@ -55,6 +56,10 @@ class upload
   {
     return $this->file_name;
   }
+  public function full_filename()
+  {
+    return $this->full_file_name;
+  }
   public function just_do_it()
   {
     if (empty($this->file_field)) {
@@ -85,9 +90,10 @@ class upload
       }
     }
 
-    $this->file_name = time() . mt_rand(1, 9999999) . $ext;
-    $full_filename = $this->save_dir . "/" . $this->file_name;
-    if (!move_uploaded_file($this->file_field['tmp_name'], $full_filename)) {
+    $this->file_name = md5(microtime(true) . mt_rand(1, 9999999)) . $ext;
+    $this->full_file_name = $this->save_dir . "/" . $this->file_name;
+    if (!move_uploaded_file($this->file_field['tmp_name'],
+                            $this->full_file_name)) {
       $this->err_desc = $this->get_err('MOVE');
       return false;
     }

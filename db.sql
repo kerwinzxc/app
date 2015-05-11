@@ -134,7 +134,6 @@ create table if not exists doctor (
   classify            tinyint not null default 0,             # 医生类别
   name                varchar(30) not null default '',        #
   sex                 tinyint not null default 1,             # 0: famale 1: male
-  origin_icon_url     varchar(255) not null default '',       #
   icon_url            varchar(255) not null default '',       #
 
   ke_shi              int unsigned not null default 0,        # 科室
@@ -282,9 +281,11 @@ create table if not exists ba_topic_comment (
 )engine=MyISAM default charset=utf8;
 
 --#线上网络问诊预约单
-drop table if exists ol_yuyue_order;
-create table if not exists ol_yuyue_order (
+drop table if exists ol_ask_order;
+create table if not exists ol_ask_order (
   id                  int unsigned not null auto_increment,   # ID
+  user_id             int unsigned not null,                  # 
+  doctor_id           int unsigned not null,                  # 
 
   name                varchar(30) not null default '',        #
   sex                 tinyint not null default 1,             # 0: famale 1: male
@@ -292,18 +293,23 @@ create table if not exists ol_yuyue_order (
   phone_num           char(15) not null,                      # mobile phone number
   disease_desc        varchar(900) not null default '',       # 疾病描述
 
-  expected_time       int unsigned not null default 0,        # 期望时间
+  expected_time_b     int unsigned not null default 0,        # 期望起始时间
+  expected_time_e     int unsigned not null default 0,        # 期望结束时间
   emr_url             varchar(770) not null default '',       #
 
   c_time              int unsigned not null default 0,
 
-  primary key(id)
+  primary key(id),
+  index i_user(`user_id`),
+  index i_doctor_id(`doctor_id`)
 )engine=MyISAM default charset=utf8 auto_increment=10000;
 
 --#电话问诊预约单
-drop table if exists tel_yuyue_order;
-create table if not exists tel_yuyue_order (
+drop table if exists tel_ask_order;
+create table if not exists tel_ask_order (
   id                  int unsigned not null auto_increment,   # ID
+  user_id             int unsigned not null,                  # 
+  doctor_id           int unsigned not null,                  # 
 
   name                varchar(30) not null default '',        #
   sex                 tinyint not null default 1,             # 0: famale 1: male
@@ -311,12 +317,15 @@ create table if not exists tel_yuyue_order (
   phone_num           char(15) not null,                      # mobile phone number
   disease_desc        varchar(900) not null default '',       # 疾病描述
 
-  expected_time       int unsigned not null default 0,        # 期望时间
+  expected_time_b     int unsigned not null default 0,        # 期望起始时间
+  expected_time_e     int unsigned not null default 0,        # 期望结束时间
   emr_url             varchar(770) not null default '',       #
 
   c_time              int unsigned not null default 0,
 
-  primary key(id)
+  primary key(id),
+  index i_user(`user_id`),
+  index i_doctor_id(`doctor_id`)
 )engine=MyISAM default charset=utf8 auto_increment=10000;
 
 --#专家名著首页banner

@@ -37,9 +37,7 @@ do {
   $tpl->assign("id", $video_id);
   $tpl->assign("doctor_id", $doctor_id);
   $tpl->assign("topic", $video_info['topic']);
-  $video_url = $video_info['video_url'];
-  $video_url = empty($video_url) ? '' : BASE_URL . "video/{$video_url}";
-  $tpl->assign("video_url", $video_url);
+  $tpl->assign("video_url", $video_info['video_url']);
 
   $tpl->assign("content_title", "播放视频 - <b>" . $doctor_info['name'] . "</b>");
   $tpl->assign("inc_name", "doctor_video_view.html");

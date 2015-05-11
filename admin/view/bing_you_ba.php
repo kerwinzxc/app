@@ -38,40 +38,20 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
     $user = $_SESSION['user']['user'];
 
-    //upload file
-    $err_msg = '';
-    $filename = '';
     $icon_url = '';
-    $photo = 'icon';
-    if (!empty($_FILES[$photo]["name"])) {
-      $filename = $_FILES[$photo]["name"];
-      if ($_FILES[$photo]["error"] > 0) {
-        $err_msg = 'Return Code: ' . $_FILES[$photo]["error"];
+    if (!empty($_FILES['icon']["name"])) {
+      $path = "image/ba/icon";
+      $up = new upload($_FILES['icon'],
+                       IMG_ROOT . "/" . $path,
+                       2*1024*1024,
+                       array('.jpg', '.jpeg', '.png')
+                      );
+      if ($up->just_do_it() === false) {
+        $err_msg = $up->error();
         break;
       }
-      if ($_FILES[$photo]["size"] > 2*1024*1024) {
-        $err_msg = $filename . " 图片大小超出限制(2M)";
-        break;
-      }
-      if (!check::can_upload($_FILES[$photo]['type'])) {
-        $err_msg = "图片格式不支持";
-        break;
-      }
-      $mime = explode('/', $_FILES[$photo]['type']);
-      $ext = $mime[1];
-      $basename = md5($name . "ddky_bing_you_ba_icon" . time());
-
-      $filename = $basename . "." . $ext;
-      $path = MNG_ROOT . 'image/';
-
-      move_uploaded_file($_FILES[$photo]['tmp_name'], $path . $filename);
-
-      $icon_url = BASE_URL . "image/$filename";
+      $icon_url = IMG_BASE_URL . $path . "/" . $up->filename();
     }
-    if ($err_msg != '') {
-      break;
-    }
-    // upload end
 
     $update_info = array();
     if (!empty($priority)) {

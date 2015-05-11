@@ -1,0 +1,64 @@
+{literal}
+<script type="text/javascript">
+function unProcessList() { location.href = "view/ol_order_unprocess_list.php"; }
+function unChargeList()  { location.href = "view/ol_order_unchage_list.php"; }
+function ProcessedList() { location.href = "view/ol_order_processed_list.php"; }
+function ChargedList()   { location.href = "view/ol_order_charge_list.php"; }
+function doneList()      { location.href = "view/ol_order_done_list.php"; }
+</script>
+<style>
+.query input{
+border:1px solid #ccc;
+width:90px;
+cursor:pointer;
+}
+.query .unprocess{
+  background:#ff3300;
+}
+.query .processed{
+  background:#ff9900;
+}
+.query .done{
+  background:#999900;
+}
+</style>
+{/literal}
+<div class="query" style="margin:8px;width: 829px \9;">
+  <div style="width:100%;height:60px;margin-bottom:8px;background:#FFC78E;">
+    <div style="padding:15px 0px 0px 0px">
+      <input style='margin-left:80px;' class='unprocess' type='button' value='未处理订单' onclick='unProcessList();'/>
+      <input style='margin-left:50px;' class='unprocess' type='button' value='未支付订单' onclick='unChargeList();'/>
+      <input style='margin-left:50px;' class='processed' type='button' value='已处理订单' onclick='ProcessedList();'/>
+      <input style='margin-left:50px;' class='processed' type='button' value='已支付订单' onclick='ChargedList();'/>
+      <input style='margin-left:50px;' class='done'      type='button' value='已结束订单' onclick='doneList();'/>
+    </div>
+  </div>
+  <table style="width:100%;table-layout:fixed;">
+    <tr style="font-weight:bold;">
+      <th style="width:10%;height:44px;background:#E9893A;">订单号</th>
+      <th style="width:10%;height:44px;background:#E9893A;">医生姓名</th>
+      <th style="width:10%;background:#E9893A;">就诊人</th>
+      <th style="width:14%;background:#E9893A;">联系电话</th>
+      <th style="width:18%;background:#E9893A;">预约时间</th>
+      <th style="width:28%;background:#E9893A;">疾病描述</th>
+      <th style="width:10%;background:#E9893A;">操作</th>
+    </tr>
+    {foreach from=$order_rows item=row name=r}
+    <tr {if $smarty.foreach.r.index % 2 eq 1}class="odd"{/if}>
+      <td class='unprocess'>{$row.id}</td>
+      <td style="height:36px;"><a href='view/doctor_modify.php?id={$row.doctor_id}'>{$row.doctor}</a></td>
+      <td>{$row.patient}</td>
+      <td>{$row.phone_num}</td>
+      <td>{$row.expected_time_b|date_format:"%m-%d %H:%M"}~{$row.expected_time_e|date_format:"%H:%M"}</td>
+      <td>{$row.disease_desc}</td>
+      <td><a href="view/ol_order_opt.php?id={$row.id}" onclick="return checkConfirm('确认要删除吗？')">结束</a></td>
+      </td>
+    </tr>
+    {/foreach}
+  </table>
+  <div class="page_v">
+    <p style="display:inline">共{if !isset($total_num)}0{else}{$total_num}{/if}单</p>
+    {if !isset($page) || $page eq 1}上一页{else}<a href="view/ol_order_list.php?p={$page-1}">上一页</a>{/if}
+    {if !isset($page) || $page ge $pages}下一页{else}<a href="view/ol_order_list.php?p={$page+1}">下一页</a>{/if}
+  </div>
+</div>

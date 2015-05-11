@@ -24,7 +24,7 @@ do {
     break;
   }
 
-  $default_content = '<br/><p>暂时无简介</p>';
+  $default_content = '<center><p style="margin-top:80px">暂无简介</p></center>';
   $ret_body['content'] = empty($info) ? $default_content : $info['content'];
 } while (false);
 

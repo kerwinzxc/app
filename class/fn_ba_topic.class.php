@@ -27,7 +27,8 @@ class fn_ba_topic
       $author_id = (int)$topic_info['user_id'];
       $user_name = '';
       $icon_url = '';
-      $topic_brief['author'] = tb_user::query_name_by_id($author_id, $user_name, $icon_url);
+      tb_user::query_name_by_id($author_id, $user_name, $icon_url);
+      $topic_brief['author'] = $user_name;
       $topic_brief['author_id'] = $author_id;
 
       $topic_brief['topic'] = $topic_info['topic'];

@@ -71,45 +71,17 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     }
 
     //upload file
-    $err_msg = '';
-    $filename = '';
-    $origin_icon_url = '';
-    $real_icon_url = '';
-    $photo = 'photo';
-    if (!empty($_FILES[$photo]["name"])) {
-      $filename = $_FILES[$photo]["name"];
-      if ($_FILES[$photo]["error"] > 0) {
-        $err_msg = 'Return Code: ' . $_FILES[$photo]["error"];
-        break;
-      }
-      if ($_FILES[$photo]["size"] > 2*1024*1024) {
-        $err_msg = $filename . " 图片大小超出限制(2M)";
-        break;
-      }
-      if (!check::can_upload($_FILES[$photo]['type'])) {
-        $err_msg = "图片格式不支持";
-        break;
-      }
-      $mime = explode('/', $_FILES[$photo]['type']);
-      $ext = $mime[1];
-      $basename = md5($phone_num . "ddky_doctor_icon" . time());
-
-      $filename = $basename . "." . $ext;
-      $path = MNG_ROOT . 'image/';
-
-      move_uploaded_file($_FILES[$photo]['tmp_name'], $path . $filename);
-
-      $filename_200x200 = $basename . "_200x200." . $ext;
-      copy($path . $filename, $path . $filename_200x200);
-      util::set_image_size($path . $filename_200x200, 200, 200);
-
-      $origin_icon_url = BASE_URL . "image/$filename";
-      $real_icon_url = BASE_URL . "image/$filename_200x200";
-    }
-    if ($err_msg != '') {
+    $path = "image/doctor/icon/" . date("Ymd");
+    $up = new upload($_FILES['photo'],
+                     IMG_ROOT . "/" . $path,
+                     2*1024*1024,
+                     array('.jpg', '.jpeg', '.png')
+                    );
+    if ($up->just_do_it() === false) {
+      $err_msg = $up->error();
       break;
     }
-    // upload end
+    $icon_url = IMG_BASE_URL . $path . "/" . $up->filename();
 
     $new_doctor_id = tb_doctor::insert_new_one($phone_num,
                                                md5('000000'),
@@ -118,8 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
                                                $classify,
                                                $name,
                                                $sex,
-                                               $origin_icon_url,
-                                               $real_icon_url,
+                                               $icon_url,
                                                $ke_shi,
                                                $tec_title,
                                                $aca_title,

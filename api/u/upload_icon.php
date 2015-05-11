@@ -30,7 +30,7 @@ do {
   $up = new upload($_FILES['head_icon'],
                    IMG_ROOT . "/" . $path,
                    2*1024*1024,
-                   array('jpg', 'jpeg', 'png')
+                   array('.jpg', '.jpeg', '.png')
                    );
   if ($up->just_do_it() === false) {
     $ret_code = ERR_UPLOAD_ICON_ERROR;

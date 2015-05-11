@@ -47,36 +47,21 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     }
     $doctor_id = $_POST['doctor_id'];
 
-    $err_msg = '';
-    $filename = '';
-    $video = 'video';
-    if (!empty($_FILES[$video]["name"])) {
-      $filename = $_FILES[$video]["name"];
-      if ($_FILES[$video]["error"] > 0) {
-        $err_msg = 'Return Code: ' . $_FILES[$video]["error"];
-        break;
-      }
-      if ($_FILES[$video]["size"] > 50*1024*1024) {
-        $err_msg = $filename . " 视频大小超出限制(2M)";
-        break;
-      }
-      $filename = md5($user . $doctor_id . time())
-        . "."
-        . end(explode('.', $filename));
-
-      move_uploaded_file($_FILES[$video]['tmp_name'], MNG_ROOT . 'video/' . $filename);
-    } else {
-      $err_msg = '视频不能为空';
+    $path = "video/doctor/" . date("Ymd");
+    $up = new upload($_FILES['video'],
+                     IMG_ROOT . "/" . $path,
+                     50*1024*1024,
+                     array('.mp4')
+                    );
+    if ($up->just_do_it() === false) {
+      $err_msg = $up->error();
       break;
     }
-    if ($err_msg != '') {
-      break;
-    }
-    // upload end
+    $video_url = IMG_BASE_URL . $path . "/" . $up->filename();
 
     $new_video_id = tb_doctor_video::insert_new_one($doctor_id,
                                                     $topic,
-                                                    $filename,
+                                                    $video_url,
                                                     time());
     if ($new_video_id !== false) {
       $err_msg = "添加成功!";

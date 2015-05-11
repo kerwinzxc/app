@@ -26,42 +26,20 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     $user = $_SESSION['user']['user'];
 
-    //upload file
-    $err_msg = '';
-    $filename = '';
-    $img_url = '';
-    $photo = 'image';
-    if (!empty($_FILES[$photo]["name"])) {
-      $filename = $_FILES[$photo]["name"];
-      if ($_FILES[$photo]["error"] > 0) {
-        $err_msg = 'Return Code: ' . $_FILES[$photo]["error"];
-        break;
-      }
-      if ($_FILES[$photo]["size"] > 2*1024*1024) {
-        $err_msg = $filename . " 图片大小超出限制(2M)";
-        break;
-      }
-      if (!check::can_upload($_FILES[$photo]['type'])) {
-        $err_msg = "图片格式不支持";
-        break;
-      }
-      $mime = explode('/', $_FILES[$photo]['type']);
-      $ext = $mime[1];
-      $basename = md5($filename . "ddky_article_banner" . time());
-
-      $filename = $basename . "." . $ext;
-      $path = MNG_ROOT . 'image/';
-
-      move_uploaded_file($_FILES[$photo]['tmp_name'], $path . $filename);
-
-      $img_url = BASE_URL . "image/$filename";
-    }
-    if ($err_msg != '') {
+    $path = "image/article/banner";
+    $up = new upload($_FILES['image'],
+                     IMG_ROOT . "/" . $path,
+                     2*1024*1024,
+                     array('.jpg', '.jpeg', '.png')
+                    );
+    if ($up->just_do_it() === false) {
+      $err_msg = $up->error();
       break;
     }
-    // upload end
+    $img_url = IMG_BASE_URL . $path . "/" . $up->filename();
 
-    $new_banner_id = tb_article_banner::insert_new_one($priority, $img_url, "");
+    $target = '';
+    $new_banner_id = tb_article_banner::insert_new_one($priority, $img_url, $target);
     if ($new_banner_id !== false) {
       $err_msg = '添加成功';
     } else {

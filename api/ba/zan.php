@@ -56,6 +56,12 @@ do {
       break;
     }
     tb_ba_topic::decr_zan_counter($topic_id);
+  } elseif ($act == 'had_zan') {
+    if (tb_ba_topic_zan::user_had_zan($topic_id, $user_id)) {
+      $ret_body['had_zan'] = 1;
+    } else {
+      $ret_body['had_zan'] = 0;
+    }
   } else {
     $ret_code = ERR_PARAM_INVALID;
   }

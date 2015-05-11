@@ -50,7 +50,7 @@ do {
     $ret_code = ERR_ID_CARD_INVALID;
     break;
   }
-  if (tb_user::set_profile($user_id, $name, $id_card) === false) {
+  if (tb_user::set_profile($user_id, $nick_name, $name, $id_card) === false) {
     $ret_code = ERR_DB_ERROR;
     break;
   }
