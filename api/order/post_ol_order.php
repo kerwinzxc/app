@@ -21,8 +21,8 @@ do {
   $sid = $_POST['sid'];
   $doctor_id = (int)$_POST['doctor_id'];
   $patient_id = (int)$_POST['patient_id'];
-  $expected_time_b = strtotime($_POST['expected_time_b']);
-  $expected_time_e = strtotime($_POST['expected_time_e']);
+  $expected_time_b = strtotime($_POST['expected_time_b'] . ":00");
+  $expected_time_e = strtotime($_POST['expected_time_e'] . ":00");
   $disease_desc = $_POST['disease_desc'];
   $photoe_1 = '';
   $photoe_2 = '';
