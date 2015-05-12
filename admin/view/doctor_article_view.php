@@ -37,8 +37,8 @@ do {
   $tpl->assign("id", $article_id);
   $tpl->assign("doctor_id", $doctor_id);
   $tpl->assign("icon_url", $article_info['icon_url']);
-  $tpl->assign("topic", $article_info['topic']);
-  $tpl->assign("content", $article_info['content']);
+  $tpl->assign("topic", htmlspecialchars_decode($article_info['topic']));
+  $tpl->assign("content", htmlspecialchars_decode($article_info['content']));
 
   $tpl->assign("content_title", "查看文章 - <b>" . $doctor_info['name'] . "</b>");
 

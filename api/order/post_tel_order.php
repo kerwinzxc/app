@@ -104,7 +104,8 @@ do {
                                                    $disease_desc,
                                                    $expected_time_b,
                                                    $expected_time_e,
-                                                   empty($emr_url_set) ? '' : implode(';', $emr_url_set));
+                                                   empty($emr_url_set) ? '' : implode(';', $emr_url_set),
+                                                   time());
   if ($new_order_id === false) {
     $ret_code = ERR_DB_ERROR;
     break;

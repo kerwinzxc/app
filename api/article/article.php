@@ -22,7 +22,7 @@ do {
   if (!empty($_GET['doctor_id'])) { //
     $doctor_id = (int)$_GET['doctor_id'];
     $where = "doctor_id=$doctor_id";
-  } else if (!empty($_GET['type'])) { //
+  } elseif (!empty($_GET['type'])) { //
     $article_type = (int)$_GET['type'];
     if ($article_type < 1
         || $article_type > 10) {

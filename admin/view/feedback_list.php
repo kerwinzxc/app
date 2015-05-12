@@ -6,7 +6,7 @@ require_once MNG_ROOT . 'view/fill_menu_name.inc.php';
 
 require_once MNG_ROOT . 'autoload.php'; // below smarty
 
-$order_rows = array();
+$feedback_rows = array();
 $page = 1;
 $pages = 1;
 $total_num = 0;
@@ -19,19 +19,17 @@ if (!isset($_GET['p'])) {
   $page = (int)$_GET['p'];
 }
 
-$total_num = tb_ol_ask_order::query_total_num('');
-$order_rows = tb_ol_ask_order::query_limit('',
-                                           ($page - 1) * 10,
-                                           10);
+$total_num = tb_feedback::query_total_num();
+$feedback_rows = tb_feedback::query_limit(($page - 1) * 10, 10);
 $pages = $total_num / 10 + 1;
 if ($total_num % 10 == 0) {
   $pages -= 1;
 }
 
 $tpl->assign("refer", $_SERVER['HTTP_REFERER']);
-$tpl->assign("content_title", '在线问诊订单');
-$tpl->assign("order_rows", $order_rows === false ? array() : $order_rows);
-$tpl->assign("inc_name", "ol_order_list.html");
+$tpl->assign("content_title", '意见反馈');
+$tpl->assign("feedback_rows", $feedback_rows === false ? array() : $feedback_rows);
+$tpl->assign("inc_name", "feedback_list.html");
 $tpl->assign("page", $page);
 $tpl->assign("total_num", $total_num);
 $tpl->assign("pages", $pages);

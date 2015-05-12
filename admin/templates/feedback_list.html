@@ -1,0 +1,24 @@
+<div class="query" style="margin:8px;width: 829px \9;">
+  <table style="width:100%;table-layout:fixed;">
+    <tr style="font-weight:bold;">
+      <th style="width:10%;height:44px;background:#E9893A;">用户</th>
+      <th style="width:60%;background:#E9893A;">意见反馈</th>
+      <th style="width:20%;background:#E9893A;">时间</th>
+      <th style="width:10%;background:#E9893A;">操作</th>
+    </tr>
+    {foreach from=$feedback_rows item=row name=r}
+    <tr {if $smarty.foreach.r.index % 2 eq 1}class="odd"{/if}>
+      <td>{$row.user}</td>
+      <td>{$row.content}</td>
+      <td>{$row.c_time|date_format:"%Y-%m-%d %H:%M:%S"}}</td>
+      <td><a href="view/feedback_del.php?id={$row.id}" onclick="return checkConfirm('确认要删除吗？')">删除</a></td>
+      </td>
+    </tr>
+    {/foreach}
+  </table>
+  <div class="page_v">
+    <p style="display:inline">共{if !isset($total_num)}0{else}{$total_num}{/if}条</p>
+    {if !isset($page) || $page eq 1}上一页{else}<a href="view/feedback_list.php?p={$page-1}">上一页</a>{/if}
+    {if !isset($page) || $page ge $pages}下一页{else}<a href="view/feedback_list.php?p={$page+1}">下一页</a>{/if}
+  </div>
+</div>

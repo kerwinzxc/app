@@ -34,9 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     $user = $_SESSION['user']['user'];
 
     $doctor_id = $_POST['doctor_id'];
-    $topic = $_POST['topic'];
+    $topic = htmlspecialchars($_POST['topic']);
     $article_type = (int)$_POST['article_type'];
-    $content = $_POST['editorValue'];
+    $content = htmlspecialchars($_POST['editorValue']);
 
     if (strlen($topic) > 90
         || ($article_type < 1 || $article_type > 4)

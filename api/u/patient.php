@@ -56,6 +56,23 @@ do {
       $real_patient_list[] = $real_p;
     }
     $ret_body['list'] = $real_patient_list;
+  } elseif ($act == 'get_default') { // get default
+    $patient_list = tb_user_patient::query_user_patient_list($user_id);
+    if ($patient_list === false) {
+      $ret_code = ERR_DB_ERROR;
+      break;
+    }
+    $def_patient_id = 0;
+    $def_patient_name = '';
+    foreach ($patient_list as $p) {
+      if ((int)$p['id'] === (int)$s_info['default_patient']) {
+        $def_patient_id = (int)$p['id'];
+        $def_patient_name = $p['name'];
+        break;
+      }
+    }
+    $ret_body['patient_id'] = $def_patient_id;
+    $ret_body['patient_name'] = $def_patient_name;
   } else { // other need params
     if (empty($_GET['patient_id'])) {
       $ret_code = ERR_PARAM_INVALID;
@@ -99,23 +116,6 @@ do {
         }
       }
       $ret_body['default_patient'] = $patient_id;
-    } elseif ($act == 'get_default') { // get default
-      $patient_list = tb_user_patient::query_user_patient_list($user_id);
-      if ($patient_list === false) {
-        $ret_code = ERR_DB_ERROR;
-        break;
-      }
-      $def_patient_id = 0;
-      $def_patient_name = '';
-      foreach ($patient_list as $p) {
-        if ((int)$p['id'] === (int)$s_info['default_patient']) {
-          $def_patient_id = (int)$p['id'];
-          $def_patient_name = $p['name'];
-          break;
-        }
-      }
-      $ret_body['patient_id'] = $def_patient_id;
-      $ret_body['patient_name'] = $def_patient_name;
     } else {
       $ret_code = ERR_PARAM_INVALID;
       break;

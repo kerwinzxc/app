@@ -286,6 +286,7 @@ create table if not exists ol_ask_order (
   id                  int unsigned not null auto_increment,   # ID
   user_id             int unsigned not null,                  # 
   doctor_id           int unsigned not null,                  # 
+  state               tinyint not null default 0,             #
 
   name                varchar(30) not null default '',        #
   sex                 tinyint not null default 1,             # 0: famale 1: male
@@ -301,7 +302,8 @@ create table if not exists ol_ask_order (
 
   primary key(id),
   index i_user(`user_id`),
-  index i_doctor_id(`doctor_id`)
+  index i_doctor_id(`doctor_id`),
+  index i_state(`state`)
 )engine=MyISAM default charset=utf8 auto_increment=10000;
 
 --#电话问诊预约单
@@ -310,6 +312,7 @@ create table if not exists tel_ask_order (
   id                  int unsigned not null auto_increment,   # ID
   user_id             int unsigned not null,                  # 
   doctor_id           int unsigned not null,                  # 
+  state               tinyint not null default 0,             #
 
   name                varchar(30) not null default '',        #
   sex                 tinyint not null default 1,             # 0: famale 1: male
@@ -325,7 +328,8 @@ create table if not exists tel_ask_order (
 
   primary key(id),
   index i_user(`user_id`),
-  index i_doctor_id(`doctor_id`)
+  index i_doctor_id(`doctor_id`),
+  index i_state(`state`)
 )engine=MyISAM default charset=utf8 auto_increment=10000;
 
 --#专家名著首页banner
@@ -336,6 +340,18 @@ create table if not exists article_banner (
   priority            int unsigned not null default 1,        #
   img_url             varchar(255) not null default '',       #
   target              varchar(255) not null default '',       #
+
+  primary key(id)
+)engine=MyISAM default charset=utf8;
+
+--#意见反馈
+drop table if exists feedback;
+create table if not exists feedback (
+  id                  int unsigned not null auto_increment,   # ID
+
+  user_id             int unsigned not null default 0,        #
+  content             varchar(450) not null default '',       #
+  c_time              int unsigned not null default 0,        # 时间
 
   primary key(id)
 )engine=MyISAM default charset=utf8;

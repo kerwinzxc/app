@@ -21,8 +21,8 @@ do {
   $sid = $_POST['sid'];
   $doctor_id = (int)$_POST['doctor_id'];
   $patient_id = (int)$_POST['patient_id'];
-  $expected_time_b = strtotime($_POST['expected_time_b'] . ":00");
-  $expected_time_e = strtotime($_POST['expected_time_e'] . ":00");
+  $expected_time_b = strtotime($_POST['expected_time_b']);
+  $expected_time_e = strtotime($_POST['expected_time_e']);
   $disease_desc = $_POST['disease_desc'];
   $photoe_1 = '';
   $photoe_2 = '';
@@ -104,7 +104,8 @@ do {
                                                   $disease_desc,
                                                   $expected_time_b,
                                                   $expected_time_e,
-                                                  empty($emr_url_set) ? '' : implode(';', $emr_url_set));
+                                                  empty($emr_url_set) ? '' : implode(';', $emr_url_set),
+                                                  time());
   if ($new_order_id === false) {
     $ret_code = ERR_DB_ERROR;
     break;

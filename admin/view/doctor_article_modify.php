@@ -34,10 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     $tpl->assign("id", $article_id);
     $tpl->assign("doctor_id", $doctor_id);
-    $tpl->assign("topic", $article_info['topic']);
+    $tpl->assign("topic", htmlspecialchars_decode($article_info['topic']));
     $tpl->assign("article_type", $article_info['article_type']);
     $tpl->assign("icon_url", $article_info['icon_url']);
-    $tpl->assign("content", $article_info['content']);
+    $tpl->assign("content", htmlspecialchars_decode($article_info['content']));
 
     $tpl->assign("content_title", "编辑文章 - <b>" . $doctor_info['name'] . "</b>");
     $tpl->assign("new_one", 0);
@@ -53,8 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     $article_id = $_POST['id'];
     $doctor_id = $_POST['doctor_id'];
     $article_type = (int)$_POST['article_type'];
-    $topic = $_POST['topic'];
-    $content = $_POST['editorValue'];
+    $topic = htmlspecialchars($_POST['topic']);
+    $content = htmlspecialchars($_POST['editorValue']);
 
     if (strlen($topic) > 90
         || ($article_type < 1 || $article_type > 4)
