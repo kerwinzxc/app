@@ -44,7 +44,7 @@ function clrTopicQueryDefaultVal()
   </table>
   <div class="page_v">
     <p style="display:inline">共{if !isset($total_num)}0{else}{$total_num}{/if}篇</p>
-    {if !isset($page) || $page eq 1}上一页{else}<a href="view/ba_topic_query.php?p={$page-1}">上一页</a>{/if}
-    {if !isset($page) || $page ge $pages}下一页{else}<a href="view/ba_topic_query.php?p={$page+1}">下一页</a>{/if}
+    {if !isset($page) || $page eq 1}上一页{else}<a href="view/ba_topic_query.php?id={$id}&p={$page-1}">上一页</a>{/if}
+    {if !isset($page) || $page ge $pages}下一页{else}<a href="view/ba_topic_query.php?id={$id}&p={$page+1}">下一页</a>{/if}
   </div>
 </div>
