@@ -10,7 +10,9 @@ class fn_doctor
       if (empty($doctor_info)) {
         continue;
       }
-      $doctor_detail_list[] = self::build_doctor_detail($doctor_info);
+      $doctor_detail = array();
+      $doctor_detail_list[] = self::build_doctor_detail($doctor_info,
+                                                        $doctor_detail);
     }
     return $doctor_detail_list;
   }
@@ -18,13 +20,13 @@ class fn_doctor
   {
     $doctor_detail_list = array();
     foreach ($doctor_list as $doctor_info) {
-      $doctor_detail_list[] = self::build_doctor_detail($doctor_info);
+      $doctor_detail = array();
+      $doctor_detail_list[] = self::build_doctor_detail($doctor_info, $doctor_detail);
     }
     return $doctor_detail_list;
   }
-  public static function build_doctor_detail($doctor_info)
+  public static function build_doctor_detail($doctor_info, &$doctor_detail)
   {
-    $doctor_detail = array();
     $doctor_detail['doctor_id'] = (int)$doctor_info['id'];
     $doctor_detail['name'] = $doctor_info['name'];
     $doctor_detail['sex'] = (int)$doctor_info['sex'];

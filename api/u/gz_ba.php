@@ -42,7 +42,20 @@ do {
       $ret_code = ERR_DB_ERROR;
       break;
     }
-    $ret_body['list'] = $gl;
+    $ba_detail_list = array();
+    foreach ($gl as $ba_id) {
+      $ba = tb_ba::query_ba_by_id($ba_id);
+      if (!empty($ba)) {
+        $ba_info = array();
+        $ba_info['ba_id'] = $ba['id'];
+        $ba_info['name'] = $ba['name'];
+        $ba_info['icon_url'] = $ba['icon_url'];
+        $gz_num = tb_user_gz_ba::query_gz_ba_num($ba['id']);
+        $ba_info['gz_num'] = empty($gz_num) ? 0 : $gz_num;
+        $ba_detail_list[] = $ba_info;
+      }
+    }
+    $ret_body['list'] = $ba_detail_list;
   } else { // other need params
     if (empty($_GET['ba_id'])) {
       $ret_code = ERR_PARAM_INVALID;

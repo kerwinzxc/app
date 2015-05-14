@@ -2,30 +2,26 @@
 
 require_once APP_ROOT . '/common/cc_key_def.php';
 
-class tb_ba
+class tb_disease
 {
-  private static $tb_name  = 'ba';
+  private static $tb_name  = 'disease';
   private static $all_cols = '*';
 
-  public static function insert_new_one($priority,
-                                        $name,
-                                        $desc,
-                                        $icon_url)
+  public static function insert_new_one($name)
   {
     $db = new sql(db_selector::get_db(db_selector::$db_w));
     $name = $db->escape($name);
-    $desc = $db->escape($desc);
     $sql = "insert into "
       . self::$tb_name
-      . "(priority,name,ba_desc,icon_url)"
-      . "value($priority,'$name','$desc','$icon_url')";
+      . "(name)"
+      . "value('$name')";
     if ($db->execute($sql) === false) {
       return false;
     }
     if ($db->affected_rows() == 1) {
       // for cache
       $cc = new cache();
-      $ck = CK_ALL_BA_SHOW_LIST;
+      $ck = CK_ALL_DISEASE_LIST;
       $cc->del($ck);
 
       return $db->get_insert_id();
@@ -45,7 +41,7 @@ class tb_ba
 
     // for cache
     $cc = new cache();
-    $ck = CK_ALL_BA_SHOW_LIST;
+    $ck = CK_ALL_DISEASE_LIST;
     $cc->del($ck);
 
     return true;
@@ -62,13 +58,35 @@ class tb_ba
 
     // for cache
     $cc = new cache();
-    $ck = CK_ALL_BA_SHOW_LIST;
+    $ck = CK_ALL_DISEASE_LIST;
     $cc->del($ck);
 
     return true;
   }
 
-  public static function query_ba_total_num()
+  public static function query_all()
+  {
+    // for cache
+    $cc = new cache();
+    $ck = CK_ALL_DISEASE_LIST;
+    $result = $cc->get($ck);
+    if ($result !== false) {
+      return json_decode($result, true);
+    }
+
+    $db = new sql(db_selector::get_db(db_selector::$db_r));
+    $sql = "select "
+      . self::$all_cols
+      . " from "
+      . self::$tb_name;
+    $ret = $db->get_rows($sql);
+
+    if (!empty($ret)) {
+      $cc->set($ck, json_encode($ret));
+    }
+    return $ret;
+  }
+  public static function query_disease_total_num()
   {
     $db = new sql(db_selector::get_db(db_selector::$db_r));
     $sql = "select count(*) from "
@@ -80,17 +98,9 @@ class tb_ba
     return (int)$ret;
   }
   // return false on error, return array on ok.
-  public static function query_ba_by_id($id)
+  public static function query_disease_by_id($id)
   {
     if (empty($id)) { return false; }
-
-    // for cache
-    $cc = new cache();
-    $ck = CK_BA_ID_2_INFO . $id;
-    $result = $cc->get($ck);
-    if ($result !== false) {
-      return json_decode($result, true);
-    }
 
     $db = new sql(db_selector::get_db(db_selector::$db_r));
     $sql = "select "
@@ -98,46 +108,16 @@ class tb_ba
     . " from "
     . self::$tb_name
     . " where id=$id limit 1";
-    $ret = $db->get_row($sql);
-
-    // for cache
-    if (!empty($ret)) {
-      $cc->set($ck, json_encode($ret));
-    }
-    return $ret;
+    return $db->get_row($sql);
   }
-  public static function query_ba_all_open_list()
-  {
-    // for cache
-    $cc = new cache();
-    $ck = CK_ALL_BA_SHOW_LIST;
-    $result = $cc->get($ck);
-    if ($result !== false) {
-      return json_decode($result, true);
-    }
-
-    $db = new sql(db_selector::get_db(db_selector::$db_r));
-    $sql = "select "
-      . self::$all_cols
-      . " from "
-      . self::$tb_name
-      . " where open=1 order by priority asc";
-    $result = $db->get_rows($sql);
-
-    // for cache
-    if (!empty($result)) {
-      $cc->set($ck, json_encode($result));
-    }
-    return $result;
-  }
-  public static function query_ba_limit($start, $offset)
+  public static function query_limit($start, $offset)
   {
     $db = new sql(db_selector::get_db(db_selector::$db_r));
     $sql = "select "
       . self::$all_cols
       . " from "
       . self::$tb_name
-      . " order by priority asc limit {$start},{$offset}";
+      . " order by id asc limit {$start},{$offset}";
     return $db->get_rows($sql);
   }
 };

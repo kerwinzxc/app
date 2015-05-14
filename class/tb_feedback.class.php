@@ -16,7 +16,7 @@ class tb_feedback
     $sql = "insert into "
       . self::$tb_name
       . "(user_id,content,c_time)"
-      . "value($user_id,'$content',$c_time)";
+      . "value($user_id,'$content',$time)";
     if ($db->execute($sql) === false) {
       return false;
     }

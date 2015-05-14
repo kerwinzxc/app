@@ -77,7 +77,7 @@ do {
     break;
   }
   $emr_url_set = array();
-  $photoes = array('photo1', 'photo2', 'photo3');
+  $photoes = array('photo0', 'photo1', 'photo2');
   foreach ($photoes as $photo) {
     $path = "image/order/ol/" . date("Ymd");
     if (!empty($_FILES[$photo]['name'])) {

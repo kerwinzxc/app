@@ -45,7 +45,27 @@ class tb_ol_ask_order
 
     // for cache
     $cc = new cache();
-    $ck = CK_OL_ASK_ORDER;
+    $ck = CK_OL_ASK_ORDER . $id;
+    $cc->del($ck);
+
+    return true;
+  }
+  public static function set_state($id, $state)
+  {
+    $db = new sql(db_selector::get_db(db_selector::$db_w));
+    $sql = "update "
+      . self::$tb_name
+      . " set state=$state "
+      . " where id=$id limit 1";
+    $result = $db->get_row($sql);
+
+    if ($db->execute($sql) === false) {
+      return false;
+    }
+
+    // for cache
+    $cc = new cache();
+    $ck = CK_OL_ASK_ORDER . $id;
     $cc->del($ck);
 
     return true;

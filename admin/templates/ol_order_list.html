@@ -45,7 +45,7 @@ cursor:pointer;
     </tr>
     {foreach from=$order_rows item=row name=r}
     <tr {if $smarty.foreach.r.index % 2 eq 1}class="odd"{/if}>
-      <td class='unprocess'>{$row.id}</td>
+      <td>{$row.id}</td>
       <td style="height:36px;"><a href='view/doctor_modify.php?id={$row.doctor_id}'>{$row.doctor}</a></td>
       <td>{$row.patient}</td>
       <td>{$row.phone_num}</td>

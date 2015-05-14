@@ -1,6 +1,6 @@
 <div style="margin:35px 130px 0 130px;">
   <div>
-    <p style="font-size:23px;display:inline">{$doctor_info_title}</p><p style="display:inline"> - {$id}</p>
+    <p style="font-size:23px;display:inline">{$doctor_info_title}</p><p style="display:inline"> - {if isset($id)}{$id}{/if}</p>
     {if isset($master_name)}
     <p style="padding-left:15px;font-size:16px;display:inline">所属专家--<a href='view/doctor_modify.php?id={$master_id}'><font color="#FF0000">{$master_name}</font></a></p>
     {/if}
@@ -45,6 +45,35 @@
          {/if}
           </select>
           <p class='must_p' style='font-size:14px;'>* &nbsp;(内部定义类别)</p></td>
+        </tr>
+        <tr>
+          <td class="form_label">关联病种</td>
+          <td>
+          <select name='disease1' style="width:95px;">
+          <option value=''>-选择病种-</option>
+          {foreach from=$disease_rows item=disease}
+          <option value="{$disease.id}" {if isset($disease_id1) && $disease_id1 eq $disease.id} selected="selected"{/if}>{$disease.name}</option>
+          {/foreach}
+          </select>
+          <select name='disease2' style="width:95px;">
+          <option value=''>-选择病种-</option>
+          {foreach from=$disease_rows item=disease}
+          <option value="{$disease.id}" {if isset($disease_id2) && $disease_id2 eq $disease.id} selected="selected"{/if}>{$disease.name}</option>
+          {/foreach}
+          </select>
+          <select name='disease3' style="width:95px;">
+          <option value=''>-选择病种-</option>
+          {foreach from=$disease_rows item=disease}
+          <option value="{$disease.id}" {if isset($disease_id3) && $disease_id3 eq $disease.id} selected="selected"{/if}>{$disease.name}</option>
+          {/foreach}
+          </select>
+          <select name='disease4' style="width:95px;">
+          <option value=''>-选择病种-</option>
+          {foreach from=$disease_rows item=disease}
+          <option value="{$disease.id}" {if isset($disease_id4) && $disease_id4 eq $disease.id} selected="selected"{/if}>{$disease.name}</option>
+          {/foreach}
+          </select>
+          </td>
         </tr>
         <tr>
           <td class="form_label">所属医院</td>

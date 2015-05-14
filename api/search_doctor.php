@@ -45,7 +45,7 @@ do {
       $ke_shi_list[] = $ke_shi_id;
     }
   }
-  if (!empty($ke_shi_list) && !empty($_GET['ke_shi'])) {
+  if (empty($ke_shi_list) && !empty($_GET['ke_shi'])) {
     $ke_shi = $_GET['ke_shi'];
     if (get_magic_quotes_gpc()) {
       $ke_shi = stripslashes($ke_shi);

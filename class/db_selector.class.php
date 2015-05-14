@@ -8,14 +8,14 @@ class db_selector
   private static $db_list = array(
       'ddky_w' => array(
         'dbname'  => 'ddky',
-        'host'    => '192.168.0.220:3306',
+        'host'    => '127.0.0.1:3306',
         'user'    => 'root',
         'passwd'  => 'zhongwei',
         'charset' => 'utf8',
         ),
       'ddky_r' => array(
         'dbname'  => 'ddky',
-        'host'    => '192.168.0.220:3306',
+        'host'    => '127.0.0.1:3306',
         'user'    => 'root',
         'passwd'  => 'zhongwei',
         'charset' => 'utf8',

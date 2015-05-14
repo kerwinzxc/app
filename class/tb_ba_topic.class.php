@@ -144,7 +144,7 @@ class tb_ba_topic
     $sql = "select id,ba_id,user_id,topic,zan,coment,c_time"
       . " from "
       . self::$tb_name
-      . " where ba_id=$ba_id order by zan desc limit {$start},{$offset}";
+      . " where ba_id=$ba_id order by zan desc, id desc limit {$start},{$offset}";
     return $db->get_rows($sql);
   }
   public static function query_topic_limit_ex($where, $start, $offset)

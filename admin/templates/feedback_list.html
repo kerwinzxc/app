@@ -8,9 +8,9 @@
     </tr>
     {foreach from=$feedback_rows item=row name=r}
     <tr {if $smarty.foreach.r.index % 2 eq 1}class="odd"{/if}>
-      <td>{$row.user}</td>
+      <td style="height:44px">{if empty($row.user)}匿名{else}{$row.user}{/if}</td>
       <td>{$row.content}</td>
-      <td>{$row.c_time|date_format:"%Y-%m-%d %H:%M:%S"}}</td>
+      <td>{$row.c_time|date_format:"%Y-%m-%d %H:%M:%S"}</td>
       <td><a href="view/feedback_del.php?id={$row.id}" onclick="return checkConfirm('确认要删除吗？')">删除</a></td>
       </td>
     </tr>

@@ -26,7 +26,7 @@ do {
     break;
   }
 
-  if ($passwd != $new_passwd) {
+  if ($passwd == $new_passwd) {
     $ret_code = 0;
     break;
   }

@@ -52,8 +52,7 @@ create table if not exists user_patient (
   birthday            date not null default '1900-01-01',     # 
 
   primary key(id),
-  index i_uid(`user_id`),
-  unique key(`id_card`)
+  index i_uid(`user_id`)
 )engine=MyISAM default charset=utf8 auto_increment=10000;
 
 --#用户关注的医生
@@ -229,7 +228,8 @@ create table if not exists ba_rel_doctor (
   ba_id               int unsigned not null default 0,        # 病友吧ID
   doctor_id           int unsigned not null default 0,        #
 
-  primary key(ba_id, doctor_id)
+  primary key(ba_id, doctor_id),
+  index i_doctor_id(`doctor_id`)
 )engine=MyISAM default charset=utf8;
 
 --#病友吧-帖子
@@ -286,7 +286,7 @@ create table if not exists ol_ask_order (
   id                  int unsigned not null auto_increment,   # ID
   user_id             int unsigned not null,                  # 
   doctor_id           int unsigned not null,                  # 
-  state               tinyint not null default 0,             #
+  state               tinyint not null default 1,             #
 
   name                varchar(30) not null default '',        #
   sex                 tinyint not null default 1,             # 0: famale 1: male
@@ -312,7 +312,7 @@ create table if not exists tel_ask_order (
   id                  int unsigned not null auto_increment,   # ID
   user_id             int unsigned not null,                  # 
   doctor_id           int unsigned not null,                  # 
-  state               tinyint not null default 0,             #
+  state               tinyint not null default 1,             #
 
   name                varchar(30) not null default '',        #
   sex                 tinyint not null default 1,             # 0: famale 1: male
@@ -354,4 +354,24 @@ create table if not exists feedback (
   c_time              int unsigned not null default 0,        # 时间
 
   primary key(id)
+)engine=MyISAM default charset=utf8;
+
+--#病种
+drop table if exists disease;
+create table if not exists disease (
+  id                  int unsigned not null auto_increment,   # ID
+
+  name                varchar(90) not null,                   #
+
+  primary key(id)
+)engine=MyISAM default charset=utf8;
+
+--#疾病种关联医生
+drop table if exists disease_rel_doctor;
+create table if not exists disease_rel_doctor (
+  disease_id          int unsigned not null default 0,        # ID
+  doctor_id           int unsigned not null default 0,        #
+
+  primary key(disease_id, doctor_id),
+  index i_doctor_id(`doctor_id`)
 )engine=MyISAM default charset=utf8;

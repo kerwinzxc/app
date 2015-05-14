@@ -20,9 +20,28 @@ if (!isset($_GET['p'])) {
 }
 
 $total_num = tb_ol_ask_order::query_total_num('');
-$order_rows = tb_ol_ask_order::query_limit('',
-                                           ($page - 1) * 10,
-                                           10);
+$orders = tb_ol_ask_order::query_limit('',
+                                       ($page - 1) * 10,
+                                       10);
+$order_rows = array();
+foreach ($orders as $item) {
+  $order = array();
+  $doctor_info = tb_doctor::query_doctor_by_id($item['doctor_id']);
+  if (!empty($doctor_info)) {
+    $order['doctor'] = $doctor_info['name'];
+  } else {
+    $order['doctor'] = '';
+  }
+  $order['doctor_id']  = $item['doctor_id'];
+  $order['id']  = $item['id'];
+  $order['patient']  = $item['name'];
+  $order['expected_time_b'] = $item['expected_time_b'];
+  $order['expected_time_e'] = $item['expected_time_e'];
+  $order['disease_desc'] = $item['disease_desc'];
+  $order['phone_num'] = $item['phone_num'];
+
+  $order_rows[] = $order;
+}
 $pages = $total_num / 10 + 1;
 if ($total_num % 10 == 0) {
   $pages -= 1;

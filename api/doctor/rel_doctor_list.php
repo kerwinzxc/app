@@ -27,15 +27,30 @@ do {
   }
 
   $doctor_list = array();
-  if ($doctor_info['classify'] == '2') { // expert
-    $doctor_list = tb_doctor::query_slave_doctor_list($doctor_id);
-  } else {
-    $result = tb_doctor::query_doctor_by_id($doctor_info['master_id']);
-    if (!empty($result)) {
-      $doctor_list[] = $result;
+  $disease_list = tb_disease_rel_doctor::query_doctor_rel_disease($doctor_id);
+  if (!empty($disease_list)) {
+    $disease_list = array_map(function ($r) { return (int)$r['disease_id'];}, $disease_list);
+    foreach ($disease_list as $disease) {
+      $dl = tb_disease_rel_doctor::query_disease_rel_doctor_list($disease);
+      if (!empty($dl)) {
+        $dl = array_map(function ($r) { return (int)$r['doctor_id'];}, $dl);
+        $real_dl = array();
+        foreach ($dl as $id) {
+          if ($id != $doctor_id) {
+            $real_dl[] = $id;
+          }
+        }
+        if (!empty($real_dl)) {
+          $doctor_list = array_merge($doctor_list, $real_dl);
+        }
+        if (count($doctor_list) > 20) {
+          break;
+        }
+      }
     }
   }
-  $doctor_detail_list = fn_doctor::build_doctor_detail_list_from_info_list($doctor_list);
+
+  $doctor_detail_list = fn_doctor::build_doctor_detail_list_from_id_list($doctor_list);
 
   $ret_body['list'] = $doctor_detail_list;
 } while (false);

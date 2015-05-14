@@ -81,6 +81,18 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       $icon_url = IMG_BASE_URL . $path . "/" . $up->filename();
     }
 
+    $disease_list = array("disease1", "disease2", "disease3", "disease4");
+    $rel_disease_list = array();
+    foreach ($disease_list as $dis) {
+      if (!empty($_POST[$dis])) {
+        $id = (int)$_POST[$dis];
+        if (!empty(tb_disease::query_disease_by_id($id))) {
+          if (!in_array($id, $rel_disease_list))
+            $rel_disease_list[] = $id;
+        }
+      }
+    }
+
     $update_info = array();
     if (!empty($name)) {
       $update_info['name'] = $name;
@@ -115,6 +127,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 
     if (tb_doctor::update($doctor_id, $update_info) !== false) {
+      foreach ($rel_disease_list as $dis) {
+        tb_disease_rel_doctor::update($dis, $doctor_id);
+      }
       $err_msg = '编辑成功';
     } else {
       $err_msg = '系统内部错误，编辑失败';
@@ -153,10 +168,33 @@ function build_html($doctor_id)
     $tpl->assign("hospital", $doctor_info['hospital']);
     $tpl->assign("expert_in", $doctor_info['expert_in']);
     $tpl->assign("c_time", $doctor_info['c_time']);
+
+    if (!empty($doctor_info['master_id'])) {
+      $info = tb_doctor::query_doctor_by_id($doctor_info['master_id']);
+      if (!empty($info)) {
+        $tpl->assign("master_name", $info['name']);
+      }
+    }
+
+    $ret = tb_disease::query_all();
+    $tpl->assign('disease_rows', $ret === false ? array() : $ret);
+    
+    $dis_ret = tb_disease_rel_doctor::query_doctor_rel_disease($doctor_id);
+    if (!empty($dis_ret)) {
+      $i = 1;
+      foreach ($dis_ret as $dis) {
+        if (!empty($dis)) {
+          $tpl->assign("disease_id" . $i, $dis['disease_id']);
+          $i++;
+        }
+      }
+    }
+
     $recent_jh_num = 1;
   }
 }
 
+  $tpl->assign("refer", '');
 $tpl->assign("err_msg", $err_msg);
 $tpl->assign("inc_name", "doctor_info.html");
 $tpl->display("home.html");

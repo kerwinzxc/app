@@ -20,6 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
   } else {
     $tpl->assign("content_title", S_DOCTOR_LU_RU);
   }
+
+  $ret = tb_disease::query_all();
+  $tpl->assign('disease_rows', $ret === false ? array() : $ret);
+
   $tpl->assign("refer", '');
   $tpl->assign("doctor_info_title", S_DOCTOR_XIN_XI);
   $tpl->assign("new_one", 1);
@@ -62,6 +66,19 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
       $hospital = stripslashes($hospital);
       $expert_in = stripslashes($expert_in);
     }
+
+    $disease_list = array("disease1", "disease2", "disease3", "disease4");
+    $rel_disease_list = array();
+    foreach ($disease_list as $dis) {
+      if (!empty($_POST[$dis])) {
+        $id = (int)$_POST[$dis];
+        if (!empty(tb_disease::query_disease_by_id($id))) {
+          if (!in_array($id, $rel_disease_list))
+            $rel_disease_list[] = $id;
+        }
+      }
+    }
+
     $user = $_SESSION['user']['user'];
 
     $doctor_info = tb_doctor::query_doctor_by_phone_num($phone_num);
@@ -99,6 +116,9 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
                                                $expert_in,
                                                time());
     if ($new_doctor_id != false) {
+      foreach ($rel_disease_list as $dis) {
+        tb_disease_rel_doctor::update($dis, $new_doctor_id);
+      }
       $err_msg = '录入成功';
     } else {
       $err_msg = '系统内部错误，录入失败';

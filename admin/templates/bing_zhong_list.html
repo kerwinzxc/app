@@ -1,0 +1,31 @@
+<script type="text/javascript">
+{literal}
+function checkConfirm(s){
+  return confirm(s);
+}
+{/literal}
+</script>
+<div class="query" style="margin:8px;width: 829px \9;">
+  <table style="width:100%;table-layout:fixed;">
+    <tr style="font-weight:bold;">
+      <th style="width:10%;height:44px;background:#E9893A;">ID</th>
+      <th style="width:75%;background:#E9893A;">病种</th>
+      <th style="width:15%;background:#E9893A;">操作</th>
+    </tr>
+    {foreach from=$disease_rows item=row name=r}
+      <tr {if $smarty.foreach.r.index % 2 eq 1}class="odd"{/if}>
+        <td style="height:40px;padding:2px;">{$row.id}</td>
+        <td>{$row.name}</td>
+        <td><a href="view/bing_zhong_del.php?id={$row.id}&opt=del" onclick="return checkConfirm('确认要删除吗>？')">删除</a></td>
+      </tr>
+    {/foreach}
+  </table>
+  <div style="margin-top:5px">
+    <a style="display:inline;margin-left:10px;float:left;" href="view/add_bing_zhong.php">添加</a>
+    <div style="float:right;">
+      <p style="display:inline">共{if !isset($total_num)}0{else}{$total_num}{/if}个</p>
+      {if !isset($page) || $page eq 1}上一页{else}<a href="view/bing_zhong_list.php?p={$page-1}">上一页</a>{/if}
+      {if !isset($page) || $page ge $pages}下一页{else}<a href="view/bing_zhong_list.php?p={$page+1}">下一页</a>{/if}
+    </div>
+  </div>
+</div>

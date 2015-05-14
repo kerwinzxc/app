@@ -10,7 +10,6 @@ class tb_user
   public static function insert_new_one($phone_num, $passwd, $c_time)
   {
     $db = new sql(db_selector::get_db(db_selector::$db_w));
-    $passwd = $db->escape($passwd);
     $sql = "insert into "
       . self::$tb_name
       . "(phone_num,passwd,c_time)"
@@ -85,7 +84,6 @@ class tb_user
   public static function update_passwd($user_id, $new_passwd)
   {
     $db = new sql(db_selector::get_db(db_selector::$db_w));
-    $new_passwd = $db->escape($new_passwd);
     $sql = "update "
       . self::$tb_name
       . " set "

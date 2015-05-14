@@ -20,3 +20,7 @@ if (!defined('CK_BA_REL_DOCTOR_LIST')) define('CK_BA_REL_DOCTOR_LIST', 'ba_rel_d
 if (!defined('CK_BA_BANNER_LIST')) define('CK_BA_BANNER_LIST', 'ba_banner_list:');
 if (!defined('CK_ARTICLE_BANNER_LIST')) define('CK_ARTICLE_BANNER_LIST', 'article_banner_list:');
 if (!defined('CK_OL_ASK_ORDER')) define('CK_OL_ASK_ORDER', 'ol_ask_order:');
+if (!defined('CK_TEL_ASK_ORDER')) define('CK_TEL_ASK_ORDER', 'tel_ask_order:');
+if (!defined('CK_DISEASE_REL_DOCTOR_LIST')) define('CK_DISEASE_REL_DOCTOR_LIST', 'disease_rel_doctor:');
+if (!defined('CK_ALL_DISEASE_LIST')) define('CK_ALL_DISEASE_LIST', 'all_disease_list:');
+if (!defined('CK_BA_ID_2_INFO')) define('CK_BA_ID_2_INFO', 'ba_info:');

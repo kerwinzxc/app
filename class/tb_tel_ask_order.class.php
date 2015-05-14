@@ -24,7 +24,7 @@ class tb_tel_ask_order
     $sql = "insert into "
       . self::$tb_name
       . "(user_id,doctor_id,name,sex,id_card,phone_num,disease_desc,expected_time_b,expected_time_e,emr_url,c_time)"
-      . "value($user_id,$doctor_id,'$name',$sex,'$id_card','$phone_num','$disease_desc',$expected_time_e,$expected_time_b,'$emr_url',$c_time)";
+      . "value($user_id,$doctor_id,'$name',$sex,'$id_card','$phone_num','$disease_desc',$expected_time_b,$expected_time_e,'$emr_url',$c_time)";
     if ($db->execute($sql) === false) {
       return false;
     }
@@ -32,6 +32,43 @@ class tb_tel_ask_order
       return $db->get_insert_id();
     }
     return false;
+  }
+  public static function del_one($id)
+  {
+    $db = new sql(db_selector::get_db(db_selector::$db_w));
+    $sql = "delete from "
+      . self::$tb_name
+      . " where id={$id} limit 1";
+    if ($db->execute($sql) === false) {
+      return false;
+    }
+
+    // for cache
+    $cc = new cache();
+    $ck = CK_TEL_ASK_ORDER . $id;
+    $cc->del($ck);
+
+    return true;
+  }
+  public static function set_state($id, $state)
+  {
+    $db = new sql(db_selector::get_db(db_selector::$db_w));
+    $sql = "update "
+      . self::$tb_name
+      . " set state=$state "
+      . " where id=$id limit 1";
+    $result = $db->get_row($sql);
+
+    if ($db->execute($sql) === false) {
+      return false;
+    }
+
+    // for cache
+    $cc = new cache();
+    $ck = CK_TEL_ASK_ORDER . $id;
+    $cc->del($ck);
+
+    return true;
   }
 
   // return false on error, return array on ok.
@@ -41,7 +78,7 @@ class tb_tel_ask_order
 
     // for cache
     $cc = new cache();
-    $ck = CK_OL_YU_YUE_ORDER . $id;
+    $ck = CK_TEL_ASK_ORDER . $id;
     $result = $cc->get($ck);
     if ($result !== false) {
       return json_decode($result, true);
@@ -61,6 +98,20 @@ class tb_tel_ask_order
     }
     return $result;
   }
+  public static function query_total_num($where)
+  {
+    if (!empty($where)) {
+      $where = "where $where";
+    }
+    $db = new sql(db_selector::get_db(db_selector::$db_r));
+    $sql = "select count(*)"
+      . " from "
+      . self::$tb_name
+      . " $where";
+    $ret = $db->get_one_row_col($sql, 0);
+    if ($ret === false) return false;
+    return (int)$ret;
+  }
   public static function query_order_num($user_id)
   {
     if (empty($user_id)) { return false; }
@@ -73,6 +124,21 @@ class tb_tel_ask_order
     $ret = $db->get_one_row_col($sql, 0);
     if ($ret === false) return false;
     return (int)$ret;
+  }
+  // return false on error, return array on ok.
+  public static function query_limit($where, $start, $offset)
+  {
+    if (!empty($where)) {
+      $where = "where $where";
+    }
+
+    $db = new sql(db_selector::get_db(db_selector::$db_r));
+    $sql = "select "
+      . self::$all_cols
+      . " from "
+      . self::$tb_name
+      . " $where order by id desc limit {$start},{$offset}";
+    return $db->get_rows($sql);
   }
   // return false on error, return array on ok.
   public static function query_order_limit($user_id, $start, $offset)
