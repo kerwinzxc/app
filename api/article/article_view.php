@@ -82,13 +82,13 @@ body{
 </style>
 <body>
 <div style="margin:15px;">
-  <div> <p style="font-size:18px;"><b><?php echo $article_info['topic']?></b></p> </div>
+  <div> <p style="font-size:18px;"><b><?php echo htmlspecialchars_decode($article_info['topic'])?></b></p> </div>
   <hr style="height:1px;border:0;background-color:#e6e6e6;"/>
   <div style="font-size:15px;color:#999999;">
    <p style="display:inline;"><?php echo date("Y-m-d", $article_info['c_time'])?></p>
    <p style="margin-left:40px;display:inline"><?php echo $article_info['author']?></p>
   </div>
-  <div style="margin-top:20px;"><?php echo $article_info['content']?></div>
+  <div style="margin-top:20px;"><?php echo htmlspecialchars_decode($article_info['content'])?></div>
   <br/>
 </div>
 </body>
