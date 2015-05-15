@@ -40,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     $master_id = $_POST['master_id'];
   }
   $classify = $_POST['classify'];
+  $disease_id = $_POST['disease'];
   $ke_shi = $_POST['ke_shi'];
   $hospital = trim($_POST['hospital']);
   $expert_in = $_POST['expert_in'];
@@ -55,9 +56,15 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         || empty($hospital) || strlen($hospital) > 90
         || empty($expert_in) || strlen($expert_in) > 450
         || empty($ke_shi) || !is_numeric($ke_shi)
+        || !is_numeric($disease_id)
         || empty($tec_title) || !is_numeric($tec_title)
         || empty($aca_title) || !is_numeric($aca_title)) {
       $err_msg = '输入参数错误';
+      break;
+    }
+
+    if (empty(tb_disease::query_disease_by_id($disease_id))) {
+      $err_msg = '咨询室病种ID无效';
       break;
     }
 
@@ -68,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     }
 
     $disease_list = array("disease1", "disease2", "disease3", "disease4");
-    $rel_disease_list = array();
+    $rel_disease_list = array($disease_id);
     foreach ($disease_list as $dis) {
       if (!empty($_POST[$dis])) {
         $id = (int)$_POST[$dis];
@@ -104,6 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
                                                md5('000000'),
                                                $user,
                                                $master_id,
+                                               $disease_id,
                                                $classify,
                                                $name,
                                                $sex,

@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
   $sex = $_POST['sex'];
   $phone_num = $_POST['phone_num'];
   $classify = $_POST['classify'];
+  $disease_id = $_POST['disease'];
   $ke_shi = $_POST['ke_shi'];
   $hospital = trim($_POST['hospital']);
   $expert_in = $_POST['expert_in'];
@@ -37,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         || empty($hospital) || strlen($hospital) > 90
         || empty($expert_in) || strlen($expert_in) > 450
         || empty($ke_shi) || !is_numeric($ke_shi)
+        || !is_numeric($disease_id)
         || empty($tec_title) || !is_numeric($tec_title)
         || empty($aca_title) || !is_numeric($aca_title)) {
       $err_msg = '输入参数错误';
@@ -65,6 +67,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       break;
     }
 
+    if (empty(tb_disease::query_disease_by_id($disease_id))) {
+      $err_msg = '咨询室病种ID无效';
+      break;
+    }
+
     //upload file
     $icon_url = '';
     if (!empty($_FILES['photo']["name"])) {
@@ -82,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 
     $disease_list = array("disease1", "disease2", "disease3", "disease4");
-    $rel_disease_list = array();
+    $rel_disease_list = array($disease_id);
     foreach ($disease_list as $dis) {
       if (!empty($_POST[$dis])) {
         $id = (int)$_POST[$dis];
@@ -109,6 +116,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
     if (!empty($ke_shi)) {
       $update_info['ke_shi'] = $ke_shi;
+    }
+    if (!empty($disease_id)) {
+      $update_info['disease_id'] = $disease_id;
     }
     if (!empty($tec_title)) {
       $update_info['tec_title'] = $tec_title;
@@ -168,6 +178,7 @@ function build_html($doctor_id)
     $tpl->assign("hospital", $doctor_info['hospital']);
     $tpl->assign("expert_in", $doctor_info['expert_in']);
     $tpl->assign("c_time", $doctor_info['c_time']);
+    $tpl->assign("disease_id", $doctor_info['disease_id']);
 
     if (!empty($doctor_info['master_id'])) {
       $info = tb_doctor::query_doctor_by_id($doctor_info['master_id']);

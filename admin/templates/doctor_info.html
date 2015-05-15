@@ -47,7 +47,19 @@
           <p class='must_p' style='font-size:14px;'>* &nbsp;(内部定义类别)</p></td>
         </tr>
         <tr>
-          <td class="form_label">关联病种</td>
+          <td class="form_label">咨询室病种</td>
+          <td>
+          <select id='disease' name='disease' style="width:95px;">
+          <option value="" >-选择病种-</option>
+          {foreach from=$disease_rows item=disease}
+          <option value="{$disease.id}" {if isset($disease_id) && $disease_id eq $disease.id} selected="selected"{/if}>{$disease.name}</option>
+          {/foreach}
+          </select>
+          <p class='must_p' style='font-size:14px;'>*</p>
+          </td>
+        </tr>
+        <tr>
+          <td class="form_label">关联其他病种</td>
           <td>
           <select name='disease1' style="width:95px;">
           <option value=''>-选择病种-</option>
@@ -265,7 +277,7 @@
           <option value="3" {if isset($tec_title) && $tec_title eq 3} selected="selected"{/if}>主治医师</option>
           <option value="4" {if isset($tec_title) && $tec_title eq 4} selected="selected"{/if}>住院医师</option>
           </select> <p class='must_p'>*</p>
-          <select style="width:100px;margin-left:20px;" id=aca_title' name='aca_title'>
+          <select style="width:100px;margin-left:20px;" id='aca_title' name='aca_title'>
           <option value=""  >--学术职称--</option>
           <option value="1" {if isset($aca_title) && $aca_title eq 1} selected="selected"{/if}>教授</option>
           <option value="2" {if isset($aca_title) && $aca_title eq 2} selected="selected"{/if}>副教授</option>

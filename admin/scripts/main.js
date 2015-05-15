@@ -172,6 +172,10 @@ function submitDoctorValidate()
     alert('请选择学术职称!');
     return false;
   }
+  if (document.getElementById("disease").value.length == 0) {
+    alert('请选择咨询室病种!');
+    return false;
+  }
   return true;
 }
 function submitLoginValidate()

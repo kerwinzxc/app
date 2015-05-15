@@ -23,8 +23,9 @@ class fn_doctor_article
     $article_brief['icon_url'] = $article['icon_url'];
     $article_brief['topic'] = $article['topic'];
     $article_brief['c_time'] = (int)$article['c_time'];
+    $article_brief['id'] = (int)$article['id'];
     $article_id = $article['id'];
-    $article_brief['article_url'] = "http://192.168.0.220/api/article/article_view.php?id={$article_id}";
+    $article_brief['article_url'] = APP_BASE_URL . "api/article/article_view.php?id={$article_id}";
     return true;
   }
 };

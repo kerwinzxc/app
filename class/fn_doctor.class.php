@@ -39,6 +39,13 @@ class fn_doctor
     $doctor_detail['hospital'] = $doctor_info['hospital'];
     $doctor_detail['expert_in'] = $doctor_info['expert_in'];
 
+    $dis = tb_disease::query_disease_by_id($doctor_info['disease_id']);
+    if (!empty($dis)) {
+      $doctor_detail['disease'] = $dis['name'] . "咨询室";
+    } else {
+      $doctor_detail['disease'] = '';
+    }
+
     return $doctor_detail;
   }
   public static function query_expert_total_num()

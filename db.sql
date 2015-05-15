@@ -130,6 +130,7 @@ create table if not exists doctor (
   employe_id          varchar(30) not null default '',        # 录入者
 
   master_id           int unsigned not null default 0,        # 所长
+  disease_id          int unsigned not null default 0,        # 咨询室病种
   classify            tinyint not null default 0,             # 医生类别
   name                varchar(30) not null default '',        #
   sex                 tinyint not null default 1,             # 0: famale 1: male
