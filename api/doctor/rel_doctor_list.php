@@ -36,7 +36,7 @@ do {
         $dl = array_map(function ($r) { return (int)$r['doctor_id'];}, $dl);
         $real_dl = array();
         foreach ($dl as $id) {
-          if ($id != $doctor_id) {
+          if ($id != $doctor_id && !in_array($id, $doctor_list)) {
             $real_dl[] = $id;
           }
         }
