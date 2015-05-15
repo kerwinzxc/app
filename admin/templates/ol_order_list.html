@@ -27,20 +27,21 @@ cursor:pointer;
   <div style="width:100%;height:60px;margin-bottom:8px;background:#FFC78E;">
     <div style="padding:15px 0px 0px 0px">
       <input style='margin-left:80px;' class='unprocess' type='button' value='未处理订单' onclick='unProcessList();'/>
-      <input style='margin-left:50px;' class='unprocess' type='button' value='未支付订单' onclick='unChargeList();'/>
-      <input style='margin-left:50px;' class='processed' type='button' value='已处理订单' onclick='ProcessedList();'/>
-      <input style='margin-left:50px;' class='processed' type='button' value='已支付订单' onclick='ChargedList();'/>
-      <input style='margin-left:50px;' class='done'      type='button' value='已结束订单' onclick='doneList();'/>
+      <input style='margin-left:50px;' class='unprocess' type='button' value='未支付订单' /><!--onclick='unChargeList();'-->
+      <input style='margin-left:50px;' class='processed' type='button' value='已处理订单' /><!--onclick='ProcessedList();'-->
+      <input style='margin-left:50px;' class='processed' type='button' value='已支付订单' /><!--onclick='ChargedList();'-->
+      <input style='margin-left:50px;' class='done'      type='button' value='已结束订单' /><!--onclick='doneList();'-->
     </div>
   </div>
   <table style="width:100%;table-layout:fixed;">
     <tr style="font-weight:bold;">
       <th style="width:10%;height:44px;background:#E9893A;">订单号</th>
-      <th style="width:10%;height:44px;background:#E9893A;">医生姓名</th>
-      <th style="width:10%;background:#E9893A;">就诊人</th>
+      <th style="width:8%;height:44px;background:#E9893A;">医生姓名</th>
+      <th style="width:8%;background:#E9893A;">就诊人</th>
       <th style="width:14%;background:#E9893A;">联系电话</th>
       <th style="width:18%;background:#E9893A;">预约时间</th>
       <th style="width:28%;background:#E9893A;">疾病描述</th>
+      <th style="width:4%;background:#E9893A;">病例</th>
       <th style="width:10%;background:#E9893A;">操作</th>
     </tr>
     {foreach from=$order_rows item=row name=r}
@@ -51,6 +52,13 @@ cursor:pointer;
       <td>{$row.phone_num}</td>
       <td>{$row.expected_time_b|date_format:"%m-%d %H:%M"}~{$row.expected_time_e|date_format:"%H:%M"}</td>
       <td>{$row.disease_desc}</td>
+      <td>
+      {if !empty($row.emr_url)}
+        {foreach from=$row.emr_url item=url}
+          <a href='{$url}' target='_blank'><img src='{$url}' height="40" width="40"</img></a>
+        {/foreach}
+      {/if}
+      </td>
       <td><a href="view/ol_order_opt.php?id={$row.id}" onclick="return checkConfirm('确认要删除吗？')">结束</a></td>
       </td>
     </tr>

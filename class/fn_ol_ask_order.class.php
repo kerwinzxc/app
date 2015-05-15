@@ -21,7 +21,13 @@ class fn_ol_ask_order
       $order['expected_time_b'] = $item['expected_time_b'];
       $order['expected_time_e'] = $item['expected_time_e'];
       $order['disease_desc'] = $item['disease_desc'];
-      $order['emr_url'] = explode(";", $item['emr_url']);
+
+      $urls = array();
+      if (!empty($item['emr_url'])) {
+        $urls = explode(";", $item['emr_url']);
+      }
+      $order['emr_url'] = $urls;
+
       $brief_list[] = $order;
     }
     return $brief_list;

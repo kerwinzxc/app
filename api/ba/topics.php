@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../init.php';
 
 if ($_SERVER['REQUEST_METHOD'] != 'GET') exit;
 
-define('ONE_PAGE_ITEMS', 10);
+define('ONE_PAGE_ITEMS', 100);
 
 $ret_code = 0;
 $ret_body = array();

@@ -9,16 +9,18 @@ function checkConfirm(s){
   <table style="width:100%;table-layout:fixed;">
     <tr style="font-weight:bold;">
       <th style="width:8%;height:44px;background:#E9893A;">图标</th>
+      <th style="width:10%;background:#E9893A;">病友吧ID</th>
       <th style="width:7%;background:#E9893A;">优先级</th>
       <th style="width:9%;background:#E9893A;">关联医生</th>
       <th style="width:15%;background:#E9893A;">贴吧名</th>
-      <th style="width:43%;background:#E9893A;">描述</th>
+      <th style="width:33%;background:#E9893A;">描述</th>
       <th style="width:6%;background:#E9893A;">话题</th>
       <th style="width:12%;background:#E9893A;">操作</th>
     </tr>
     {foreach from=$ba_rows item=row name=r}
       <tr {if $smarty.foreach.r.index % 2 eq 1}class="odd"{/if}>
         <td style="height:64px;padding:2px;"><a href="view/bing_you_ba.php?id={$row.id}"><img src="{$row.icon_url}" height="60" width="60"></img></a></td>
+        <td>{$row.id}</td>
         <td>{$row.priority}</td>
         <td>
           <select style="width:100%;" readonly>

@@ -19,8 +19,8 @@ if (!isset($_GET['p'])) {
   $page = (int)$_GET['p'];
 }
 
-$total_num = tb_ol_ask_order::query_total_num('');
-$orders = tb_ol_ask_order::query_limit('',
+$total_num = tb_ol_ask_order::query_total_num('state=1');
+$orders = tb_ol_ask_order::query_limit('state=1',
                                        ($page - 1) * 10,
                                        10);
 $order_rows = array();

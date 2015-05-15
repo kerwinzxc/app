@@ -24,6 +24,16 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     if ($priority < 1) $priority = 1;
     if ($priority > 10000) $priority = 10000;
 
+    $ba_id = 0;
+    if (!empty($_POST['ba_id'])) {
+      $ba_id = (int)$_POST['ba_id'];
+      $ba_info = tb_ba::query_ba_by_id($ba_id);
+      if (empty($ba_info)) {
+        $err_msg = '病友吧ID无效';
+        break;
+      }
+    }
+
     $user = $_SESSION['user']['user'];
 
     $path = "image/ba/banner";
@@ -38,7 +48,11 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     }
     $img_url = IMG_BASE_URL . $path . "/" . $up->filename();
 
-    $new_ba_banner_id = tb_ba_banner::insert_new_one($priority, $img_url, "");
+    $target = '';
+    if ($ba_id !== 0) {
+      $target = json_encode(array("ba_id" => $ba_id));
+    }
+    $new_ba_banner_id = tb_ba_banner::insert_new_one($priority, $img_url, $target);
     if ($new_ba_banner_id != false) {
       $err_msg = '添加成功';
     } else {

@@ -1,5 +1,12 @@
 <script type="text/javascript">
 {literal}
+function checkBaid(obj) {
+  if (isNaN(obj.value)) {
+    alert('请输入数字');
+    return false;
+  }
+  return true;
+}
 function checkPriority(obj) {
   if (isNaN(obj.value)) {
     alert('请输入数字(1~10000)');
@@ -34,6 +41,10 @@ function submitBaValidate($new_one)
         <tr>
           <td class="form_label">优先级</td>
           <td><input style="width:100px;padding-left:2px;" id='priority' type='number' min='1' max='10000' name='priority' value='{if isset($priority)}{$priority}{else}1{/if}' onchange='checkPriority(this)'/><p class='must_p' style='font-size:13px;'>1~10000 (数值越小优先级越高)</p></td>
+        </tr>
+        <tr>
+          <td class="form_label">关联病友吧</td>
+          <td><input style="width:100px;padding-left:2px;" id='ba_id' type='number' name='ba_id' value='{if isset($ba_id)}{$ba_id}{else}{/if}' onchange='checkBaid(this)'/><p class='must_p' style='font-size:13px;'>病友吧ID</p></td>
         </tr>
         <tr>
           <td class="form_label">图片</td>

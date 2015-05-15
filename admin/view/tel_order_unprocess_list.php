@@ -19,8 +19,8 @@ if (!isset($_GET['p'])) {
   $page = (int)$_GET['p'];
 }
 
-$total_num = tb_ol_ask_order::query_total_num('');
-$orders = tb_ol_ask_order::query_limit('',
+$total_num = tb_tel_ask_order::query_total_num('state=1');
+$orders = tb_tel_ask_order::query_limit('state=1',
                                        ($page - 1) * 10,
                                        10);
 $order_rows = array();
@@ -56,7 +56,7 @@ if ($total_num % 10 == 0) {
 $tpl->assign("refer", $_SERVER['HTTP_REFERER']);
 $tpl->assign("content_title", '在线问诊订单');
 $tpl->assign("order_rows", $order_rows === false ? array() : $order_rows);
-$tpl->assign("inc_name", "ol_order_list.html");
+$tpl->assign("inc_name", "tel_order_list.html");
 $tpl->assign("page", $page);
 $tpl->assign("total_num", $total_num);
 $tpl->assign("pages", $pages);
