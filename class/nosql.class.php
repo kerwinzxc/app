@@ -14,7 +14,7 @@ class nosql
   private function connect($key)
   {
     if ($this->connected === false) {
-      $server = "192.168.0.220:6381";
+      $server = "127.0.0.1:6381";
       if (empty($server)) {
         return false;
       }
