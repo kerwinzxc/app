@@ -21,7 +21,7 @@ do {
     $r['id'] = $row['id'];
     $r['priority'] = $row['priority'];
     $r['img_url'] = $row['img_url'];
-    $r['target'] = $row['target'];
+    $r['target'] = json_decode($row['target'], true);
 
     $banner_rows[] = $r;
   }

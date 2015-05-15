@@ -96,7 +96,7 @@ function submitBaValidate($new_one)
         </tr>
       </table>
       <hr style="margin-top:20px;height:1px;border:0;background-color:#FF9900;"/>
-      <input style="float:left;margin-right:20px;" type="button" id="add_rel_doctor" value="添加医生" onclick="addRelDoctor()"/><p style="height:27px;line-height:27px;font-size:14px">输入医生ID</p>
+      <input style="float:left;margin-right:20px;" type="button" id="add_rel_doctor" value="添加关联医生" onclick="addRelDoctor()"/><p style="height:27px;line-height:27px;font-size:14px">输入医生ID</p>
       <div id="rel_doctors">
       {foreach from=$rel_doctors item=doctor name=r}
       <input name="doctor{$smarty.foreach.r.index + 1}" length="40px" style="margin-top:10px" value="{$doctor}"/>

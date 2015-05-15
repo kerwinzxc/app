@@ -17,7 +17,16 @@ do {
   foreach ($ret as $banner) {
     $banner_info = array();
     $banner_info['img_url'] = $banner['img_url'];
-    $banner_info['target'] = $banner['target'];
+
+    $target = json_decode($banner['target'], true);
+    if (!empty($target)) {
+      $ba_info = tb_ba::query_ba_by_id($target['ba_id']);
+      if (!empty($ba_info)) {
+        $target['name'] = $ba_info['name'];
+      }
+    }
+    $banner_info['target'] = $target;
+
     $banner_list[] = $banner_info;
   }
   $ret_body['list'] = $banner_list;

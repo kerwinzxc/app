@@ -24,6 +24,16 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     if ($priority < 1) $priority = 1;
     if ($priority > 10000) $priority = 10000;
 
+    $articel_id = 0;
+    if (!empty($_POST['article_id'])) {
+      $article_id = (int)$_POST['article_id'];
+      $article_info = tb_doctor_article::query_article_by_id($article_id);
+      if (empty($article_info)) {
+        $err_msg = '文章ID无效';
+        break;
+      }
+    }
+
     $user = $_SESSION['user']['user'];
 
     $path = "image/article/banner";
@@ -39,6 +49,9 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     $img_url = IMG_BASE_URL . $path . "/" . $up->filename();
 
     $target = '';
+    if ($article_id !== 0) {
+      $target = json_encode(array("article_id" => $article_id));
+    }
     $new_banner_id = tb_article_banner::insert_new_one($priority, $img_url, $target);
     if ($new_banner_id !== false) {
       $err_msg = '添加成功';

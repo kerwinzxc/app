@@ -270,7 +270,9 @@ window.onload = loadFun;
       </tr>
     {/foreach}
   </table>
-  <div class="page_v">
+  <div style="margin-top:5px">
+    <a style="display:inline;margin-left:10px;float:left;" href="view/doctor_entering.php">添加</a>
+    <div style="float:right;">
     <p style="display:inline">共{if !isset($total_num)}0{else}{$total_num}{/if}名</p>
     {if ! isset($my_doctor) }
       {if !isset($page) || $page eq 1}上一页{else}<a href="view/doctor_query.php?p={$page-1}">上一页</a>{/if}
@@ -279,5 +281,6 @@ window.onload = loadFun;
       {if !isset($page) || $page eq 1}上一页{else}<a href="view/my_doctor.php?p={$page-1}">上一页</a>{/if}
       {if !isset($page) || $page ge $pages}下一页{else}<a href="view/my_doctor.php?p={$page+1}">下一页</a>{/if}
     {/if}
+    </div>
   </div>
 </div>

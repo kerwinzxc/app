@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
     if (tb_employe::login_auth($user, md5($passwd))) {
       $_SESSION['user'] = array('user' => $user);
-      header('Location: view/doctor_entering.php');
+      header('Location: view/doctor_query.php');
       exit;
     }
 

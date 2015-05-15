@@ -17,7 +17,7 @@ do {
   foreach ($ret as $banner) {
     $banner_info = array();
     $banner_info['img_url'] = $banner['img_url'];
-    $banner_info['target'] = $banner['target'];
+    $banner_info['target'] = json_decode($banner['target'], true);
     $banner_list[] = $banner_info;
   }
   $ret_body['list'] = $banner_list;
