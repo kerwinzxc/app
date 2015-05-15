@@ -6,11 +6,11 @@
     //上传配置
     $config = array(
         "savePath" => "upload/" ,             //存储文件夹
-        "maxSize" => 1000 ,                   //允许的文件最大尺寸，单位KB
+        "maxSize" => 2000 ,                   //允许的文件最大尺寸，单位KB
         "allowFiles" => array( ".gif" , ".png" , ".jpg" , ".jpeg" , ".bmp" )  //允许的文件格式
     );
     //上传文件目录
-    $Path = "upload/";
+    $Path = "../../../image/article/content/";
 
     //背景保存在临时目录中
     $config[ "savePath" ] = $Path;
