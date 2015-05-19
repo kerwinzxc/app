@@ -24,3 +24,4 @@ if (!defined('CK_TEL_ASK_ORDER')) define('CK_TEL_ASK_ORDER', 'tel_ask_order:');
 if (!defined('CK_DISEASE_REL_DOCTOR_LIST')) define('CK_DISEASE_REL_DOCTOR_LIST', 'disease_rel_doctor:');
 if (!defined('CK_ALL_DISEASE_LIST')) define('CK_ALL_DISEASE_LIST', 'all_disease_list:');
 if (!defined('CK_BA_ID_2_INFO')) define('CK_BA_ID_2_INFO', 'ba_info:');
+if (!defined('CK_VIDEO_BANNER_LIST')) define('CK_VIDEO_BANNER_LIST', 'video_banner_list:');

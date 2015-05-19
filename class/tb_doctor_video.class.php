@@ -8,6 +8,8 @@ class tb_doctor_video
   private static $all_cols = '*';
 
   public static function insert_new_one($doctor_id,
+                                        $icon_url,
+                                        $video_type,
                                         $topic,
                                         $video_url,
                                         $c_time)
@@ -17,8 +19,8 @@ class tb_doctor_video
     $video_url = $db->escape($video_url);
     $sql = "insert into "
       . self::$tb_name
-      . "(doctor_id,topic,video_url,c_time)"
-      . "value($doctor_id,'$topic','$video_url',$c_time)";
+      . "(doctor_id,icon_url,video_type,topic,video_url,c_time)"
+      . "value($doctor_id,'$icon_url','$video_type','$topic','$video_url',$c_time)";
     if ($db->execute($sql) === false) {
       return false;
     }
@@ -65,14 +67,16 @@ class tb_doctor_video
       . " where doctor_id=$doctor_id";
     return $db->get_rows($sql);
   }
-  public static function query_video_total_num($doctor_id)
+  public static function query_video_total_num($where)
   {
-    if (empty($doctor_id)) { return false; }
+    if (!empty($where)) {
+      $where = " where $where";
+    }
 
     $db = new sql(db_selector::get_db(db_selector::$db_r));
     $sql = "select count(*) from "
       . self::$tb_name
-      . " where doctor_id=$doctor_id";
+      . " {$where}";
     $ret = $db->get_one_row_col($sql, 0);
     if ($ret === false) { return false; }
     return (int)$ret;

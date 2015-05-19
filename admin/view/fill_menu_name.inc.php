@@ -11,6 +11,7 @@ $tpl->assign("s_feedback",        '意见反馈');
 $tpl->assign("s_bing_you_ba",     '病友吧列表');
 $tpl->assign("s_bing_you_ba_banner",'病友吧推广图');
 $tpl->assign("s_doctor_article_banner",'专家文章推广图');
+$tpl->assign("s_doctor_video_banner",'专家视频推广图');
 $tpl->assign("s_ol_order_list",   '在线问诊订单');
 $tpl->assign("s_tel_order_list",  '专线电话订单');
 $tpl->assign("s_feedback",        '意见反馈');

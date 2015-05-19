@@ -187,12 +187,15 @@ create table if not exists doctor_video (
   id                  int unsigned not null auto_increment,   # 视频ID
   doctor_id           int unsigned not null default 0,        # 医生ID
 
+  icon_url            varchar(255) not null default '',       #
+  video_type          tinyint not null default 0,             #
   topic               varchar(90) not null default '',        #
   video_url           varchar(255) not null default '',       #
   c_time              int unsigned not null default 0,
 
   primary key(id),
-  index i_did(`doctor_id`)
+  index i_did(`doctor_id`),
+  index i_type(`video_type`)
 )engine=MyISAM default charset=utf8;
 
 --#病友吧
@@ -336,6 +339,18 @@ create table if not exists tel_ask_order (
 --#专家名著首页banner
 drop table if exists article_banner;
 create table if not exists article_banner (
+  id                  int unsigned not null auto_increment,   # ID
+
+  priority            int unsigned not null default 1,        #
+  img_url             varchar(255) not null default '',       #
+  target              varchar(255) not null default '',       #
+
+  primary key(id)
+)engine=MyISAM default charset=utf8;
+
+--#专家讲座首页banner
+drop table if exists video_banner;
+create table if not exists video_banner (
   id                  int unsigned not null auto_increment,   # ID
 
   priority            int unsigned not null default 1,        #
