@@ -5,7 +5,7 @@ class util
   public static function generate_order_id()
   { return date('ymd') . str_pad(mt_rand(1, 9999999), 7, '0', STR_PAD_LEFT); }
 
-  public static function post_data($url, $data, $timeout = 1)
+  public static function post_data($url, $data, $header = false, $timeout = 1)
   {
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $url);
@@ -14,6 +14,24 @@ class util
     curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
     curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    if (!empty($header)) {
+      curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
+    }
+    $ret = curl_exec($curl);
+    curl_close($curl);
+    return $ret;
+  }
+  public static function get_data($url, $header = false, $timeout = 1)
+  {
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_HEADER, false);
+    curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
+    if (!empty($header)) {
+      curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
+    }
     $ret = curl_exec($curl);
     curl_close($curl);
     return $ret;

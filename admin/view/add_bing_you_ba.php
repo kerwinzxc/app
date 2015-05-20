@@ -37,6 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     }
     $user = $_SESSION['user']['user'];
 
+    if (tb_ba::query_ba_name_exist_or_not($name)) {
+      $err_msg = "吧名已经存在，请更换";
+      break;
+    }
+
     $path = "image/ba/icon";
     $up = new upload($_FILES['icon'],
                      IMG_ROOT . "/" . $path,

@@ -167,7 +167,7 @@ class tb_user
     if ($user_info === false) {
       return false;
     }
-    $name = $user_info['name'];
+    $name = $user_info['nick_name'];
     $icon_url = $user_info['icon_url'];
     return true;
   }

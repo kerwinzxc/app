@@ -106,6 +106,18 @@ class tb_ba
     }
     return $ret;
   }
+  public static function query_ba_name_exist_or_not($name)
+  {
+    if (empty($name)) { return true; }
+
+    $db = new sql(db_selector::get_db(db_selector::$db_r));
+    $sql = "select 1 from "
+      . self::$tb_name
+      . " where name='{$name}' limit 1";
+    $ret = $db->get_one_row_col($sql, 0);
+    if ($ret === false) return false;
+    return $ret == '1';
+  }
   public static function query_ba_all_open_list()
   {
     // for cache

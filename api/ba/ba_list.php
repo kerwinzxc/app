@@ -18,6 +18,7 @@ do {
     $ba_info = array();
     $ba_info['ba_id'] = $ba['id'];
     $ba_info['name'] = $ba['name'];
+    $ba_info['desc'] = $ba['ba_desc'];
     $ba_info['icon_url'] = $ba['icon_url'];
     $gz_num = tb_user_gz_ba::query_gz_ba_num($ba['id']);
     $ba_info['gz_num'] = empty($gz_num) ? 0 : $gz_num;
